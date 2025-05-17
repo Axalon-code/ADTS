@@ -1,11 +1,15 @@
 import { 
-  users, contacts, blogPosts,
+  users, contacts, blogPosts, services, availabilitySlots, bookings, blockedDates,
   type User, type InsertUser, 
   type Contact, type InsertContact,
-  type BlogPost, type InsertBlogPost
+  type BlogPost, type InsertBlogPost,
+  type Service, type InsertService,
+  type AvailabilitySlot, type InsertAvailabilitySlot,
+  type Booking, type InsertBooking,
+  type BlockedDate, type InsertBlockedDate
 } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, and, gte, lte, sql } from "drizzle-orm";
 
 // Interface for storage operations
 export interface IStorage {
@@ -20,6 +24,33 @@ export interface IStorage {
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   getBlogPostsByCategory(category: string): Promise<BlogPost[]>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  
+  // Service booking methods
+  getServices(): Promise<Service[]>;
+  getServicesByCategory(category: string): Promise<Service[]>;
+  getServiceById(id: number): Promise<Service | undefined>;
+  createService(service: InsertService): Promise<Service>;
+  updateService(id: number, service: Partial<InsertService>): Promise<Service>;
+  
+  // Availability methods
+  getAvailabilitySlots(): Promise<AvailabilitySlot[]>;
+  createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot>;
+  deleteAvailabilitySlot(id: number): Promise<void>;
+  
+  // Booking methods
+  getBookings(): Promise<Booking[]>;
+  getBookingsByDate(date: Date): Promise<Booking[]>;
+  getBookingById(id: number): Promise<Booking | undefined>;
+  createBooking(booking: InsertBooking): Promise<Booking>;
+  updateBookingStatus(id: number, status: string): Promise<Booking>;
+  
+  // Blocked dates methods
+  getBlockedDates(): Promise<BlockedDate[]>;
+  createBlockedDate(blockedDate: InsertBlockedDate): Promise<BlockedDate>;
+  deleteBlockedDate(id: number): Promise<void>;
+  
+  // Availability checking
+  getAvailableTimeSlots(date: Date, serviceId: number): Promise<{ startTime: string, endTime: string }[]>;
 }
 
 // DatabaseStorage implementation using PostgreSQL
