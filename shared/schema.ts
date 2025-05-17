@@ -41,3 +41,34 @@ export const contactSchema = createInsertSchema(contacts).pick({
 
 export type InsertContact = z.infer<typeof contactSchema>;
 export type Contact = typeof contacts.$inferSelect;
+
+// Blog posts for IT tips and resources
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  excerpt: text("excerpt").notNull(),
+  content: text("content").notNull(),
+  category: text("category").notNull(),
+  tags: text("tags").array(),
+  publishedAt: timestamp("published_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at"),
+  featured: boolean("featured").default(false),
+  author: text("author").default("Alex"),
+  imageUrl: text("image_url")
+});
+
+export const blogPostSchema = createInsertSchema(blogPosts).pick({
+  title: true,
+  slug: true,
+  excerpt: true,
+  content: true,
+  category: true,
+  tags: true,
+  featured: true,
+  author: true,
+  imageUrl: true
+});
+
+export type InsertBlogPost = z.infer<typeof blogPostSchema>;
+export type BlogPost = typeof blogPosts.$inferSelect;
