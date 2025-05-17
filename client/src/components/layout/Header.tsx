@@ -153,41 +153,69 @@ export default function Header() {
               role="menu"
               aria-labelledby="menu-button"
             >
-              <nav className="flex flex-col space-y-4">
-                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
-                  <NavLink to="#home" label="Home" />
-                </div>
+              <nav className="flex flex-col space-y-3">
+                <Button
+                  onClick={() => {
+                    scrollToSection("home");
+                    setMenuOpen(false);
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  Home
+                </Button>
                 
-                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
-                  <NavLink to="#services" label="Services" />
-                </div>
+                <Button
+                  onClick={() => {
+                    scrollToSection("services");
+                    setMenuOpen(false);
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  Services
+                </Button>
                 
-                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
-                  <NavLink to="#about" label="About Me" />
-                </div>
+                <Button
+                  onClick={() => {
+                    scrollToSection("about");
+                    setMenuOpen(false);
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  About Me
+                </Button>
                 
-                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
-                  <NavLink to="#certifications" label="Certifications" />
-                </div>
+                <Button
+                  onClick={() => {
+                    scrollToSection("certifications");
+                    setMenuOpen(false);
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  Certifications
+                </Button>
                 
-                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
-                  <Link href="/blog">
-                    <a className="nav-link text-base border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all" role="menuitem">Resources</a>
-                  </Link>
-                </div>
+                <Link href="/blog">
+                  <a className="bg-primary text-white hover:bg-accent transition-colors w-full block text-left px-4 py-2 rounded-md" role="menuitem">
+                    Resources
+                  </a>
+                </Link>
                 
-                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
-                  <Link href="/booking">
-                    <a className="nav-link text-base border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all" role="menuitem">Book Now</a>
-                  </Link>
-                </div>
+                <Link href="/booking">
+                  <a className="bg-primary text-white hover:bg-accent transition-colors w-full block text-left px-4 py-2 rounded-md" role="menuitem">
+                    Book Now
+                  </a>
+                </Link>
                 
                 <Button 
                   onClick={() => {
                     scrollToSection("contact");
                     setMenuOpen(false);
                   }} 
-                  className="mt-2 bg-primary text-white hover:bg-accent transition-colors w-full"
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
                   role="menuitem"
                 >
                   Contact
