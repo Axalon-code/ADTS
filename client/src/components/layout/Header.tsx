@@ -198,17 +198,25 @@ export default function Header() {
                   Certifications
                 </Button>
                 
-                <Link href="/blog">
-                  <a className="bg-primary text-white hover:bg-accent transition-colors w-full block text-left px-4 py-2 rounded-md" role="menuitem">
-                    Resources
-                  </a>
-                </Link>
+                <Button 
+                  onClick={() => {
+                    window.location.href = "/blog";
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  Resources
+                </Button>
                 
-                <Link href="/booking">
-                  <a className="bg-primary text-white hover:bg-accent transition-colors w-full block text-left px-4 py-2 rounded-md" role="menuitem">
-                    Book Now
-                  </a>
-                </Link>
+                <Button
+                  onClick={() => {
+                    window.location.href = "/booking";
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  Book Now
+                </Button>
                 
                 <Button 
                   onClick={() => {
