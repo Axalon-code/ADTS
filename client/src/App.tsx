@@ -16,6 +16,7 @@ function App() {
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={BlogPost} />
         <Route path="/booking" component={Booking} />
+        <Route path="/case-study/:id" component={CaseStudy} />
         <Route component={NotFound} />
       </Switch>
     </>
