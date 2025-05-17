@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { ModeToggle } from "@/components/ModeToggle";
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
-  const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Check if we're at the top of the page
   useEffect(() => {
@@ -20,26 +20,31 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
-  // Close mobile menu when clicking outside
+  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (mobileMenuOpen && !target.closest("#mobile-menu") && !target.closest("#mobile-menu-button")) {
-        setMobileMenuOpen(false);
+      if (
+        menuOpen && 
+        menuRef.current && 
+        buttonRef.current && 
+        !menuRef.current.contains(event.target as Node) && 
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [mobileMenuOpen]);
+  }, [menuOpen]);
 
-  // Close mobile menu when navigating
+  // Close menu when navigating
   useEffect(() => {
-    setMobileMenuOpen(false);
+    setMenuOpen(false);
   }, [location]);
 
   // Handle smooth scrolling for hash links
@@ -48,7 +53,7 @@ export default function Header() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setMobileMenuOpen(false);
+    setMenuOpen(false);
   };
 
   const NavLink = ({ to, label }: { to: string; label: string }) => {
@@ -89,16 +94,21 @@ export default function Header() {
             </a>
           </Link>
           
-          {/* Mobile menu button */}
-          <div className="block md:hidden">
+          <div className="flex items-center gap-4">
+            {/* Theme Toggle - Always visible */}
+            <div className="flex items-center border-r-2 border-primary/30 dark:border-blue-500/30 pr-4">
+              <ModeToggle />
+            </div>
+            
+            {/* Hamburger menu button */}
             <Button 
-              id="mobile-menu-button" 
+              ref={buttonRef}
               variant="ghost" 
               size="sm" 
-              onClick={toggleMobileMenu} 
-              className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))]"
+              onClick={toggleMenu} 
+              className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-blue-500 rounded-md p-1"
             >
-              {mobileMenuOpen ? (
+              {menuOpen ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -112,59 +122,37 @@ export default function Header() {
               )}
             </Button>
           </div>
-          
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6 border-2 border-primary dark:border-blue-500 rounded-md py-2 px-4 shadow-md">
-            <NavLink to="#home" label="Home" />
-            <NavLink to="#services" label="Services" />
-            <NavLink to="#about" label="About Me" />
-            <NavLink to="#certifications" label="Certifications" />
-            <Link href="/blog">
-              <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all">Resources</a>
-            </Link>
-            <Link href="/booking">
-              <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all">Book Now</a>
-            </Link>
-            <Button onClick={() => scrollToSection("contact")} className="bg-primary text-white hover:bg-accent transition-colors border-2 border-primary hover:border-accent">
-              Contact
-            </Button>
-            <div className="pl-1 border-l-2 border-primary dark:border-blue-500">
-              <ModeToggle />
-            </div>
-          </nav>
         </div>
         
-        {/* Mobile Navigation */}
-        {isMobile && (
-          <nav 
-            id="mobile-menu" 
-            className={`${mobileMenuOpen ? 'flex' : 'hidden'} flex-col mt-4 border-t dark:border-gray-700 pt-4 md:hidden`}
+        {/* Dropdown Navigation Menu - Only visible when menuOpen is true */}
+        {menuOpen && (
+          <div 
+            ref={menuRef}
+            className="absolute right-4 mt-2 w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-blue-500 py-3 px-4 z-50"
           >
-            <NavLink to="#home" label="Home" />
-            <div className="py-2"><NavLink to="#services" label="Services" /></div>
-            <div className="py-2"><NavLink to="#about" label="About Me" /></div>
-            <div className="py-2"><NavLink to="#certifications" label="Certifications" /></div>
-            <div className="py-2">
+            <nav className="flex flex-col space-y-3">
+              <NavLink to="#home" label="Home" />
+              <NavLink to="#services" label="Services" />
+              <NavLink to="#about" label="About Me" />
+              <NavLink to="#certifications" label="Certifications" />
               <Link href="/blog">
-                <a className="nav-link">Resources</a>
+                <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all">Resources</a>
               </Link>
-            </div>
-            <div className="py-2">
               <Link href="/booking">
-                <a className="nav-link">Book Now</a>
+                <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all">Book Now</a>
               </Link>
-            </div>
-            <Button 
-              onClick={() => scrollToSection("contact")} 
-              className="mt-2 bg-primary text-white hover:bg-accent transition-colors"
-            >
-              Contact
-            </Button>
-            <div className="mt-4 flex items-center">
-              <span className="mr-2 text-sm dark:text-gray-300">Toggle Theme</span>
-              <ModeToggle />
-            </div>
-          </nav>
+              
+              <Button 
+                onClick={() => {
+                  scrollToSection("contact");
+                  setMenuOpen(false);
+                }} 
+                className="mt-2 bg-primary text-white hover:bg-accent transition-colors w-full"
+              >
+                Contact
+              </Button>
+            </nav>
+          </div>
         )}
       </div>
     </header>
