@@ -27,6 +27,9 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 // Service type definition
 interface Service {
@@ -68,20 +71,20 @@ export default function BookingPage() {
   const [notes, setNotes] = useState("");
   
   // Fetch services by category
-  const { data: services, isLoading: servicesLoading } = useQuery({
+  const { data: services = [], isLoading: servicesLoading } = useQuery<Service[]>({
     queryKey: ['/api/services/category', initialServiceCategory],
     enabled: !!initialServiceCategory
   });
   
   // Fetch available time slots for the selected date and service
-  const { data: availableSlots, isLoading: slotsLoading } = useQuery({
+  const { data: availableSlots = [], isLoading: slotsLoading } = useQuery<TimeSlot[]>({
     queryKey: ['/api/available-slots', selectedDate?.toISOString().split('T')[0], selectedService],
     enabled: !!selectedDate && !!selectedService
   });
   
   // Set initial selected service based on the first service loaded
   useEffect(() => {
-    if (services && services.length > 0 && !selectedService) {
+    if (services.length > 0 && !selectedService) {
       setSelectedService(services[0].id);
     }
   }, [services, selectedService]);
@@ -195,8 +198,8 @@ export default function BookingPage() {
   };
   
   // Get currently selected service details
-  const selectedServiceDetails = services?.find(
-    (service: Service) => service.id === selectedService
+  const selectedServiceDetails = services.find(
+    (service) => service.id === selectedService
   );
   
   return (
@@ -345,10 +348,10 @@ export default function BookingPage() {
                 <div>
                   {servicesLoading ? (
                     <div className="py-8 text-center">Loading available services...</div>
-                  ) : services && services.length > 0 ? (
+                  ) : services.length > 0 ? (
                     <div className="space-y-6">
                       <div className="grid grid-cols-1 gap-4">
-                        {services.map((service: Service) => (
+                        {services.map((service) => (
                           <div
                             key={service.id}
                             className={cn(
@@ -407,21 +410,23 @@ export default function BookingPage() {
                       mode="single"
                       selected={selectedDate}
                       onSelect={setSelectedDate}
-                      initialFocus
                       disabled={(date) => {
-                        // Disable dates in the past
-                        const yesterday = new Date();
-                        yesterday.setDate(yesterday.getDate() - 1);
-                        return date < yesterday;
+                        // Disable past dates and weekends (0 = Sunday, 6 = Saturday)
+                        return (
+                          date < new Date(new Date().setHours(0, 0, 0, 0)) ||
+                          date.getDay() === 0 ||
+                          date.getDay() === 6
+                        );
                       }}
                       className="rounded-md border mx-auto"
                     />
                   </div>
-                  <div className="flex gap-4">
-                    <Button variant="outline" className="w-full" onClick={() => setStep("service")}>
-                      Go Back
+                  
+                  <div className="flex gap-2">
+                    <Button variant="outline" className="w-1/2" onClick={() => setStep("service")}>
+                      Back
                     </Button>
-                    <Button className="w-full" onClick={goToTimeSelection}>
+                    <Button className="w-1/2" onClick={goToTimeSelection}>
                       Continue to Time Selection
                     </Button>
                   </div>
@@ -433,129 +438,115 @@ export default function BookingPage() {
                 <div className="space-y-6">
                   {slotsLoading ? (
                     <div className="py-8 text-center">Loading available time slots...</div>
-                  ) : availableSlots && availableSlots.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      {availableSlots.map((slot: TimeSlot, index: number) => (
-                        <button
-                          key={index}
-                          className={cn(
-                            "p-3 rounded-md border text-center transition-colors",
-                            selectedTimeSlot && 
-                            selectedTimeSlot.startTime === slot.startTime && 
-                            selectedTimeSlot.endTime === slot.endTime
-                              ? "border-primary bg-primary/5"
-                              : "hover:border-primary/50"
-                          )}
-                          onClick={() => setSelectedTimeSlot(slot)}
-                        >
-                          <span className="block font-medium">{formatTime(slot.startTime)}</span>
-                          <span className="text-sm text-muted-foreground">
-                            to {formatTime(slot.endTime)}
-                          </span>
-                        </button>
-                      ))}
+                  ) : availableSlots.length > 0 ? (
+                    <div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
+                        {availableSlots.map((slot, index) => (
+                          <div
+                            key={index}
+                            className={cn(
+                              "border rounded-md p-3 text-center cursor-pointer transition-colors",
+                              selectedTimeSlot === slot
+                                ? "border-primary bg-primary/5"
+                                : "hover:border-primary/50"
+                            )}
+                            onClick={() => setSelectedTimeSlot(slot)}
+                          >
+                            <span className="font-medium">
+                              {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <div className="flex gap-2 mt-6">
+                        <Button variant="outline" className="w-1/2" onClick={() => setStep("date")}>
+                          Back
+                        </Button>
+                        <Button className="w-1/2" onClick={goToDetailsForm}>
+                          Continue to Your Details
+                        </Button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="py-8 text-center">
-                      <p>No available time slots for the selected date.</p>
-                      <p className="text-sm text-muted-foreground mt-2">
-                        Please select another date or service.
-                      </p>
+                    <div>
+                      <div className="py-8 text-center">
+                        <p>No available time slots for the selected date. Please choose another date.</p>
+                      </div>
+                      <Button variant="outline" className="w-full" onClick={() => setStep("date")}>
+                        Back to Date Selection
+                      </Button>
                     </div>
                   )}
-                  <div className="flex gap-4">
-                    <Button variant="outline" className="w-full" onClick={() => setStep("date")}>
-                      Go Back
-                    </Button>
-                    <Button 
-                      className="w-full" 
-                      onClick={goToDetailsForm}
-                      disabled={!selectedTimeSlot}
-                    >
-                      Continue to Details
-                    </Button>
-                  </div>
                 </div>
               )}
               
-              {/* Details Form Step */}
+              {/* Client Details Step */}
               {step === "details" && (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="clientName" className="text-sm font-medium">
-                        Full Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
+                      <Label htmlFor="clientName">Full Name <span className="text-red-500">*</span></Label>
+                      <Input
                         id="clientName"
-                        className="w-full p-2 border rounded-md"
-                        type="text"
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
                         required
+                        placeholder="e.g. John Smith"
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <label htmlFor="clientEmail" className="text-sm font-medium">
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
-                      <input
+                      <Label htmlFor="clientEmail">Email Address <span className="text-red-500">*</span></Label>
+                      <Input
                         id="clientEmail"
-                        className="w-full p-2 border rounded-md"
                         type="email"
                         value={clientEmail}
                         onChange={(e) => setClientEmail(e.target.value)}
                         required
+                        placeholder="e.g. john@example.com"
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <label htmlFor="clientPhone" className="text-sm font-medium">
-                        Phone Number
-                      </label>
-                      <input
+                      <Label htmlFor="clientPhone">Phone Number <span className="text-red-500">*</span></Label>
+                      <Input
                         id="clientPhone"
-                        className="w-full p-2 border rounded-md"
                         type="tel"
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
+                        required
+                        placeholder="e.g. 07123 456789"
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <label htmlFor="clientCompany" className="text-sm font-medium">
-                        Company Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
+                      <Label htmlFor="clientCompany">Company Name</Label>
+                      <Input
                         id="clientCompany"
-                        className="w-full p-2 border rounded-md"
-                        type="text"
                         value={clientCompany}
                         onChange={(e) => setClientCompany(e.target.value)}
-                        required
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <label htmlFor="notes" className="text-sm font-medium">
-                        Additional Notes
-                      </label>
-                      <textarea
-                        id="notes"
-                        className="w-full p-2 border rounded-md min-h-[100px]"
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        placeholder="Please share any specific requirements or questions you have for the consultation"
+                        placeholder="e.g. ABC Corporation"
                       />
                     </div>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <Button variant="outline" className="w-full" onClick={() => setStep("time")}>
-                      Go Back
+                  <div className="space-y-2">
+                    <Label htmlFor="notes">Additional Notes</Label>
+                    <Textarea
+                      id="notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Any specific requirements or questions about your consultation"
+                      className="h-32"
+                    />
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <Button type="button" variant="outline" className="w-1/2" onClick={() => setStep("time")}>
+                      Back
                     </Button>
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-1/2">
                       Complete Booking
                     </Button>
                   </div>

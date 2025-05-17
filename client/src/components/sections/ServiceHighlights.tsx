@@ -85,13 +85,22 @@ export default function ServiceHighlights() {
           ))}
         </div>
         
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center flex flex-col md:flex-row justify-center items-center gap-4">
           <Button 
             onClick={() => scrollToSection("services")}
             className="bg-primary text-white px-8 py-3 hover:bg-accent transition-colors inline-flex items-center justify-center"
           >
             View All Services
             <i className="fas fa-chevron-right ml-2 text-sm"></i>
+          </Button>
+          
+          <Button 
+            onClick={() => window.location.href = "/booking"}
+            variant="outline"
+            className="px-8 py-3 inline-flex items-center justify-center border-primary text-primary hover:bg-primary/10"
+          >
+            Book a Consultation
+            <i className="fas fa-calendar-check ml-2 text-sm"></i>
           </Button>
         </div>
       </div>

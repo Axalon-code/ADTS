@@ -122,6 +122,9 @@ export default function Header() {
             <Link href="/blog">
               <a className="nav-link">Resources</a>
             </Link>
+            <Link href="/booking">
+              <a className="nav-link">Book Now</a>
+            </Link>
             <Button onClick={() => scrollToSection("contact")} className="bg-primary text-white hover:bg-accent transition-colors">
               Contact
             </Button>
@@ -142,6 +145,11 @@ export default function Header() {
             <div className="py-2">
               <Link href="/blog">
                 <a className="nav-link">Resources</a>
+              </Link>
+            </div>
+            <div className="py-2">
+              <Link href="/booking">
+                <a className="nav-link">Book Now</a>
               </Link>
             </div>
             <Button 
