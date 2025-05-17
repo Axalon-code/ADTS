@@ -81,7 +81,7 @@ export default function Header() {
             <a className="flex items-center">
               <div className="w-40 md:w-52">
                 <img 
-                  src="/attached_assets/image_1747515986297.png" 
+                  src="/@assets/Alex logo-01.png" 
                   alt="ADTS - Tailoring Your IT Requirements" 
                   className="w-full h-auto"
                 />
