@@ -102,8 +102,8 @@ export default function Header() {
           <div className="flex justify-between items-center">
             <Link href="/">
               <a className="flex items-center">
-                <div className="w-48 md:w-64">
-                  <AnimatedLogo size="medium" />
+                <div className="w-56 md:w-72">
+                  <AnimatedLogo size="large" />
                 </div>
               </a>
             </Link>

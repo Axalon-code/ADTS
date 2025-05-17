@@ -15,11 +15,11 @@ export default function AnimatedLogo({
   const [gradientPosition, setGradientPosition] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   
-  // Size classes
+  // Size classes - increased size for more prominence
   const sizeClasses = {
-    small: "text-2xl md:text-3xl",
-    medium: "text-3xl md:text-4xl",
-    large: "text-4xl md:text-5xl"
+    small: "text-3xl md:text-4xl",
+    medium: "text-4xl md:text-5xl",
+    large: "text-5xl md:text-6xl"
   };
   
   // Effect for continuous animation
@@ -28,7 +28,7 @@ export default function AnimatedLogo({
     
     const animationInterval = setInterval(() => {
       setGradientPosition(prev => (prev + 1) % 100);
-    }, 50);
+    }, 40); // Slightly faster base animation
     
     return () => clearInterval(animationInterval);
   }, [interactive, isHovered]);
@@ -38,8 +38,8 @@ export default function AnimatedLogo({
     if (!isHovered) return;
     
     const animationInterval = setInterval(() => {
-      setGradientPosition(prev => (prev + 3) % 100);
-    }, 30);
+      setGradientPosition(prev => (prev + 4) % 100);
+    }, 20); // Even faster animation on hover for more dramatic effect
     
     return () => clearInterval(animationInterval);
   }, [isHovered]);
@@ -60,10 +60,10 @@ export default function AnimatedLogo({
       <span 
         style={gradientStyle}
         className={`
-          bg-gradient-to-r from-blue-700 via-blue-500 to-emerald-400 
-          dark:bg-gradient-to-r dark:from-blue-500 dark:via-blue-400 dark:to-emerald-300
-          text-transparent bg-clip-text transition-all duration-300
-          ${isHovered ? 'scale-105 transform' : ''}
+          bg-gradient-to-r from-blue-900 via-blue-700 to-emerald-600 
+          dark:bg-gradient-to-r dark:from-blue-700 dark:via-blue-500 dark:to-emerald-500
+          text-transparent bg-clip-text transition-all duration-300 font-extrabold tracking-wider
+          ${isHovered ? 'scale-110 transform' : ''}
         `}
       >
         ADTS
