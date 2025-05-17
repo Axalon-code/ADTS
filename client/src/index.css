@@ -53,6 +53,10 @@
   --contact-icon-color: 217 100% 50%;
   --contact-link-color: 217 100% 50%;
   --contact-link-hover-color: 217 100% 40%;
+  
+  /* Mobile menu colors for light mode */
+  --mobile-menu-color: 217 100% 50%;
+  --mobile-menu-hover-color: 217 100% 40%;
 }
 
 .dark {
@@ -101,6 +105,10 @@
   --contact-icon-color: 217 100% 60%;
   --contact-link-color: 217 100% 60%;
   --contact-link-hover-color: 217 100% 70%;
+  
+  /* Mobile menu colors for dark mode */
+  --mobile-menu-color: 217 100% 60%;
+  --mobile-menu-hover-color: 217 100% 70%;
 }
 
 @layer base {
