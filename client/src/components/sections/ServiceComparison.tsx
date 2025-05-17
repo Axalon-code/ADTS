@@ -305,13 +305,18 @@ export default function ServiceComparison() {
 
         <div className="max-w-6xl mx-auto mb-12">
           {/* Service Category Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div role="tablist" aria-label="Service categories" className="flex flex-wrap justify-center gap-2 mb-8">
             <Button 
               variant={activeCategory === "azure" ? "default" : "outline"}
               onClick={() => handleCategoryChange("azure")}
               className={`${activeCategory === "azure" ? "bg-primary text-white" : "text-primary hover:bg-primary/10"} px-6 py-3`}
               disabled={animating}
+              role="tab"
+              id="tab-azure"
+              aria-selected={activeCategory === "azure"}
+              aria-controls="panel-azure"
             >
+              <span className="sr-only">{activeCategory === "azure" ? "Currently viewing " : "View "}</span>
               Azure Cloud
             </Button>
             <Button 
@@ -319,7 +324,12 @@ export default function ServiceComparison() {
               onClick={() => handleCategoryChange("identity")}
               className={`${activeCategory === "identity" ? "bg-primary text-white" : "text-primary hover:bg-primary/10"} px-6 py-3`}
               disabled={animating}
+              role="tab"
+              id="tab-identity"
+              aria-selected={activeCategory === "identity"}
+              aria-controls="panel-identity"
             >
+              <span className="sr-only">{activeCategory === "identity" ? "Currently viewing " : "View "}</span>
               Identity & Access
             </Button>
             <Button 
@@ -327,7 +337,12 @@ export default function ServiceComparison() {
               onClick={() => handleCategoryChange("m365")}
               className={`${activeCategory === "m365" ? "bg-primary text-white" : "text-primary hover:bg-primary/10"} px-6 py-3`}
               disabled={animating}
+              role="tab"
+              id="tab-m365"
+              aria-selected={activeCategory === "m365"}
+              aria-controls="panel-m365"
             >
+              <span className="sr-only">{activeCategory === "m365" ? "Currently viewing " : "View "}</span>
               Microsoft 365
             </Button>
             <Button 
@@ -335,7 +350,12 @@ export default function ServiceComparison() {
               onClick={() => handleCategoryChange("automation")}
               className={`${activeCategory === "automation" ? "bg-primary text-white" : "text-primary hover:bg-primary/10"} px-6 py-3`}
               disabled={animating}
+              role="tab"
+              id="tab-automation"
+              aria-selected={activeCategory === "automation"}
+              aria-controls="panel-automation"
             >
+              <span className="sr-only">{activeCategory === "automation" ? "Currently viewing " : "View "}</span>
               Process Automation
             </Button>
           </div>

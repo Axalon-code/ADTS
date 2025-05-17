@@ -18,7 +18,7 @@ export default function Home() {
         <meta name="description" content="Expert IT consultancy services specializing in Microsoft 365, Azure, and Enterprise Identity Management solutions tailored to your business requirements." />
       </Helmet>
       <Header />
-      <main>
+      <main id="main-content" aria-live="polite">
         <Hero />
         <ServiceHighlights />
         <DetailedServices />
