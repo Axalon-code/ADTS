@@ -17,16 +17,16 @@ const ServiceCard = ({ icon, title, description, linkId }: ServiceCardProps) => 
   };
 
   return (
-    <Card className="bg-white hover:shadow-lg transition-shadow">
+    <Card className="bg-white dark:bg-[hsl(var(--service-card-bg))] hover:shadow-lg transition-all duration-200">
       <CardContent className="p-8">
-        <div className="text-primary mb-4">
+        <div className="text-primary dark:text-accent mb-4">
           <i className={`${icon} text-4xl`}></i>
         </div>
-        <h3 className="font-inter font-semibold text-xl mb-3">{title}</h3>
-        <p className="text-muted-foreground mb-6">{description}</p>
+        <h3 className="font-inter font-semibold text-xl mb-3 dark:text-white">{title}</h3>
+        <p className="text-muted-foreground dark:text-gray-300 mb-6">{description}</p>
         <button 
           onClick={() => scrollToSection(linkId)}
-          className="text-primary font-medium hover:text-accent transition-colors inline-flex items-center"
+          className="text-primary font-medium hover:text-accent dark:text-blue-400 dark:hover:text-blue-300 transition-colors inline-flex items-center"
         >
           Learn more
           <i className="fas fa-arrow-right ml-2 text-sm"></i>

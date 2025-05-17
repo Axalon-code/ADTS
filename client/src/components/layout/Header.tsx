@@ -75,7 +75,7 @@ export default function Header() {
   };
 
   return (
-    <header className={`sticky top-0 z-50 bg-white ${isScrolled ? 'shadow-md' : ''}`}>
+    <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200`}>
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Link href="/">
@@ -84,7 +84,7 @@ export default function Header() {
                 <img 
                   src="/logo.png" 
                   alt="ADTS - Tailoring Your IT Requirements" 
-                  className="w-full h-auto"
+                  className="w-full h-auto dark:filter dark:brightness-0 dark:invert"
                 />
               </div>
             </a>
@@ -97,7 +97,7 @@ export default function Header() {
               variant="ghost" 
               size="sm" 
               onClick={toggleMobileMenu} 
-              className="text-primary"
+              className="text-primary dark:text-accent"
             >
               <i className={`fas ${mobileMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
             </Button>
@@ -120,7 +120,7 @@ export default function Header() {
         {isMobile && (
           <nav 
             id="mobile-menu" 
-            className={`${mobileMenuOpen ? 'flex' : 'hidden'} flex-col mt-4 border-t pt-4 md:hidden`}
+            className={`${mobileMenuOpen ? 'flex' : 'hidden'} flex-col mt-4 border-t dark:border-gray-700 pt-4 md:hidden`}
           >
             <NavLink to="#home" label="Home" />
             <div className="py-2"><NavLink to="#services" label="Services" /></div>
@@ -133,7 +133,7 @@ export default function Header() {
               Contact
             </Button>
             <div className="mt-4 flex items-center">
-              <span className="mr-2 text-sm">Toggle Theme</span>
+              <span className="mr-2 text-sm dark:text-gray-300">Toggle Theme</span>
               <ModeToggle />
             </div>
           </nav>

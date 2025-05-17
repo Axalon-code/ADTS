@@ -50,7 +50,7 @@
   --popover: 222 47% 11%;
   --popover-foreground: 213 31% 91%;
 
-  --card: 222 47% 11%;
+  --card: 225 40% 15%;
   --card-foreground: 213 31% 91%;
 
   --border: 224 71% 25%;
@@ -59,7 +59,7 @@
   --primary: 224 100% 50%;
   --primary-foreground: 210 100% 99%;
 
-  --secondary: 225 57% 30%;
+  --secondary: 225 57% 15%;
   --secondary-foreground: 0 0% 98%;
 
   --accent: 210 100% 60%;
@@ -69,6 +69,9 @@
   --destructive-foreground: 0 0% 98%;
 
   --ring: 224 71% 40%;
+  
+  --header-bg: 220 47% 10%;
+  --service-card-bg: 222 47% 15%;
 }
 
 @layer base {
