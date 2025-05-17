@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <img 
-              src="/assets/Alex logo-01.png" 
+              src="/attached_assets/image_1747515986297.png" 
               alt="ADTS - Tailoring Your IT Requirements" 
               className="w-40 h-auto filter brightness-0 invert"
             />
