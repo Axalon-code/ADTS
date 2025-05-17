@@ -60,7 +60,7 @@ export default function Header() {
       return (
         <button 
           onClick={() => scrollToSection(to.substring(1))} 
-          className={`nav-link ${isActive ? "active" : ""}`}
+          className={`nav-link border-b-2 ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all`}
         >
           {label}
         </button>
@@ -69,7 +69,7 @@ export default function Header() {
 
     return (
       <Link href={to}>
-        <a className={`nav-link ${isActive ? "active" : ""}`}>{label}</a>
+        <a className={`nav-link border-b-2 ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all`}>{label}</a>
       </Link>
     );
   };
@@ -114,21 +114,23 @@ export default function Header() {
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-6 border-2 border-primary dark:border-blue-500 rounded-md py-2 px-4 shadow-md">
             <NavLink to="#home" label="Home" />
             <NavLink to="#services" label="Services" />
             <NavLink to="#about" label="About Me" />
             <NavLink to="#certifications" label="Certifications" />
             <Link href="/blog">
-              <a className="nav-link">Resources</a>
+              <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all">Resources</a>
             </Link>
             <Link href="/booking">
-              <a className="nav-link">Book Now</a>
+              <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all">Book Now</a>
             </Link>
-            <Button onClick={() => scrollToSection("contact")} className="bg-primary text-white hover:bg-accent transition-colors">
+            <Button onClick={() => scrollToSection("contact")} className="bg-primary text-white hover:bg-accent transition-colors border-2 border-primary hover:border-accent">
               Contact
             </Button>
-            <ModeToggle />
+            <div className="pl-1 border-l-2 border-primary dark:border-blue-500">
+              <ModeToggle />
+            </div>
           </nav>
         </div>
         
