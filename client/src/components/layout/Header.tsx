@@ -80,10 +80,10 @@ export default function Header() {
         <div className="flex justify-between items-center">
           <Link href="/">
             <a className="flex items-center">
-              <div className="w-40 md:w-52">
-                <div className="text-primary dark:text-blue-500 font-bold text-2xl md:text-3xl">
+              <div className="w-48 md:w-64">
+                <div className="text-primary dark:text-blue-500 font-bold text-3xl md:text-4xl">
                   ADTS
-                  <div className="text-sm font-normal">Tailoring Your IT Requirements</div>
+                  <div className="text-sm md:text-base font-normal mt-1">Tailoring Your IT Requirements</div>
                 </div>
               </div>
             </a>
