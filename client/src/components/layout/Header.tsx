@@ -65,7 +65,7 @@ export default function Header() {
       return (
         <button 
           onClick={() => scrollToSection(to.substring(1))} 
-          className={`nav-link border-b-2 ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all`}
+          className={`nav-link border-b-2 text-base font-medium ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all w-full text-left`}
           role="menuitem"
           aria-current={isActive ? "page" : undefined}
         >
@@ -77,7 +77,7 @@ export default function Header() {
     return (
       <Link href={to}>
         <a 
-          className={`nav-link border-b-2 ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all`}
+          className={`nav-link border-b-2 text-base font-medium ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all w-full text-left`}
           role="menuitem"
           aria-current={isActive ? "page" : undefined}
         >
@@ -153,17 +153,34 @@ export default function Header() {
               role="menu"
               aria-labelledby="menu-button"
             >
-              <nav className="flex flex-col space-y-3">
-                <NavLink to="#home" label="Home" />
-                <NavLink to="#services" label="Services" />
-                <NavLink to="#about" label="About Me" />
-                <NavLink to="#certifications" label="Certifications" />
-                <Link href="/blog">
-                  <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all" role="menuitem">Resources</a>
-                </Link>
-                <Link href="/booking">
-                  <a className="nav-link border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all" role="menuitem">Book Now</a>
-                </Link>
+              <nav className="flex flex-col space-y-4">
+                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
+                  <NavLink to="#home" label="Home" />
+                </div>
+                
+                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
+                  <NavLink to="#services" label="Services" />
+                </div>
+                
+                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
+                  <NavLink to="#about" label="About Me" />
+                </div>
+                
+                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
+                  <NavLink to="#certifications" label="Certifications" />
+                </div>
+                
+                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
+                  <Link href="/blog">
+                    <a className="nav-link text-base border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all" role="menuitem">Resources</a>
+                  </Link>
+                </div>
+                
+                <div className="border-l-2 border-primary dark:border-blue-500 pl-3">
+                  <Link href="/booking">
+                    <a className="nav-link text-base border-b-2 border-transparent hover:border-primary dark:hover:border-blue-500 transition-all" role="menuitem">Book Now</a>
+                  </Link>
+                </div>
                 
                 <Button 
                   onClick={() => {
