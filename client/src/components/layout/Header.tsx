@@ -82,9 +82,9 @@ export default function Header() {
             <a className="flex items-center">
               <div className="w-40 md:w-52">
                 <img 
-                  src="/logo.png" 
+                  src="/logo.jpg" 
                   alt="ADTS - Tailoring Your IT Requirements" 
-                  className="w-full h-auto dark:filter dark:brightness-0 dark:invert"
+                  className="w-full h-auto"
                 />
               </div>
             </a>

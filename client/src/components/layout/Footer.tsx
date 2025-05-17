@@ -16,9 +16,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <img 
-              src="/logo.png" 
+              src="/logo.jpg" 
               alt="ADTS - Tailoring Your IT Requirements" 
-              className="w-40 h-auto dark:filter dark:brightness-0 dark:invert"
+              className="w-40 h-auto"
             />
             <p className="mb-6">Independent IT consultancy specializing in Microsoft technologies, providing tailored solutions for your business needs.</p>
             <div className="flex space-x-4">
