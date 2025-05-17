@@ -36,7 +36,7 @@ export function ModeToggle() {
         onClick={toggleTheme}
         aria-label="Toggle theme"
         disabled={isAnimating}
-        className={`relative w-10 h-10 rounded-full overflow-hidden transition-all duration-500 ${
+        className={`relative w-10 h-10 rounded-md overflow-hidden transition-all duration-500 ${
           theme === "dark" 
             ? "bg-blue-900 border-blue-700 hover:bg-blue-800 shadow-inner shadow-blue-800" 
             : "bg-blue-100 border-blue-200 hover:bg-blue-200"
