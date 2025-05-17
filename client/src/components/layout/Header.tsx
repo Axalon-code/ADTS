@@ -108,6 +108,9 @@ export default function Header() {
             <NavLink to="#services" label="Services" />
             <NavLink to="#about" label="About Me" />
             <NavLink to="#certifications" label="Certifications" />
+            <Link href="/blog">
+              <a className="nav-link">Resources</a>
+            </Link>
             <Button onClick={() => scrollToSection("contact")} className="bg-primary text-white hover:bg-accent transition-colors">
               Contact
             </Button>
@@ -125,6 +128,11 @@ export default function Header() {
             <div className="py-2"><NavLink to="#services" label="Services" /></div>
             <div className="py-2"><NavLink to="#about" label="About Me" /></div>
             <div className="py-2"><NavLink to="#certifications" label="Certifications" /></div>
+            <div className="py-2">
+              <Link href="/blog">
+                <a className="nav-link">Resources</a>
+              </Link>
+            </div>
             <Button 
               onClick={() => scrollToSection("contact")} 
               className="mt-2 bg-primary text-white hover:bg-accent transition-colors"

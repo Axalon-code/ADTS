@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <rect width="800" height="400" fill="#0a2136" />
+  
+  <!-- Background Grid -->
+  <g stroke="#1a3146" stroke-width="1">
+    <defs>
+      <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+        <path d="M 50 0 L 0 0 0 50" fill="none" />
+      </pattern>
+    </defs>
+    <rect width="800" height="400" fill="url(#grid)" />
+  </g>
+  
+  <!-- Central Server/Cloud -->
+  <g transform="translate(400, 190)">
+    <path d="M -80 -40 C -80 -60 -40 -80 0 -80 C 40 -80 80 -60 80 -40 C 80 -20 40 0 0 0 C -40 0 -80 -20 -80 -40 Z" 
+          fill="#0052FF" stroke="#ffffff" stroke-width="2" />
+    <path d="M -80 -20 C -80 0 -40 20 0 20 C 40 20 80 0 80 -20" 
+          stroke="#ffffff" stroke-width="2" fill="none" />
+    <text x="0" y="-40" font-family="Arial" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">Intune</text>
+  </g>
+  
+  <!-- Devices -->
+  <!-- Laptop 1 -->
+  <g transform="translate(160, 200)">
+    <rect x="-50" y="-30" width="100" height="70" rx="5" fill="#ffffff" />
+    <rect x="-45" y="-25" width="90" height="50" rx="2" fill="#0a2136" />
+    <rect x="-20" y="30" width="40" height="5" rx="2" fill="#ffffff" />
+  </g>
+  
+  <!-- Phone -->
+  <g transform="translate(600, 130)">
+    <rect x="-20" y="-40" width="40" height="80" rx="5" fill="#ffffff" />
+    <rect x="-15" y="-35" width="30" height="60" rx="2" fill="#0a2136" />
+    <circle cx="0" cy="35" r="5" fill="#ffffff" />
+  </g>
+  
+  <!-- Tablet -->
+  <g transform="translate(640, 250)">
+    <rect x="-35" y="-45" width="70" height="90" rx="5" fill="#ffffff" />
+    <rect x="-30" y="-40" width="60" height="80" rx="2" fill="#0a2136" />
+    <circle cx="0" cy="50" r="5" fill="#ffffff" />
+  </g>
+  
+  <!-- Desktop -->
+  <g transform="translate(200, 300)">
+    <rect x="-30" y="-25" width="60" height="50" rx="2" fill="#ffffff" />
+    <rect x="-25" y="-20" width="50" height="40" rx="1" fill="#0a2136" />
+    <rect x="-15" y="30" width="30" height="10" fill="#ffffff" />
+    <rect x="-10" y="25" width="20" height="5" fill="#ffffff" />
+  </g>
+  
+  <!-- Connection Lines -->
+  <g stroke="#0052FF" stroke-width="3">
+    <line x1="220" y1="200" x2="300" y2="190" stroke-dasharray="5,5" />
+    <line x1="400" y1="220" x2="200" y2="280" stroke-dasharray="5,5" />
+    <line x1="500" y1="180" x2="570" y2="130" stroke-dasharray="5,5" />
+    <line x1="490" y1="200" x2="590" y2="240" stroke-dasharray="5,5" />
+  </g>
+  
+  <!-- Policy Icons -->
+  <g transform="translate(310, 120)">
+    <circle cx="0" cy="0" r="30" fill="#ffffff" />
+    <text x="0" y="8" font-family="Arial" font-size="30" font-weight="bold" fill="#0052FF" text-anchor="middle">✓</text>
+    <text x="0" y="50" font-family="Arial" font-size="14" fill="#ffffff" text-anchor="middle">Compliance</text>
+  </g>
+  
+  <g transform="translate(490, 120)">
+    <circle cx="0" cy="0" r="30" fill="#ffffff" />
+    <rect x="-15" y="-15" width="30" height="30" rx="5" fill="#0052FF" />
+    <text x="0" y="50" font-family="Arial" font-size="14" fill="#ffffff" text-anchor="middle">Apps</text>
+  </g>
+  
+  <g transform="translate(490, 275)">
+    <circle cx="0" cy="0" r="30" fill="#ffffff" />
+    <path d="M -10 -10 L 10 -10 L 10 10 L -10 10 Z" stroke="#0052FF" stroke-width="4" fill="none" />
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="#0052FF" stroke-width="4" />
+    <text x="0" y="50" font-family="Arial" font-size="14" fill="#ffffff" text-anchor="middle">Config</text>
+  </g>
+  
+  <g transform="translate(310, 275)">
+    <circle cx="0" cy="0" r="30" fill="#ffffff" />
+    <path d="M 0 -15 L 15 0 L 0 15 L -15 0 Z" fill="#0052FF" />
+    <text x="0" y="50" font-family="Arial" font-size="14" fill="#ffffff" text-anchor="middle">Protection</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="70" font-family="Arial" font-size="36" font-weight="bold" fill="#ffffff" text-anchor="middle">Microsoft Intune</text>
+  <text x="400" y="110" font-family="Arial" font-size="20" fill="#d0d0d0" text-anchor="middle">Secure Device Management</text>
+</svg>
