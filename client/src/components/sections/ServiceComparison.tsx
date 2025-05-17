@@ -269,9 +269,25 @@ export default function ServiceComparison() {
     
     setAnimating(true);
     
+    // Create announcement for screen readers
+    const categoryNames = {
+      azure: "Azure Cloud",
+      identity: "Identity and Access",
+      m365: "Microsoft 365",
+      automation: "Process Automation"
+    };
+    
+    // Update announcement for screen readers
+    const announcement = document.getElementById('category-change-announcement');
+    if (announcement) {
+      announcement.textContent = `Loading ${categoryNames[category]} service packages`;
+    }
+    
     // Start animation - slide out
     if (sliderRef.current) {
       sliderRef.current.classList.add('translate-x-full', 'opacity-0');
+      // Add aria attributes for screen readers
+      sliderRef.current.setAttribute('aria-busy', 'true');
     }
     
     // Change category after slide out animation
@@ -287,14 +303,24 @@ export default function ServiceComparison() {
       setTimeout(() => {
         if (sliderRef.current) {
           sliderRef.current.classList.remove('opacity-0');
+          // Update aria attributes when complete
+          sliderRef.current.setAttribute('aria-busy', 'false');
         }
         setAnimating(false);
+        
+        // Update announcement when animation completes
+        const announcementComplete = document.getElementById('category-change-announcement');
+        if (announcementComplete) {
+          announcementComplete.textContent = `Finished loading ${categoryNames[category]} service packages`;
+        }
       }, 50);
     }, 300);
   };
 
   return (
     <section id="service-comparison" className="py-16 bg-slate-50 dark:bg-gray-900">
+      {/* Screen reader announcement area */}
+      <div aria-live="polite" className="sr-only" id="category-change-announcement"></div>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="font-bold text-3xl md:text-4xl mb-4">Service Packages</h2>
@@ -364,7 +390,17 @@ export default function ServiceComparison() {
           <div 
             ref={sliderRef}
             className="grid grid-cols-1 md:grid-cols-3 gap-8 transition-all duration-300 ease-in-out"
+            role="tabpanel"
+            id={`panel-${activeCategory}`}
+            aria-labelledby={`tab-${activeCategory}`}
+            aria-live="polite"
           >
+            <div className="sr-only" aria-live="assertive">
+              Now displaying {activeCategory === "azure" ? "Azure Cloud" : 
+                activeCategory === "identity" ? "Identity and Access" : 
+                activeCategory === "m365" ? "Microsoft 365" : 
+                "Process Automation"} service packages
+            </div>
             {activePlans.map((plan) => (
               <Card 
                 key={plan.id} 
