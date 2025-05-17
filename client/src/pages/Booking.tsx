@@ -72,13 +72,13 @@ export default function BookingPage() {
   
   // Fetch services by category
   const { data: services = [], isLoading: servicesLoading } = useQuery<Service[]>({
-    queryKey: ['/api/services/category', initialServiceCategory],
+    queryKey: [`/api/services/category/${initialServiceCategory}`],
     enabled: !!initialServiceCategory
   });
   
   // Fetch available time slots for the selected date and service
   const { data: availableSlots = [], isLoading: slotsLoading } = useQuery<TimeSlot[]>({
-    queryKey: ['/api/available-slots', selectedDate?.toISOString().split('T')[0], selectedService],
+    queryKey: [`/api/available-slots?date=${selectedDate?.toISOString().split('T')[0]}&serviceId=${selectedService}`],
     enabled: !!selectedDate && !!selectedService
   });
   

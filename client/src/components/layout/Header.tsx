@@ -75,7 +75,7 @@ export default function Header() {
   };
 
   return (
-    <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200`}>
+    <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-blue-500`}>
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Link href="/">
