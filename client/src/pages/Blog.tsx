@@ -1,33 +1,45 @@
 import { useQuery } from "@tanstack/react-query";
-import { BlogPost } from "@shared/schema";
 import { Helmet } from "react-helmet";
-import { useParams } from "wouter";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { Link } from "wouter";
 
+// Define the blog post type based on our schema
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  tags: string[];
+  publishedAt: string;
+  updatedAt?: string;
+  featured: boolean;
+  author: string;
+  imageUrl?: string;
+}
+
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   
   // Fetch all blog posts
-  const { data: allPosts, isLoading } = useQuery({
+  const { data: allPosts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"],
   });
   
   // Filter posts by category if a category is selected
   const filteredPosts = selectedCategory
-    ? allPosts?.filter((post: BlogPost) => post.category === selectedCategory)
+    ? allPosts.filter(post => post.category === selectedCategory)
     : allPosts;
   
   // Get unique categories from all posts
-  const categories = allPosts
-    ? [...new Set(allPosts.map((post: BlogPost) => post.category))]
-    : [];
+  const categories = [...new Set(allPosts.map(post => post.category))];
 
   return (
     <>
@@ -99,9 +111,9 @@ export default function Blog() {
                     </Card>
                   ))}
                 </div>
-              ) : filteredPosts?.length > 0 ? (
+              ) : filteredPosts.length > 0 ? (
                 <div className="space-y-8">
-                  {filteredPosts.map((post: BlogPost) => (
+                  {filteredPosts.map((post) => (
                     <BlogPostCard key={post.id} post={post} />
                   ))}
                 </div>

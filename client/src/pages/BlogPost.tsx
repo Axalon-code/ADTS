@@ -7,10 +7,26 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 
+// Define the blog post type
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  tags: string[];
+  publishedAt: string;
+  updatedAt?: string;
+  featured: boolean;
+  author: string;
+  imageUrl?: string;
+}
+
 export default function BlogPost() {
   const { slug } = useParams();
   
-  const { data: post, isLoading, error } = useQuery({
+  const { data: post, isLoading, error } = useQuery<BlogPost>({
     queryKey: [`/api/blog/${slug}`],
   });
 
