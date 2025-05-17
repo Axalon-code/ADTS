@@ -18,26 +18,34 @@
   --border: 220 5.9% 90%;
   --input: 220 5.9% 90%;
 
-  --primary: 224 100% 50%;
+  /* Consistent blue colors */
+  --primary: 217 100% 50%; /* Microsoft Blue */
   --primary-foreground: 210 100% 99%;
 
   --secondary: 219 67% 18%;
   --secondary-foreground: 0 0% 98%;
 
-  --accent: 210 100% 60%;
+  --accent: 217 100% 50%; /* Same as primary for consistency */
   --accent-foreground: 0 0% 98%;
 
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 100% 99%;
 
-  --ring: 224 100% 50%;
+  --ring: 217 100% 50%;
   --radius: 0.5rem;
 
-  --chart-1: 224 100% 50%;
+  --chart-1: 217 100% 50%;
   --chart-2: 219 67% 18%;
-  --chart-3: 210 100% 60%;
+  --chart-3: 217 100% 60%;
   --chart-4: 0 0% 90%;
   --chart-5: 0 0% 70%;
+  
+  /* Service card colors for light mode */
+  --service-icon-color: 217 100% 50%;
+  --service-card-bg: 0 0% 100%;
+  --service-title-color: 220 14.3% 10.2%;
+  --service-link-color: 217 100% 50%;
+  --service-link-hover: 217 100% 40%;
 }
 
 .dark {
@@ -56,13 +64,14 @@
   --border: 224 71% 25%;
   --input: 224 71% 25%;
 
-  --primary: 224 100% 50%;
+  /* Consistent blue colors */
+  --primary: 217 100% 50%; /* Microsoft Blue */
   --primary-foreground: 210 100% 99%;
 
   --secondary: 225 57% 15%;
   --secondary-foreground: 0 0% 98%;
 
-  --accent: 210 100% 60%;
+  --accent: 217 100% 60%; /* Slightly brighter for dark mode */
   --accent-foreground: 0 0% 98%;
 
   --destructive: 0 62.8% 30.6%;
@@ -71,7 +80,13 @@
   --ring: 224 71% 40%;
   
   --header-bg: 220 47% 10%;
+  
+  /* Service card colors for dark mode */
+  --service-icon-color: 217 100% 60%;
   --service-card-bg: 222 47% 15%;
+  --service-title-color: 0 0% 100%;
+  --service-link-color: 217 100% 60%;
+  --service-link-hover: 217 100% 70%;
 }
 
 @layer base {
