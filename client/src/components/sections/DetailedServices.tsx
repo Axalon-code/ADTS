@@ -8,20 +8,20 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ id, icon, title, items }: ServiceCardProps) => (
-  <Card id={id} className="bg-white dark:bg-[hsl(var(--service-card-bg))] shadow-md">
+  <Card id={id} className="bg-[hsl(var(--service-card-bg))] shadow-md">
     <CardContent className="p-8">
       <div className="flex items-center mb-6">
-        <div className="bg-primary bg-opacity-10 dark:bg-blue-500 dark:bg-opacity-20 p-4 rounded-md mr-4">
-          <i className={`${icon} text-primary dark:text-blue-500 text-2xl`}></i>
+        <div className="bg-[hsl(var(--service-icon-color))] bg-opacity-10 p-4 rounded-md mr-4">
+          <i className={`${icon} text-[hsl(var(--service-icon-color))] text-2xl`}></i>
         </div>
-        <h3 className="font-inter font-semibold text-2xl dark:text-white">{title}</h3>
+        <h3 className="font-inter font-semibold text-2xl text-[hsl(var(--service-title-color))]">{title}</h3>
       </div>
       
       <ul className="space-y-4 mb-6">
         {items.map((item, index) => (
           <li key={index} className="flex items-start">
-            <i className="fas fa-check text-primary dark:text-blue-500 mt-1 mr-3"></i>
-            <span className="dark:text-gray-300">{item}</span>
+            <i className="fas fa-check text-[hsl(var(--service-icon-color))] mt-1 mr-3"></i>
+            <span className="text-foreground">{item}</span>
           </li>
         ))}
       </ul>
@@ -114,10 +114,10 @@ export default function DetailedServices() {
         </div>
         
         <div className="mt-16">
-          <Card className="bg-white dark:bg-[hsl(var(--service-card-bg))] shadow-md">
+          <Card className="bg-[hsl(var(--service-card-bg))] shadow-md">
             <CardContent className="p-8">
-              <h3 className="font-inter font-semibold text-2xl mb-6 dark:text-white">Services Not Offered</h3>
-              <p className="text-muted-foreground dark:text-gray-300 mb-6">
+              <h3 className="font-inter font-semibold text-2xl mb-6 text-[hsl(var(--service-title-color))]">Services Not Offered</h3>
+              <p className="text-muted-foreground mb-6">
                 To ensure I deliver the highest quality service, I focus on my core expertise. The following services are outside my current consultation offerings:
               </p>
               
@@ -126,7 +126,7 @@ export default function DetailedServices() {
                   {servicesNotOffered.slice(0, 3).map((item, index) => (
                     <li key={index} className="flex items-start">
                       <i className="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
-                      <span className="dark:text-gray-300">{item}</span>
+                      <span className="text-foreground">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -135,7 +135,7 @@ export default function DetailedServices() {
                   {servicesNotOffered.slice(3).map((item, index) => (
                     <li key={index} className="flex items-start">
                       <i className="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
-                      <span className="dark:text-gray-300">{item}</span>
+                      <span className="text-foreground">{item}</span>
                     </li>
                   ))}
                 </ul>
