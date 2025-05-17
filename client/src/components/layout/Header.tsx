@@ -1,0 +1,138 @@
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [location] = useLocation();
+  const isMobile = useIsMobile();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Check if we're at the top of the page
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (mobileMenuOpen && !target.closest("#mobile-menu") && !target.closest("#mobile-menu-button")) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [mobileMenuOpen]);
+
+  // Close mobile menu when navigating
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location]);
+
+  // Handle smooth scrolling for hash links
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setMobileMenuOpen(false);
+  };
+
+  const NavLink = ({ to, label }: { to: string; label: string }) => {
+    const isHash = to.startsWith("#");
+    const currentPath = location === "/" ? "#home" : location;
+    const isActive = isHash ? currentPath === to : location === to;
+
+    if (isHash) {
+      return (
+        <button 
+          onClick={() => scrollToSection(to.substring(1))} 
+          className={`nav-link ${isActive ? "active" : ""}`}
+        >
+          {label}
+        </button>
+      );
+    }
+
+    return (
+      <Link href={to}>
+        <a className={`nav-link ${isActive ? "active" : ""}`}>{label}</a>
+      </Link>
+    );
+  };
+
+  return (
+    <header className={`sticky top-0 z-50 bg-white ${isScrolled ? 'shadow-md' : ''}`}>
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex justify-between items-center">
+          <Link href="/">
+            <a className="flex items-center">
+              <div className="w-40 md:w-52">
+                <img 
+                  src="/attached_assets/Alex logo-01.png" 
+                  alt="ADTS - Tailoring Your IT Requirements" 
+                  className="w-full h-auto"
+                />
+              </div>
+            </a>
+          </Link>
+          
+          {/* Mobile menu button */}
+          <div className="block md:hidden">
+            <Button 
+              id="mobile-menu-button" 
+              variant="ghost" 
+              size="sm" 
+              onClick={toggleMobileMenu} 
+              className="text-primary"
+            >
+              <i className={`fas ${mobileMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
+            </Button>
+          </div>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <NavLink to="#home" label="Home" />
+            <NavLink to="#services" label="Services" />
+            <NavLink to="#about" label="About Me" />
+            <NavLink to="#certifications" label="Certifications" />
+            <Button onClick={() => scrollToSection("contact")} className="bg-primary text-white hover:bg-accent transition-colors">
+              Contact
+            </Button>
+          </nav>
+        </div>
+        
+        {/* Mobile Navigation */}
+        {isMobile && (
+          <nav 
+            id="mobile-menu" 
+            className={`${mobileMenuOpen ? 'flex' : 'hidden'} flex-col mt-4 border-t pt-4 md:hidden`}
+          >
+            <NavLink to="#home" label="Home" />
+            <div className="py-2"><NavLink to="#services" label="Services" /></div>
+            <div className="py-2"><NavLink to="#about" label="About Me" /></div>
+            <div className="py-2"><NavLink to="#certifications" label="Certifications" /></div>
+            <Button 
+              onClick={() => scrollToSection("contact")} 
+              className="mt-2 bg-primary text-white hover:bg-accent transition-colors"
+            >
+              Contact
+            </Button>
+          </nav>
+        )}
+      </div>
+    </header>
+  );
+}
