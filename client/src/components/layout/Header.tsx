@@ -102,9 +102,9 @@ export default function Header() {
             <Link href="/">
               <a className="flex items-center">
                 <div className="w-48 md:w-64">
-                  <div className="text-primary dark:text-blue-500 font-bold text-3xl md:text-4xl">
-                    ADTS
-                    <div className="text-sm md:text-base font-normal mt-1">Tailoring Your IT Requirements</div>
+                  <div className="font-bold text-3xl md:text-4xl">
+                    <span className="bg-gradient-to-r from-blue-700 via-blue-500 to-emerald-400 text-transparent bg-clip-text dark:bg-gradient-to-r dark:from-blue-500 dark:via-blue-400 dark:to-emerald-300">ADTS</span>
+                    <div className="text-sm md:text-base font-normal mt-1 text-gray-700 dark:text-gray-300">Tailoring Your IT Requirements</div>
                   </div>
                 </div>
               </a>
