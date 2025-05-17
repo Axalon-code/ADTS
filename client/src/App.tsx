@@ -3,6 +3,7 @@ import Home from "@/pages/Home";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Booking from "@/pages/Booking";
+import CaseStudy from "@/pages/CaseStudy";
 import NotFound from "@/pages/not-found";
 import ScrollToTop from "@/components/ScrollToTop";
 
