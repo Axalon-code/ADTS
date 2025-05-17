@@ -358,8 +358,7 @@ export default function ServiceComparison() {
                   <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
                   <CardDescription className="mt-1 min-h-12">{plan.description}</CardDescription>
                   <div className="mt-4">
-                    <span className="text-3xl font-bold text-primary">{plan.price}</span>
-                    <span className="text-muted-foreground ml-1">{plan.billingPeriod}</span>
+                    <span className="text-lg text-muted-foreground">Contact for pricing</span>
                   </div>
                 </CardHeader>
 
