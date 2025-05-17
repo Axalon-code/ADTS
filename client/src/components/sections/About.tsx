@@ -10,23 +10,23 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20 bg-white dark:bg-[hsl(222,47%,11%)]">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
-            <h2 className="font-inter font-bold text-3xl md:text-4xl mb-6">About Me</h2>
-            <p className="text-lg text-muted-foreground mb-6">
+            <h2 className="font-inter font-bold text-3xl md:text-4xl mb-6 dark:text-white">About Me</h2>
+            <p className="text-lg text-muted-foreground dark:text-gray-300 mb-6">
               I'm an independent IT consultant specializing in Microsoft technologies with extensive experience in designing, implementing, and optimizing cloud and hybrid solutions.
             </p>
             
-            <Card className="mb-8 border-0 shadow-none">
+            <Card className="mb-8 border-0 shadow-none dark:bg-transparent">
               <CardContent className="p-0">
-                <h3 className="font-inter font-semibold text-xl mb-4">My Expertise</h3>
+                <h3 className="font-inter font-semibold text-xl mb-4 dark:text-white">My Expertise</h3>
                 <ul className="space-y-3">
                   {expertiseList.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <i className="fas fa-check-circle text-primary mt-1 mr-3"></i>
-                      <span>{item}</span>
+                      <i className="fas fa-check-circle text-primary dark:text-blue-500 mt-1 mr-3"></i>
+                      <span className="dark:text-gray-300">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -37,7 +37,7 @@ export default function About() {
               href="https://www.linkedin.com/in/alexdevlyashevskiy/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center text-primary font-medium hover:text-accent transition-colors"
+              className="inline-flex items-center text-primary dark:text-blue-500 font-medium hover:text-accent dark:hover:text-blue-400 transition-colors"
             >
               <i className="fab fa-linkedin mr-2"></i>
               Connect on LinkedIn
