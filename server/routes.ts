@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { contactSchema } from "@shared/schema";
+import { contactSchema, blogPostSchema } from "@shared/schema";
 import nodemailer from "nodemailer";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -82,6 +82,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
     } catch (error) {
       console.error("Error processing contact form:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // API routes for blog posts
+  app.get("/api/blog", async (req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      return res.status(200).json(posts);
+    } catch (error) {
+      console.error("Error fetching blog posts:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/blog/featured", async (req, res) => {
+    try {
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 3;
+      const posts = await storage.getFeaturedBlogPosts(limit);
+      return res.status(200).json(posts);
+    } catch (error) {
+      console.error("Error fetching featured blog posts:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/blog/category/:category", async (req, res) => {
+    try {
+      const { category } = req.params;
+      const posts = await storage.getBlogPostsByCategory(category);
+      return res.status(200).json(posts);
+    } catch (error) {
+      console.error(`Error fetching blog posts by category ${req.params.category}:`, error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/blog/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const post = await storage.getBlogPostBySlug(slug);
+      
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
+      return res.status(200).json(post);
+    } catch (error) {
+      console.error(`Error fetching blog post with slug ${req.params.slug}:`, error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Admin-only endpoint to create a blog post (would need authentication in production)
+  app.post("/api/blog", async (req, res) => {
+    try {
+      // Validate request body using the schema
+      const result = blogPostSchema.safeParse(req.body);
+      
+      if (!result.success) {
+        return res.status(400).json({ 
+          message: "Validation error", 
+          errors: result.error.format() 
+        });
+      }
+      
+      const postData = result.data;
+      
+      // Store the blog post in the database
+      const savedPost = await storage.createBlogPost(postData);
+      
+      return res.status(201).json({ 
+        message: "Blog post created successfully",
+        id: savedPost.id,
+        slug: savedPost.slug
+      });
+    } catch (error) {
+      console.error("Error creating blog post:", error);
       return res.status(500).json({ message: "Internal server error" });
     }
   });
