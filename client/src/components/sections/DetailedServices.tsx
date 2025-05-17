@@ -136,7 +136,7 @@ export default function DetailedServices() {
     "Palo Alto and Checkpoint firewall configuration",
     "Cisco or Juniper routers and switches",
     "Recovery from compromised ransomware attacks",
-    "EOL non-supported hardware, software, and OS fixes"
+    "EOL Hardware, Software and Operating Systems"
   ];
 
   return (
