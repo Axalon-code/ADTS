@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ModeToggle } from "@/components/ModeToggle";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -81,7 +82,7 @@ export default function Header() {
             <a className="flex items-center">
               <div className="w-40 md:w-52">
                 <img 
-                  src="/@assets/Alex logo-01.png" 
+                  src="/logo.png" 
                   alt="ADTS - Tailoring Your IT Requirements" 
                   className="w-full h-auto"
                 />
@@ -111,6 +112,7 @@ export default function Header() {
             <Button onClick={() => scrollToSection("contact")} className="bg-primary text-white hover:bg-accent transition-colors">
               Contact
             </Button>
+            <ModeToggle />
           </nav>
         </div>
         
@@ -130,6 +132,10 @@ export default function Header() {
             >
               Contact
             </Button>
+            <div className="mt-4 flex items-center">
+              <span className="mr-2 text-sm">Toggle Theme</span>
+              <ModeToggle />
+            </div>
           </nav>
         )}
       </div>
