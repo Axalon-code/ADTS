@@ -46,6 +46,13 @@
   --service-title-color: 220 14.3% 10.2%;
   --service-link-color: 217 100% 50%;
   --service-link-hover: 217 100% 40%;
+  
+  /* Contact card colors for light mode */
+  --card-bg: 0 0% 100%;
+  --contact-icon-bg: 217 100% 50% / 0.1;
+  --contact-icon-color: 217 100% 50%;
+  --contact-link-color: 217 100% 50%;
+  --contact-link-hover-color: 217 100% 40%;
 }
 
 .dark {
@@ -87,6 +94,13 @@
   --service-title-color: 0 0% 100%;
   --service-link-color: 217 100% 60%;
   --service-link-hover: 217 100% 70%;
+  
+  /* Contact card colors for dark mode */
+  --card-bg: 222 47% 15%;
+  --contact-icon-bg: 217 100% 60% / 0.2;
+  --contact-icon-color: 217 100% 60%;
+  --contact-link-color: 217 100% 60%;
+  --contact-link-hover-color: 217 100% 70%;
 }
 
 @layer base {
