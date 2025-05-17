@@ -2,17 +2,17 @@ import { Card, CardContent } from "@/components/ui/card";
 
 interface ServiceCardProps {
   id: string;
-  icon: string;
+  iconSrc: string;
   title: string;
   items: string[];
 }
 
-const ServiceCard = ({ id, icon, title, items }: ServiceCardProps) => (
+const ServiceCard = ({ id, iconSrc, title, items }: ServiceCardProps) => (
   <Card id={id} className="bg-[hsl(var(--service-card-bg))] shadow-md">
     <CardContent className="p-8">
       <div className="flex items-center mb-6">
-        <div className="bg-[hsl(var(--service-icon-color))] bg-opacity-10 p-4 rounded-md mr-4">
-          <i className={`${icon} text-[hsl(var(--service-icon-color))] text-2xl`}></i>
+        <div className="p-2 rounded-md mr-4">
+          <img src={iconSrc} alt={title} className="w-12 h-12" />
         </div>
         <h3 className="font-inter font-semibold text-2xl text-[hsl(var(--service-title-color))]">{title}</h3>
       </div>
@@ -33,7 +33,7 @@ export default function DetailedServices() {
   const services = [
     {
       id: "azure-services",
-      icon: "fas fa-cloud",
+      iconSrc: "/service-icons/azure-cloud.svg",
       title: "Microsoft Azure Solutions",
       items: [
         "Full cloud and hybrid on-premises Azure tenancy configuration",
@@ -45,7 +45,7 @@ export default function DetailedServices() {
     },
     {
       id: "identity-services",
-      icon: "fas fa-shield-alt",
+      iconSrc: "/service-icons/shield.svg",
       title: "Identity & Access Management",
       items: [
         "Microsoft Entra ID (Azure AD) implementation and management",
@@ -58,7 +58,7 @@ export default function DetailedServices() {
     },
     {
       id: "m365-services",
-      icon: "fas fa-laptop",
+      iconSrc: "/service-icons/laptop.svg",
       title: "Microsoft 365 Administration",
       items: [
         "Office 365 administration and configuration",
@@ -71,7 +71,7 @@ export default function DetailedServices() {
     },
     {
       id: "automation-services",
-      icon: "fas fa-robot",
+      iconSrc: "/service-icons/robot.svg",
       title: "IT Automation & Support",
       items: [
         "Robotic Process Automation (RPA) development",
@@ -106,7 +106,7 @@ export default function DetailedServices() {
             <ServiceCard 
               key={index}
               id={service.id}
-              icon={service.icon}
+              iconSrc={service.iconSrc}
               title={service.title}
               items={service.items}
             />

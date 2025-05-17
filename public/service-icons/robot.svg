@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <rect x="25" y="25" width="30" height="35" rx="3" fill="#0052FF"/>
+  <rect x="28" y="30" width="24" height="20" rx="2" fill="#0a2136"/>
+  <circle cx="35" cy="40" r="4" fill="#0052FF"/>
+  <circle cx="45" cy="40" r="4" fill="#0052FF"/>
+  <rect x="33" y="50" width="14" height="3" rx="1" fill="#0a2136"/>
+  
+  <!-- Antenna -->
+  <rect x="39" y="15" width="2" height="10" fill="#0052FF"/>
+  <circle cx="40" cy="12" r="4" fill="#0052FF"/>
+  
+  <!-- Arms -->
+  <rect x="15" y="35" width="10" height="4" rx="2" fill="#0052FF"/>
+  <rect x="55" y="35" width="10" height="4" rx="2" fill="#0052FF"/>
+</svg>
