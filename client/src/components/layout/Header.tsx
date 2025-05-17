@@ -66,6 +66,8 @@ export default function Header() {
         <button 
           onClick={() => scrollToSection(to.substring(1))} 
           className={`nav-link border-b-2 ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all`}
+          role="menuitem"
+          aria-current={isActive ? "page" : undefined}
         >
           {label}
         </button>
@@ -74,13 +76,27 @@ export default function Header() {
 
     return (
       <Link href={to}>
-        <a className={`nav-link border-b-2 ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all`}>{label}</a>
+        <a 
+          className={`nav-link border-b-2 ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all`}
+          role="menuitem"
+          aria-current={isActive ? "page" : undefined}
+        >
+          {label}
+        </a>
       </Link>
     );
   };
 
   return (
-    <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-blue-500`}>
+    <>
+      {/* Skip to main content link for screen readers and keyboard users */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:p-4 focus:bg-white dark:focus:bg-gray-900 focus:text-primary dark:focus:text-blue-400 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-blue-500"
+      >
+        Skip to main content
+      </a>
+      <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-blue-500`}>
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Link href="/">
@@ -105,16 +121,20 @@ export default function Header() {
               ref={buttonRef}
               variant="ghost" 
               size="sm" 
-              onClick={toggleMenu} 
+              onClick={toggleMenu}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu" 
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
               className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-blue-500 rounded-md p-1.5"
             >
+              <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
               {menuOpen ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="3" y1="12" x2="21" y2="12"></line>
                   <line x1="3" y1="6" x2="21" y2="6"></line>
                   <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -127,8 +147,11 @@ export default function Header() {
         {/* Dropdown Navigation Menu - Only visible when menuOpen is true */}
         {menuOpen && (
           <div 
+            id="mobile-menu"
             ref={menuRef}
             className="absolute right-4 mt-2 w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-blue-500 py-3 px-4 z-50"
+            role="menu"
+            aria-labelledby="menu-button"
           >
             <nav className="flex flex-col space-y-3">
               <NavLink to="#home" label="Home" />

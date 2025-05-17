@@ -34,7 +34,8 @@ export function ModeToggle() {
         variant="outline" 
         size="icon" 
         onClick={toggleTheme}
-        aria-label="Toggle theme"
+        aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        aria-live="polite"
         disabled={isAnimating}
         className={`relative w-10 h-10 rounded-md overflow-hidden transition-all duration-500 ${
           theme === "dark" 
@@ -42,8 +43,14 @@ export function ModeToggle() {
             : "bg-blue-100 border-blue-200 hover:bg-blue-200"
         }`}
       >
+        {/* Hidden text for screen readers */}
+        <span className="sr-only">
+          {theme === "dark" ? "Currently in dark mode" : "Currently in light mode"}
+        </span>
+        
         {/* Background circle that scales during transition */}
         <span 
+          aria-hidden="true"
           className={`absolute inset-0 rounded-full transition-all duration-500 ${
             theme === "dark" 
               ? isAnimating ? "scale-0 bg-blue-200" : "scale-0 bg-blue-200" 
@@ -53,6 +60,7 @@ export function ModeToggle() {
         
         {/* Sun icon */}
         <span 
+          aria-hidden="true"
           className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${
             theme === "dark"
               ? isAnimating ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-0"
@@ -64,6 +72,7 @@ export function ModeToggle() {
         
         {/* Moon icon */}
         <span 
+          aria-hidden="true"
           className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${
             theme === "dark"
               ? isAnimating ? "opacity-0 -rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
