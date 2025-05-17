@@ -118,6 +118,206 @@ export class DatabaseStorage implements IStorage {
       .returning();
     return result[0];
   }
+
+  // Service booking methods
+  async getServices(): Promise<Service[]> {
+    return db.select().from(services).where(eq(services.isActive, true));
+  }
+
+  async getServicesByCategory(category: string): Promise<Service[]> {
+    return db.select().from(services).where(
+      and(
+        eq(services.isActive, true),
+        eq(services.category, category)
+      )
+    );
+  }
+
+  async getServiceById(id: number): Promise<Service | undefined> {
+    const result = await db.select().from(services).where(eq(services.id, id));
+    return result.length > 0 ? result[0] : undefined;
+  }
+
+  async createService(service: InsertService): Promise<Service> {
+    const result = await db
+      .insert(services)
+      .values(service)
+      .returning();
+    return result[0];
+  }
+
+  async updateService(id: number, service: Partial<InsertService>): Promise<Service> {
+    const result = await db
+      .update(services)
+      .set(service)
+      .where(eq(services.id, id))
+      .returning();
+    return result[0];
+  }
+
+  // Availability methods
+  async getAvailabilitySlots(): Promise<AvailabilitySlot[]> {
+    return db.select().from(availabilitySlots);
+  }
+
+  async createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot> {
+    const result = await db
+      .insert(availabilitySlots)
+      .values(slot)
+      .returning();
+    return result[0];
+  }
+
+  async deleteAvailabilitySlot(id: number): Promise<void> {
+    await db
+      .delete(availabilitySlots)
+      .where(eq(availabilitySlots.id, id));
+  }
+
+  // Booking methods
+  async getBookings(): Promise<Booking[]> {
+    return db.select().from(bookings);
+  }
+
+  async getBookingsByDate(date: Date): Promise<Booking[]> {
+    const dateStr = date.toISOString().split('T')[0];
+    return db.select().from(bookings).where(eq(bookings.date, dateStr));
+  }
+
+  async getBookingById(id: number): Promise<Booking | undefined> {
+    const result = await db.select().from(bookings).where(eq(bookings.id, id));
+    return result.length > 0 ? result[0] : undefined;
+  }
+
+  async createBooking(booking: InsertBooking): Promise<Booking> {
+    const result = await db
+      .insert(bookings)
+      .values(booking)
+      .returning();
+    return result[0];
+  }
+
+  async updateBookingStatus(id: number, status: string): Promise<Booking> {
+    const result = await db
+      .update(bookings)
+      .set({ status, updatedAt: new Date() })
+      .where(eq(bookings.id, id))
+      .returning();
+    return result[0];
+  }
+
+  // Blocked dates methods
+  async getBlockedDates(): Promise<BlockedDate[]> {
+    return db.select().from(blockedDates);
+  }
+
+  async createBlockedDate(blockedDate: InsertBlockedDate): Promise<BlockedDate> {
+    const result = await db
+      .insert(blockedDates)
+      .values(blockedDate)
+      .returning();
+    return result[0];
+  }
+
+  async deleteBlockedDate(id: number): Promise<void> {
+    await db
+      .delete(blockedDates)
+      .where(eq(blockedDates.id, id));
+  }
+
+  // Availability checking
+  async getAvailableTimeSlots(date: Date, serviceId: number): Promise<{ startTime: string, endTime: string }[]> {
+    // Get the requested service to determine duration
+    const service = await this.getServiceById(serviceId);
+    if (!service) {
+      throw new Error(`Service with ID ${serviceId} not found`);
+    }
+
+    const serviceDuration = service.duration; // in minutes
+    const dateStr = date.toISOString().split('T')[0];
+    const dayOfWeek = date.getDay(); // 0-6, Sunday-Saturday
+
+    // Get availability slots for this day of the week
+    const availSlots = await db.select().from(availabilitySlots).where(eq(availabilitySlots.dayOfWeek, dayOfWeek));
+    
+    // Get existing bookings for this date
+    const existingBookings = await this.getBookingsByDate(date);
+    
+    // Get blocked dates that include this date
+    const blockedDatesForDay = await db.select().from(blockedDates).where(
+      and(
+        lte(blockedDates.startDate, dateStr),
+        gte(blockedDates.endDate, dateStr)
+      )
+    );
+
+    // If the date is fully blocked, return no available slots
+    if (blockedDatesForDay.length > 0) {
+      return [];
+    }
+
+    // Calculate available time slots
+    let availableTimeSlots: { startTime: string, endTime: string }[] = [];
+
+    for (const slot of availSlots) {
+      // Convert slot times to minutes since midnight for easier calculation
+      const slotStartMinutes = convertTimeToMinutes(slot.startTime);
+      const slotEndMinutes = convertTimeToMinutes(slot.endTime);
+      
+      // Create possible slots in the availability window
+      let currentStartMinutes = slotStartMinutes;
+      
+      while (currentStartMinutes + serviceDuration <= slotEndMinutes) {
+        const currentEndMinutes = currentStartMinutes + serviceDuration;
+        
+        // Check if this potential slot overlaps with existing bookings
+        const isOverlapping = existingBookings.some(booking => {
+          const bookingStartMinutes = convertTimeToMinutes(booking.startTime);
+          const bookingEndMinutes = convertTimeToMinutes(booking.endTime);
+          
+          return (
+            (currentStartMinutes < bookingEndMinutes && currentEndMinutes > bookingStartMinutes) ||
+            (bookingStartMinutes < currentEndMinutes && bookingEndMinutes > currentStartMinutes)
+          );
+        });
+        
+        if (!isOverlapping) {
+          availableTimeSlots.push({
+            startTime: convertMinutesToTime(currentStartMinutes),
+            endTime: convertMinutesToTime(currentEndMinutes)
+          });
+        }
+        
+        // Move to the next possible slot (30-minute increments)
+        currentStartMinutes += 30;
+      }
+    }
+    
+    return availableTimeSlots;
+  }
+}
+
+// Helper functions for time calculations
+function convertTimeToMinutes(time: string | Date): number {
+  let hours, minutes;
+  
+  if (time instanceof Date) {
+    hours = time.getHours();
+    minutes = time.getMinutes();
+  } else {
+    // Handle PostgreSQL time format "HH:MM:SS"
+    const parts = time.split(':');
+    hours = parseInt(parts[0], 10);
+    minutes = parseInt(parts[1], 10);
+  }
+  
+  return hours * 60 + minutes;
+}
+
+function convertMinutesToTime(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:00`;
 }
 
 // Export the database storage instance
