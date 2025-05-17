@@ -79,8 +79,17 @@
     @apply border-border;
   }
 
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
+  }
+
+  /* Apply transitions to all elements for smooth theme changes */
+  *, *::before, *::after {
+    @apply transition-colors duration-300;
   }
 }
 
