@@ -81,11 +81,10 @@ export default function Header() {
           <Link href="/">
             <a className="flex items-center">
               <div className="w-40 md:w-52">
-                <img 
-                  src="/adts-logo.svg" 
-                  alt="ADTS - Tailoring Your IT Requirements" 
-                  className="w-full h-auto"
-                />
+                <div className="text-primary dark:text-blue-500 font-bold text-2xl md:text-3xl">
+                  ADTS
+                  <div className="text-sm font-normal">Tailoring Your IT Requirements</div>
+                </div>
               </div>
             </a>
           </Link>

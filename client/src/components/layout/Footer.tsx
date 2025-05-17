@@ -15,11 +15,10 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <img 
-              src="/adts-logo.svg" 
-              alt="ADTS - Tailoring Your IT Requirements" 
-              className="w-40 h-auto"
-            />
+            <div className="text-white font-bold text-2xl mb-2">
+              ADTS
+              <div className="text-sm font-normal">Tailoring Your IT Requirements</div>
+            </div>
             <p className="mb-6">Independent IT consultancy specializing in Microsoft technologies, providing tailored solutions for your business needs.</p>
             <div className="flex space-x-4">
               <a href="https://www.linkedin.com/in/alexdevlyashevskiy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
