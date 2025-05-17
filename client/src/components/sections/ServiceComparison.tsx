@@ -352,13 +352,7 @@ export default function ServiceComparison() {
                   plan.mostPopular ? 'border-primary shadow-lg' : 'border-gray-200 dark:border-gray-700'
                 }`}
               >
-                {plan.mostPopular && (
-                  <div className="absolute top-0 right-0">
-                    <div className="bg-primary text-white text-xs font-bold px-3 py-1 transform rotate-45 translate-x-4 -translate-y-1">
-                      POPULAR
-                    </div>
-                  </div>
-                )}
+
 
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
@@ -382,12 +376,7 @@ export default function ServiceComparison() {
 
                 <CardFooter>
                   <Button 
-                    className={`w-full ${
-                      plan.mostPopular 
-                        ? 'bg-primary text-white hover:bg-accent' 
-                        : 'bg-white text-primary border border-primary hover:bg-primary/10'
-                    }`}
-                    variant={plan.mostPopular ? "default" : "outline"}
+                    className="w-full bg-primary text-white hover:bg-accent"
                   >
                     Choose {plan.name}
                   </Button>
