@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { seedBlogPosts } from "./seed";
+import { seedBookingData } from "./seed-booking";
 
 const app = express();
 app.use(express.json());
@@ -70,5 +71,8 @@ app.use((req, res, next) => {
     
     // Seed blog posts for IT resources section
     await seedBlogPosts();
+    
+    // Seed booking data (services and availability)
+    await seedBookingData();
   });
 })();

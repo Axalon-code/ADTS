@@ -46,8 +46,9 @@ interface TimeSlot {
 }
 
 export default function BookingPage() {
-  const [searchParams] = useSearchParams();
-  const initialServiceCategory = searchParams.get("category") || "azure";
+  const [location] = useLocation();
+  const params = new URLSearchParams(location.split('?')[1] || '');
+  const initialServiceCategory = params.get("category") || "azure";
   const { toast } = useToast();
   
   // State for booking form
