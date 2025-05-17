@@ -20,8 +20,10 @@ export default function Home() {
       <main>
         <Hero />
         <ServiceHighlights />
-        <About />
         <DetailedServices />
+        <ServiceComparison />
+        <CaseStudies />
+        <About />
         <Certifications />
         <CallToAction />
         <Contact />
