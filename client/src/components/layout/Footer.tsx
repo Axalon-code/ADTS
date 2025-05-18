@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import AnimatedLogo from "@/components/AnimatedLogo";
+import FooterAnimatedLogo from "@/components/FooterAnimatedLogo";
 
 export default function Footer() {
   const scrollToSection = (id: string) => {
@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="mb-2">
-              <AnimatedLogo size="large" />
+              <FooterAnimatedLogo size="large" />
             </div>
             <p className="mb-6">Independent IT consultancy specializing in Microsoft technologies, providing tailored solutions for your business needs.</p>
             <div className="flex space-x-4">
