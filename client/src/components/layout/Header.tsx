@@ -206,6 +206,16 @@ export default function Header() {
                   Resources
                 </Button>
                 
+                <Button 
+                  onClick={() => {
+                    window.location.href = "/glossary";
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  IT Glossary
+                </Button>
+                
                 <Button
                   onClick={() => {
                     window.location.href = "/booking";
