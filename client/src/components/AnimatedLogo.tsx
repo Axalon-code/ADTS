@@ -81,6 +81,10 @@ export default function AnimatedLogo({
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
           className="power-logo relative top-1"
+          style={{
+            filter: `hue-rotate(${(gradientPosition - 50) * 3}deg)`,
+            transition: 'filter 0.3s ease'
+          }}
         >
           <defs>
             <linearGradient id="powerLogoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
