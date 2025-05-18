@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom gradient for icons */
+.gradient-text {
+  background: linear-gradient(to right, #0000BD, #00C3B9, #00FF86);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(to right, #0000BD, #00C3B9, #00FF86);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Hover effect for gradient icons */
+.gradient-text-hover:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
 :root {
   --background: 0 0% 97.5%;
   --foreground: 220 14.3% 10.2%;
@@ -41,7 +63,6 @@
   --chart-5: 0 0% 70%;
   
   /* Service card colors for light mode */
-  --service-icon-color: 220 100% 50%;
   --service-card-bg: 0 0% 100%;
   --service-title-color: 220 14.3% 10.2%;
   --service-link-color: 220 100% 50%;

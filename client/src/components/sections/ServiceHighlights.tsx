@@ -19,8 +19,8 @@ const ServiceCard = ({ icon, title, description, linkId }: ServiceCardProps) => 
   return (
     <Card className="bg-[hsl(var(--service-card-bg))] hover:shadow-lg transition-all duration-200">
       <CardContent className="p-8">
-        <div className="text-[hsl(var(--service-icon-color))] mb-4">
-          <i className={`${icon} text-5xl`}></i>
+        <div className="mb-4">
+          <i className={`${icon} text-5xl gradient-text gradient-text-hover`}></i>
         </div>
         <h3 className="font-inter font-semibold text-xl mb-3 text-[hsl(var(--service-title-color))]">{title}</h3>
         <p className="text-muted-foreground dark:text-gray-300 mb-6">{description}</p>
@@ -29,7 +29,7 @@ const ServiceCard = ({ icon, title, description, linkId }: ServiceCardProps) => 
           className="text-[hsl(var(--service-link-color))] font-medium hover:text-[hsl(var(--service-link-hover))] transition-colors inline-flex items-center"
         >
           Learn more
-          <i className="fas fa-arrow-right ml-2 text-sm"></i>
+          <i className="fas fa-arrow-right ml-2 text-sm gradient-text"></i>
         </button>
       </CardContent>
     </Card>
@@ -91,7 +91,7 @@ export default function ServiceHighlights() {
             className="bg-primary text-white px-8 py-3 hover:bg-accent transition-colors inline-flex items-center justify-center"
           >
             View All Services
-            <i className="fas fa-chevron-right ml-2 text-sm"></i>
+            <i className="fas fa-chevron-right ml-2 text-sm gradient-text"></i>
           </Button>
           
           <Button 
@@ -100,7 +100,7 @@ export default function ServiceHighlights() {
             className="px-8 py-3 inline-flex items-center justify-center border-primary text-primary hover:bg-primary/10"
           >
             Book a Consultation
-            <i className="fas fa-calendar-check ml-2 text-sm"></i>
+            <i className="fas fa-calendar-check ml-2 text-sm gradient-text"></i>
           </Button>
         </div>
       </div>

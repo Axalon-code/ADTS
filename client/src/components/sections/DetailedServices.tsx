@@ -8,8 +8,7 @@ interface ServiceCardProps {
 }
 
 const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) => {
-  const iconColor = "var(--service-icon-color)";
-  
+  // Will use our gradient class instead of a single color
   switch (iconType) {
     case "azure":
       return (
