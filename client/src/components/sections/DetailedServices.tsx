@@ -50,12 +50,13 @@ const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) =
     case "support":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          <circle cx="32" cy="32" r="20" fill="url(#blue-green-gradient)"/>
-          <circle cx="32" cy="32" r="16" fill="var(--service-card-bg)"/>
-          <path d="M26 26 C26 26 28 22 32 22 C36 22 38 26 38 26" stroke="url(#blue-green-gradient)" strokeWidth="2.5" fill="none"/>
-          <circle cx="26" cy="32" r="2" fill="url(#blue-green-gradient)"/>
-          <circle cx="38" cy="32" r="2" fill="url(#blue-green-gradient)"/>
-          <path d="M26 38 C26 38 28 42 32 42 C36 42 38 38 38 38" stroke="url(#blue-green-gradient)" strokeWidth="2.5" fill="none"/>
+          {/* Headset base */}
+          <path d="M32 12 C20 12 10 22 10 34 L10 46 C10 48 12 50 14 50 L20 50 C22 50 24 48 24 46 L24 34 C24 32 22 30 20 30 L16 30 C16 24 23 16 32 16 C41 16 48 24 48 30 L44 30 C42 30 40 32 40 34 L40 46 C40 48 42 50 44 50 L50 50 C52 50 54 48 54 46 L54 34 C54 22 44 12 32 12 Z" fill="url(#blue-green-gradient)"/>
+          {/* Headset ear cups */}
+          <circle cx="16" cy="38" r="4" fill="var(--service-card-bg)"/>
+          <circle cx="48" cy="38" r="4" fill="var(--service-card-bg)"/>
+          {/* Microphone */}
+          <path d="M40 46 C40 46 42 48 42 52 L45 52 C45 52 44 46 40 46 Z" fill="url(#blue-green-gradient)"/>
         </svg>
       );
     default:
