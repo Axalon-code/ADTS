@@ -70,7 +70,7 @@ export default function AnimatedLogo({
       <span 
         style={gradientStyle}
         className={`
-          inline-flex items-center gap-3
+          inline-flex items-center justify-center gap-3
           transition-all duration-700
           ${isHovered ? 'scale-105 transform' : ''}
         `}
@@ -81,7 +81,7 @@ export default function AnimatedLogo({
           viewBox="0 0 24 24" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
-          className="power-logo"
+          className="power-logo relative top-1"
         >
           <defs>
             <linearGradient id="powerLogoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
