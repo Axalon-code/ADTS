@@ -20,9 +20,25 @@ const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) =
     case "identity":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          <path d="M32 12 L52 24 L52 40 C52 48 32 56 32 56 C32 56 12 48 12 40 L12 24 Z" fill="url(#blue-green-gradient)"/>
-          <path d="M32 16 L46.4 25.6 L46.4 38.4 C46.4 44 32 50.4 32 50.4 C32 50.4 17.6 44 17.6 38.4 L17.6 25.6 Z" fill="var(--service-card-bg)"/>
-          <path d="M32 20 L42.4 27.2 L42.4 36.8 C42.4 40.8 32 45.6 32 45.6 C32 45.6 21.6 40.8 21.6 36.8 L21.6 27.2 Z" fill="url(#blue-green-gradient)"/>
+          {/* Microsoft Entra ID logo - diamond with light and dark blue sides */}
+          <defs>
+            <linearGradient id="entra-light-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#61E2FF" />
+              <stop offset="100%" stopColor="#61BFD9" />
+            </linearGradient>
+            <linearGradient id="entra-dark-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0066CC" />
+              <stop offset="100%" stopColor="#0050A2" />
+            </linearGradient>
+          </defs>
+          <g transform="translate(12, 10) scale(0.7)">
+            {/* Main diamond shape */}
+            <path d="M20 2 L38 20 L20 38 L2 20 Z" fill="url(#entra-light-blue)" />
+            {/* Center square */}
+            <path d="M20 13 L27 20 L20 27 L13 20 Z" fill="#E5F4F8" />
+            {/* Dark blue right corner */}
+            <path d="M38 20 L20 38 L20 20 Z" fill="url(#entra-dark-blue)" />
+          </g>
         </svg>
       );
     case "m365":
