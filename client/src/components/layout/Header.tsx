@@ -97,7 +97,7 @@ export default function Header() {
       >
         Skip to main content
       </a>
-      <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-blue-500`}>
+      <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-[#0066FF]`}>
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <Link href="/">
@@ -110,7 +110,7 @@ export default function Header() {
             
             <div className="flex items-center gap-4">
               {/* Theme Toggle - Always visible */}
-              <div className="flex items-center border-r-2 border-primary/30 dark:border-blue-500/30 pr-4">
+              <div className="flex items-center border-r-2 border-primary/30 dark:border-[#0066FF]/30 pr-4">
                 <ModeToggle />
               </div>
               
@@ -123,7 +123,7 @@ export default function Header() {
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu" 
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
-                className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-blue-500 rounded-md p-1.5"
+                className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-[#0066FF] rounded-md p-1.5"
               >
                 <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
                 {menuOpen ? (

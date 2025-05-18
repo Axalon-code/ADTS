@@ -19,46 +19,46 @@
   --input: 220 5.9% 90%;
 
   /* Consistent blue colors */
-  --primary: 217 100% 50%; /* Microsoft Blue */
+  --primary: 220 100% 50%; /* Bright Blue #0066FF */
   --primary-foreground: 210 100% 99%;
 
   --secondary: 219 67% 18%;
   --secondary-foreground: 0 0% 98%;
 
-  --accent: 217 100% 50%; /* Same as primary for consistency */
+  --accent: 220 100% 50%; /* Same as primary for consistency */
   --accent-foreground: 0 0% 98%;
 
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 100% 99%;
 
-  --ring: 217 100% 50%;
+  --ring: 220 100% 50%;
   --radius: 0.5rem;
 
-  --chart-1: 217 100% 50%;
+  --chart-1: 220 100% 50%;
   --chart-2: 219 67% 18%;
-  --chart-3: 217 100% 60%;
+  --chart-3: 220 100% 60%;
   --chart-4: 0 0% 90%;
   --chart-5: 0 0% 70%;
   
   /* Service card colors for light mode */
-  --service-icon-color: 217 100% 50%;
+  --service-icon-color: 220 100% 50%;
   --service-card-bg: 0 0% 100%;
   --service-title-color: 220 14.3% 10.2%;
-  --service-link-color: 217 100% 50%;
-  --service-link-hover: 217 100% 40%;
+  --service-link-color: 220 100% 50%;
+  --service-link-hover: 220 100% 40%;
   
   /* Contact card colors for light mode */
   --card-bg: 0 0% 100%;
-  --contact-icon-bg: 217 100% 50% / 0.1;
-  --contact-icon-color: 217 100% 50%;
-  --contact-link-color: 217 100% 50%;
-  --contact-link-hover-color: 217 100% 40%;
+  --contact-icon-bg: 220 100% 50% / 0.1;
+  --contact-icon-color: 220 100% 50%;
+  --contact-link-color: 220 100% 50%;
+  --contact-link-hover-color: 220 100% 40%;
   
   /* Mobile menu colors for light mode */
-  --mobile-menu-color: 217 100% 50%;
-  --mobile-menu-hover-color: 217 100% 40%;
-  --mobile-menu-bg: 217 100% 50% / 0.05;
-  --mobile-menu-bg-hover: 217 100% 50% / 0.1;
+  --mobile-menu-color: 220 100% 50%;
+  --mobile-menu-hover-color: 220 100% 40%;
+  --mobile-menu-bg: 220 100% 50% / 0.05;
+  --mobile-menu-bg-hover: 220 100% 50% / 0.1;
 }
 
 .dark {
@@ -78,13 +78,13 @@
   --input: 224 71% 25%;
 
   /* Consistent blue colors */
-  --primary: 217 100% 50%; /* Microsoft Blue */
+  --primary: 220 100% 50%; /* Bright Blue #0066FF */
   --primary-foreground: 210 100% 99%;
 
   --secondary: 225 57% 15%;
   --secondary-foreground: 0 0% 98%;
 
-  --accent: 217 100% 60%; /* Slightly brighter for dark mode */
+  --accent: 220 100% 60%; /* Slightly brighter for dark mode */
   --accent-foreground: 0 0% 98%;
 
   --destructive: 0 62.8% 30.6%;
