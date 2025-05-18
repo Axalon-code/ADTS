@@ -13,8 +13,13 @@ const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) =
     case "azure":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          <path d="M32,12c-6.6,0-12,5.4-12,12c0,0.3,0,0.7,0.1,1h-0.1c-3.5,0-6.4,2.9-6.4,6.4s2.9,6.4,6.4,6.4H44c5.3,0,9.6-4.3,9.6-9.6
-          s-4.3-9.6-9.6-9.6c-0.3,0-0.7,0-1,0.1V18C43,14.2,38,12,32,12z" fill="url(#blue-green-gradient)"/>
+          {/* Microsoft Azure logo styled with site gradient */}
+          <g transform="translate(8, 8) scale(0.75)">
+            {/* Right part of the 'A' */}
+            <path d="M64 8 L45 56 L22 56 L41 8 Z" fill="url(#blue-green-gradient)" />
+            {/* Left part of the 'A' */}
+            <path d="M26 8 L0 56 L22 56 L35 26 L26 8 Z" fill="url(#blue-green-gradient)" />
+          </g>
         </svg>
       );
     case "identity":
