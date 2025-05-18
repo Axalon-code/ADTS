@@ -28,7 +28,7 @@ export default function AnimatedLogo({
     
     // Create a very slow, smooth gradient transition
     const updateGradient = () => {
-      const time = Date.now() / 8000; // Very slow cycle - takes about 8 seconds for one cycle
+      const time = Date.now() / 4000; // Medium speed cycle - takes about 4 seconds for one cycle
       const position = Math.sin(time) * 50 + 50; // Oscillate between 0 and 100
       setGradientPosition(position);
     };
@@ -51,11 +51,11 @@ export default function AnimatedLogo({
   // No breathing effect, just hover enlargement
   const hoverScale = isHovered ? 1.05 : 1;
   
-  // Dynamic gradient styles
+  // Dynamic gradient styles with more exaggerated positioning
   const gradientStyle = {
-    backgroundSize: '200% 200%',
-    backgroundPosition: `${gradientPosition}% 0%`,
-    transition: 'background-position 0.5s ease' // Smoother transition
+    backgroundSize: '400% 400%',  // Much larger gradient size makes transition more noticeable
+    backgroundPosition: `${gradientPosition}% 50%`,
+    transition: 'background-position 0.3s ease' // Faster transition
   };
   
   return (
@@ -98,7 +98,11 @@ export default function AnimatedLogo({
         </svg>
         <span className="bg-gradient-to-r from-[#0000BD] via-[#00C3B9] to-[#00FF86]
                          dark:bg-gradient-to-r dark:from-[#0000BD] dark:via-[#00C3B9] dark:to-[#00FF86]
-                         text-transparent bg-clip-text font-extrabold tracking-wider">
+                         text-transparent bg-clip-text font-extrabold tracking-wider"
+              style={{
+                backgroundSize: '400% 400%',
+                backgroundPosition: `${gradientPosition}% 50%`
+              }}>
           ADTS
         </span>
       </span>
