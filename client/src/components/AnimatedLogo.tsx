@@ -71,14 +71,14 @@ export default function AnimatedLogo({
         style={gradientStyle}
         className={`
           bg-gradient-to-r from-blue-900 via-blue-600 to-emerald-500 
-          dark:bg-gradient-to-r dark:from-blue-600 dark:via-teal-500 dark:to-emerald-400
+          dark:bg-gradient-to-r dark:from-blue-400 dark:via-cyan-300 dark:to-green-300
           text-transparent bg-clip-text transition-all duration-700 font-extrabold tracking-wider
           ${isHovered ? 'scale-105 transform' : ''}
         `}
       >
         ADTS
       </span>
-      <div className="text-sm md:text-base font-normal mt-1 text-primary dark:text-blue-400 transition-colors">
+      <div className="text-sm md:text-base font-semibold mt-1 text-primary dark:text-blue-300 transition-colors">
         Tailoring Your IT Requirements
       </div>
     </div>
