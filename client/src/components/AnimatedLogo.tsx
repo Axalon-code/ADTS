@@ -70,7 +70,7 @@ export default function AnimatedLogo({
       <span 
         style={gradientStyle}
         className={`
-          bg-gradient-to-r from-blue-900 via-blue-600 to-emerald-500 
+          bg-gradient-to-r from-[#0000BD] via-[#00C3B9] to-[#00FF86]
           dark:bg-gradient-to-r dark:from-[#0000BD] dark:via-[#00C3B9] dark:to-[#00FF86]
           text-transparent bg-clip-text transition-all duration-700 font-extrabold tracking-wider
           ${isHovered ? 'scale-105 transform' : ''}
@@ -78,7 +78,7 @@ export default function AnimatedLogo({
       >
         ADTS
       </span>
-      <div className="text-sm md:text-base font-semibold mt-1 text-primary dark:text-[#0000BD] transition-colors">
+      <div className="text-sm md:text-base font-semibold mt-1 text-[#0000BD] dark:text-[#0000BD] transition-colors">
         Tailoring Your IT Requirements
       </div>
     </div>
