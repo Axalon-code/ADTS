@@ -4,7 +4,7 @@
 
 /* Custom gradient for icons */
 .gradient-text {
-  background: linear-gradient(to right, #0000BD, #00C3B9, #00FF86);
+  background: linear-gradient(to right, #0000BD, #04fff2, #00cc42);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -17,7 +17,7 @@
 }
 
 .dark .gradient-text {
-  background: linear-gradient(to right, #0000BD, #00C3B9, #00FF86);
+  background: linear-gradient(to right, #0000BD, #04fff2, #00cc42);
   -webkit-background-clip: text;
   background-clip: text;
 }
