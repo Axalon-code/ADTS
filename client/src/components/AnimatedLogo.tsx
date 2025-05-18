@@ -54,6 +54,9 @@ export default function AnimatedLogo({
     return () => clearInterval(animationInterval);
   }, [isHovered]);
   
+  // Breathing effect calculation
+  const breathScale = isHovered ? 1.05 : 1 + Math.sin(gradientPosition * 0.0314) * 0.05;
+  
   // Dynamic gradient styles
   const gradientStyle = {
     backgroundSize: '200% 200%',
@@ -68,11 +71,13 @@ export default function AnimatedLogo({
       onMouseLeave={() => interactive && setIsHovered(false)}
     >
       <span 
-        style={gradientStyle}
+        style={{
+          ...gradientStyle,
+          transform: `scale(${breathScale})` 
+        }}
         className={`
           inline-flex items-center justify-center gap-3
           transition-all duration-700
-          ${isHovered ? 'scale-105 transform' : ''}
         `}
       >
         <svg 
