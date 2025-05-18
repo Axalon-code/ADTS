@@ -8,6 +8,7 @@ import ServiceComparison from "@/components/sections/ServiceComparison";
 import Certifications from "@/components/sections/Certifications";
 import CallToAction from "@/components/sections/CallToAction";
 import Contact from "@/components/sections/Contact";
+import TooltipExample from "@/components/sections/TooltipExample";
 import { Helmet } from 'react-helmet';
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
         <ServiceComparison />
         <About />
         <Certifications />
+        <TooltipExample />
         <CallToAction />
         <Contact />
       </main>
