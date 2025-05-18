@@ -20,15 +20,9 @@ const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) =
     case "identity":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          {/* Microsoft Entra ID logo - diamond with site's gradient scheme */}
-          <g transform="translate(8, 8) scale(0.75)">
-            {/* Main diamond shape */}
-            <path d="M32 4 L60 32 L32 60 L4 32 Z" fill="url(#blue-green-gradient)" />
-            {/* Center square */}
-            <path d="M32 18 L46 32 L32 46 L18 32 Z" fill="var(--service-card-bg)" />
-            {/* Corner section with gradient */}
-            <path d="M60 32 L32 60 L32 32 Z" fill="url(#blue-green-gradient)" opacity="0.85" />
-          </g>
+          <path d="M32 12 L52 24 L52 40 C52 48 32 56 32 56 C32 56 12 48 12 40 L12 24 Z" fill="url(#blue-green-gradient)"/>
+          <path d="M32 16 L46.4 25.6 L46.4 38.4 C46.4 44 32 50.4 32 50.4 C32 50.4 17.6 44 17.6 38.4 L17.6 25.6 Z" fill="var(--service-card-bg)"/>
+          <path d="M32 20 L42.4 27.2 L42.4 36.8 C42.4 40.8 32 45.6 32 45.6 C32 45.6 21.6 40.8 21.6 36.8 L21.6 27.2 Z" fill="url(#blue-green-gradient)"/>
         </svg>
       );
     case "m365":
