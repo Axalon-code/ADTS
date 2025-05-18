@@ -111,7 +111,7 @@ export default function FooterAnimatedLogo({
         </span>
       </span>
       <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors">
-        <div style={{ textAlign: 'center', marginLeft: '-3.5rem' }}>Tailoring Your IT Requirements</div>
+        <div style={{ textAlign: 'center', marginLeft: '-4rem' }}>Tailoring Your IT Requirements</div>
       </div>
     </div>
   );
