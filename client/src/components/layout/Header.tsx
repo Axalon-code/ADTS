@@ -93,7 +93,7 @@ export default function Header() {
       {/* Skip to main content link for screen readers and keyboard users */}
       <a 
         href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:p-4 focus:bg-white dark:focus:bg-gray-900 focus:text-primary dark:focus:text-blue-400 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-blue-500"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:p-4 focus:bg-white dark:focus:bg-gray-900 focus:text-primary dark:focus:text-[#0066FF] focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-[#0066FF]"
       >
         Skip to main content
       </a>
@@ -147,7 +147,7 @@ export default function Header() {
             <div 
               id="mobile-menu"
               ref={menuRef}
-              className="absolute right-4 mt-2 w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-blue-500 py-3 px-4 z-50"
+              className="absolute right-4 mt-2 w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-[#0066FF] py-3 px-4 z-50"
               role="menu"
               aria-labelledby="menu-button"
             >
