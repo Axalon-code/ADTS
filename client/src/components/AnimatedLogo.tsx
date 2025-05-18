@@ -70,13 +70,38 @@ export default function AnimatedLogo({
       <span 
         style={gradientStyle}
         className={`
-          bg-gradient-to-r from-[#0000BD] via-[#00C3B9] to-[#00FF86]
-          dark:bg-gradient-to-r dark:from-[#0000BD] dark:via-[#00C3B9] dark:to-[#00FF86]
-          text-transparent bg-clip-text transition-all duration-700 font-extrabold tracking-wider
+          inline-flex items-center gap-3
+          transition-all duration-700
           ${isHovered ? 'scale-105 transform' : ''}
         `}
       >
-        ADTS
+        <svg 
+          width={size === 'small' ? '24' : size === 'medium' ? '30' : '36'} 
+          height={size === 'small' ? '24' : size === 'medium' ? '30' : '36'} 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          className="power-logo"
+        >
+          <defs>
+            <linearGradient id="powerLogoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0000BD" />
+              <stop offset="50%" stopColor="#00C3B9" />
+              <stop offset="100%" stopColor="#00FF86" />
+            </linearGradient>
+          </defs>
+          <path 
+            d="M12 3.5V10.5M7.5 4.5C5.9 5.4 4 7.6 4 10.9C4 16 8 18.5 12 18.5C16 18.5 20 16 20 10.9C20 7.6 18.1 5.4 16.5 4.5" 
+            stroke="url(#powerLogoGradient)" 
+            strokeWidth="2.5" 
+            strokeLinecap="round"
+          />
+        </svg>
+        <span className="bg-gradient-to-r from-[#0000BD] via-[#00C3B9] to-[#00FF86]
+                         dark:bg-gradient-to-r dark:from-[#0000BD] dark:via-[#00C3B9] dark:to-[#00FF86]
+                         text-transparent bg-clip-text font-extrabold tracking-wider">
+          ADTS
+        </span>
       </span>
       <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors">
         Tailoring Your IT Requirements
