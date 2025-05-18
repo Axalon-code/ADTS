@@ -11,6 +11,11 @@
   display: inline-block;
 }
 
+/* SVG gradient - for service cards */
+.gradient-svg {
+  color: url(#svg-gradient);
+}
+
 .dark .gradient-text {
   background: linear-gradient(to right, #0000BD, #00C3B9, #00FF86);
   -webkit-background-clip: text;

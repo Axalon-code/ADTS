@@ -14,37 +14,37 @@ const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) =
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
           <path d="M32,12c-6.6,0-12,5.4-12,12c0,0.3,0,0.7,0.1,1h-0.1c-3.5,0-6.4,2.9-6.4,6.4s2.9,6.4,6.4,6.4H44c5.3,0,9.6-4.3,9.6-9.6
-          s-4.3-9.6-9.6-9.6c-0.3,0-0.7,0-1,0.1V18C43,14.2,38,12,32,12z" fill="currentColor"/>
+          s-4.3-9.6-9.6-9.6c-0.3,0-0.7,0-1,0.1V18C43,14.2,38,12,32,12z" fill="url(#blue-green-gradient)"/>
         </svg>
       );
     case "identity":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          <path d="M32 12 L52 24 L52 40 C52 48 32 56 32 56 C32 56 12 48 12 40 L12 24 Z" fill="currentColor"/>
+          <path d="M32 12 L52 24 L52 40 C52 48 32 56 32 56 C32 56 12 48 12 40 L12 24 Z" fill="url(#blue-green-gradient)"/>
           <path d="M32 16 L46.4 25.6 L46.4 38.4 C46.4 44 32 50.4 32 50.4 C32 50.4 17.6 44 17.6 38.4 L17.6 25.6 Z" fill="var(--service-card-bg)"/>
-          <path d="M32 20 L42.4 27.2 L42.4 36.8 C42.4 40.8 32 45.6 32 45.6 C32 45.6 21.6 40.8 21.6 36.8 L21.6 27.2 Z" fill="currentColor"/>
+          <path d="M32 20 L42.4 27.2 L42.4 36.8 C42.4 40.8 32 45.6 32 45.6 C32 45.6 21.6 40.8 21.6 36.8 L21.6 27.2 Z" fill="url(#blue-green-gradient)"/>
         </svg>
       );
     case "m365":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          <rect x="16" y="16" width="32" height="20" rx="2" fill="currentColor"/>
+          <rect x="16" y="16" width="32" height="20" rx="2" fill="url(#blue-green-gradient)"/>
           <rect x="19" y="19" width="26" height="14" rx="1" fill="var(--service-card-bg)"/>
-          <path d="M12 40 L52 40 L52 44 C52 46 50 48 48 48 L16 48 C14 48 12 46 12 44 Z" fill="currentColor"/>
+          <path d="M12 40 L52 40 L52 44 C52 46 50 48 48 48 L16 48 C14 48 12 46 12 44 Z" fill="url(#blue-green-gradient)"/>
         </svg>
       );
     case "automation":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          <rect x="20" y="20" width="24" height="28" rx="3" fill="currentColor"/>
+          <rect x="20" y="20" width="24" height="28" rx="3" fill="url(#blue-green-gradient)"/>
           <rect x="23" y="24" width="18" height="16" rx="2" fill="var(--service-card-bg)"/>
-          <circle cx="28" cy="32" r="3" fill="currentColor"/>
-          <circle cx="36" cy="32" r="3" fill="currentColor"/>
+          <circle cx="28" cy="32" r="3" fill="url(#blue-green-gradient)"/>
+          <circle cx="36" cy="32" r="3" fill="url(#blue-green-gradient)"/>
           <rect x="27" y="42" width="10" height="2" rx="1" fill="var(--service-card-bg)"/>
-          <rect x="31" y="12" width="2" height="8" fill="currentColor"/>
-          <circle cx="32" cy="10" r="3" fill="currentColor"/>
-          <rect x="12" y="28" width="8" height="3" rx="1.5" fill="currentColor"/>
-          <rect x="44" y="28" width="8" height="3" rx="1.5" fill="currentColor"/>
+          <rect x="31" y="12" width="2" height="8" fill="url(#blue-green-gradient)"/>
+          <circle cx="32" cy="10" r="3" fill="url(#blue-green-gradient)"/>
+          <rect x="12" y="28" width="8" height="3" rx="1.5" fill="url(#blue-green-gradient)"/>
+          <rect x="44" y="28" width="8" height="3" rx="1.5" fill="url(#blue-green-gradient)"/>
         </svg>
       );
     default:
@@ -72,6 +72,19 @@ const ServiceCard = ({ id, iconType, title, items }: ServiceCardProps) => (
       </ul>
     </CardContent>
   </Card>
+);
+
+// Define an SVG gradient that will be used by all service icons
+const SvgGradientDefs = () => (
+  <svg width="0" height="0" style={{ position: 'absolute' }}>
+    <defs>
+      <linearGradient id="blue-green-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#0000BD" />
+        <stop offset="50%" stopColor="#00C3B9" />
+        <stop offset="100%" stopColor="#00FF86" />
+      </linearGradient>
+    </defs>
+  </svg>
 );
 
 export default function DetailedServices() {
@@ -140,6 +153,9 @@ export default function DetailedServices() {
 
   return (
     <section id="services" className="py-20 bg-background">
+      {/* Include the SVG gradient definitions that will be used by all SVG icons */}
+      <SvgGradientDefs />
+      
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4">Comprehensive IT Services</h2>
