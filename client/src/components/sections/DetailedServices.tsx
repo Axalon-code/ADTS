@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 interface ServiceCardProps {
   id: string;
-  iconType: "azure" | "identity" | "m365" | "automation";
+  iconType: "azure" | "identity" | "m365" | "automation" | "support";
   title: string;
   items: string[];
 }
@@ -45,6 +45,17 @@ const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) =
           <circle cx="32" cy="10" r="3" fill="url(#blue-green-gradient)"/>
           <rect x="12" y="28" width="8" height="3" rx="1.5" fill="url(#blue-green-gradient)"/>
           <rect x="44" y="28" width="8" height="3" rx="1.5" fill="url(#blue-green-gradient)"/>
+        </svg>
+      );
+    case "support":
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
+          <circle cx="32" cy="32" r="20" fill="url(#blue-green-gradient)"/>
+          <circle cx="32" cy="32" r="16" fill="var(--service-card-bg)"/>
+          <path d="M26 26 C26 26 28 22 32 22 C36 22 38 26 38 26" stroke="url(#blue-green-gradient)" strokeWidth="2.5" fill="none"/>
+          <circle cx="26" cy="32" r="2" fill="url(#blue-green-gradient)"/>
+          <circle cx="38" cy="32" r="2" fill="url(#blue-green-gradient)"/>
+          <path d="M26 38 C26 38 28 42 32 42 C36 42 38 38 38 38" stroke="url(#blue-green-gradient)" strokeWidth="2.5" fill="none"/>
         </svg>
       );
     default:
@@ -130,14 +141,21 @@ export default function DetailedServices() {
     {
       id: "automation-services",
       iconType: "automation",
-      title: "IT Automation & Support",
+      title: "IT Automation",
       items: [
         "Robotic Process Automation (RPA) development",
         "Business process automation consulting",
+        "Stakeholder communication and technical guidance"
+      ]
+    },
+    {
+      id: "support-services",
+      iconType: "support",
+      title: "IT Support",
+      items: [
         "General IT system administration and troubleshooting",
         "Desktop and laptop repairs, upgrades, and servicing",
-        "Vendor and supplier communication management",
-        "Stakeholder communication and technical guidance"
+        "Vendor and supplier communication management"
       ]
     }
   ];
