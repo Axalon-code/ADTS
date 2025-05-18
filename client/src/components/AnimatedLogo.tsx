@@ -76,8 +76,8 @@ export default function AnimatedLogo({
         `}
       >
         <svg 
-          width={size === 'small' ? '24' : size === 'medium' ? '30' : '36'} 
-          height={size === 'small' ? '24' : size === 'medium' ? '30' : '36'} 
+          width={size === 'small' ? '32' : size === 'medium' ? '40' : '48'} 
+          height={size === 'small' ? '32' : size === 'medium' ? '40' : '48'} 
           viewBox="0 0 24 24" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@ export default function AnimatedLogo({
           <path 
             d="M12 3.5V10.5M7.5 4.5C5.9 5.4 4 7.6 4 10.9C4 16 8 18.5 12 18.5C16 18.5 20 16 20 10.9C20 7.6 18.1 5.4 16.5 4.5" 
             stroke="url(#powerLogoGradient)" 
-            strokeWidth="2.5" 
+            strokeWidth="3" 
             strokeLinecap="round"
           />
         </svg>
