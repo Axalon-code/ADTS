@@ -22,40 +22,34 @@ export default function AnimatedLogo({
     large: "text-5xl md:text-6xl"
   };
   
-  // Effect for continuous breathing animation
+  // Effect for continuous gradient color transition
   useEffect(() => {
     if (!interactive || isHovered) return;
     
-    // Create a more prominent, slower breathing effect
-    const breath = () => {
-      const time = Date.now() / 2000; // Medium cycle - takes about 2 seconds for one cycle
+    // Create a very slow, smooth gradient transition
+    const updateGradient = () => {
+      const time = Date.now() / 8000; // Very slow cycle - takes about 8 seconds for one cycle
       const position = Math.sin(time) * 50 + 50; // Oscillate between 0 and 100
       setGradientPosition(position);
     };
     
-    const animationInterval = setInterval(breath, 30);
+    const animationInterval = setInterval(updateGradient, 50);
     
     return () => clearInterval(animationInterval);
   }, [interactive, isHovered]);
   
-  // Effect for hover animation - slightly faster breathing
+  // Effect for hover animation - pauses the gradient in a fixed position
   useEffect(() => {
     if (!isHovered) return;
     
-    // Create a slightly faster breathing effect on hover
-    const breath = () => {
-      const time = Date.now() / 2000; // Faster cycle when hovered
-      const position = Math.sin(time) * 50 + 50;
-      setGradientPosition(position);
-    };
+    // When hovered, maintain a consistent gradient position
+    setGradientPosition(75); // Fixed position showing more of the green/teal side
     
-    const animationInterval = setInterval(breath, 50);
-    
-    return () => clearInterval(animationInterval);
+    return () => {}; // No interval to clear
   }, [isHovered]);
   
-  // Breathing effect calculation - significantly increased amplitude for very noticeable effect
-  const breathScale = isHovered ? 1.15 : 1 + Math.sin(gradientPosition * 0.0314) * 0.15;
+  // No breathing effect, just hover enlargement
+  const hoverScale = isHovered ? 1.05 : 1;
   
   // Dynamic gradient styles
   const gradientStyle = {
@@ -73,7 +67,7 @@ export default function AnimatedLogo({
       <span 
         style={{
           ...gradientStyle,
-          transform: `scale(${breathScale})` 
+          transform: isHovered ? 'scale(1.05)' : 'scale(1)'
         }}
         className={`
           inline-flex items-center justify-center gap-3
