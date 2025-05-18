@@ -111,7 +111,7 @@ export default function AnimatedLogo({
         </span>
       </span>
       <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors flex justify-end">
-        <span className="pr-14">Tailoring Your IT Requirements</span>
+        <span className="pr-13">Tailoring Your IT Requirements</span>
       </div>
     </div>
   );
