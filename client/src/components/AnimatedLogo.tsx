@@ -110,7 +110,7 @@ export default function AnimatedLogo({
           ADTS
         </span>
       </span>
-      <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors">
+      <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors text-right pr-2">
         Tailoring Your IT Requirements
       </div>
     </div>
