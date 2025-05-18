@@ -37,7 +37,7 @@ export function ModeToggle() {
         aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
         aria-live="polite"
         disabled={isAnimating}
-        className={`relative w-10 h-10 rounded-md overflow-hidden transition-all duration-500 ${
+        className={`relative w-14 h-14 rounded-md overflow-hidden transition-all duration-500 ${
           theme === "dark" 
             ? "bg-blue-900 border-blue-700 hover:bg-blue-800 shadow-inner shadow-blue-800" 
             : "bg-blue-100 border-blue-200 hover:bg-blue-200"
@@ -67,7 +67,7 @@ export function ModeToggle() {
               : isAnimating ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
           }`}
         >
-          <Sun className="h-5 w-5 text-blue-700" />
+          <Sun className="h-7 w-7 text-blue-700" />
         </span>
         
         {/* Moon icon */}
@@ -79,7 +79,7 @@ export function ModeToggle() {
               : isAnimating ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-0"
           }`}
         >
-          <Moon className="h-5 w-5 text-blue-300" />
+          <Moon className="h-7 w-7 text-blue-300" />
         </span>
       </Button>
     </div>
