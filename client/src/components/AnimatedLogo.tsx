@@ -26,14 +26,14 @@ export default function AnimatedLogo({
   useEffect(() => {
     if (!interactive || isHovered) return;
     
-    // Create a smoother, slower breathing effect
+    // Create a more prominent, slower breathing effect
     const breath = () => {
-      const time = Date.now() / 3000; // Slow cycle - takes about 3 seconds for one cycle
+      const time = Date.now() / 2000; // Medium cycle - takes about 2 seconds for one cycle
       const position = Math.sin(time) * 50 + 50; // Oscillate between 0 and 100
       setGradientPosition(position);
     };
     
-    const animationInterval = setInterval(breath, 50);
+    const animationInterval = setInterval(breath, 30);
     
     return () => clearInterval(animationInterval);
   }, [interactive, isHovered]);
@@ -54,8 +54,8 @@ export default function AnimatedLogo({
     return () => clearInterval(animationInterval);
   }, [isHovered]);
   
-  // Breathing effect calculation
-  const breathScale = isHovered ? 1.05 : 1 + Math.sin(gradientPosition * 0.0314) * 0.05;
+  // Breathing effect calculation - significantly increased amplitude for very noticeable effect
+  const breathScale = isHovered ? 1.15 : 1 + Math.sin(gradientPosition * 0.0314) * 0.15;
   
   // Dynamic gradient styles
   const gradientStyle = {
