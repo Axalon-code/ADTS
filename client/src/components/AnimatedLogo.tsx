@@ -111,7 +111,7 @@ export default function AnimatedLogo({
         </span>
       </span>
       <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors">
-        <div style={{ marginRight: '3rem', textAlign: 'right' }}>Tailoring Your IT Requirements</div>
+        <div style={{ marginRight: '2.9rem', textAlign: 'right' }}>Tailoring Your IT Requirements</div>
       </div>
     </div>
   );
