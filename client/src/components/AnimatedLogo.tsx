@@ -22,24 +22,34 @@ export default function AnimatedLogo({
     large: "text-5xl md:text-6xl"
   };
   
-  // Effect for continuous animation
+  // Effect for continuous breathing animation
   useEffect(() => {
     if (!interactive || isHovered) return;
     
-    const animationInterval = setInterval(() => {
-      setGradientPosition(prev => (prev + 1) % 100);
-    }, 40); // Slightly faster base animation
+    // Create a smoother, slower breathing effect
+    const breath = () => {
+      const time = Date.now() / 3000; // Slow cycle - takes about 3 seconds for one cycle
+      const position = Math.sin(time) * 50 + 50; // Oscillate between 0 and 100
+      setGradientPosition(position);
+    };
+    
+    const animationInterval = setInterval(breath, 50);
     
     return () => clearInterval(animationInterval);
   }, [interactive, isHovered]);
   
-  // Effect for hover animation
+  // Effect for hover animation - slightly faster breathing
   useEffect(() => {
     if (!isHovered) return;
     
-    const animationInterval = setInterval(() => {
-      setGradientPosition(prev => (prev + 4) % 100);
-    }, 20); // Even faster animation on hover for more dramatic effect
+    // Create a slightly faster breathing effect on hover
+    const breath = () => {
+      const time = Date.now() / 2000; // Faster cycle when hovered
+      const position = Math.sin(time) * 50 + 50;
+      setGradientPosition(position);
+    };
+    
+    const animationInterval = setInterval(breath, 50);
     
     return () => clearInterval(animationInterval);
   }, [isHovered]);
@@ -48,7 +58,7 @@ export default function AnimatedLogo({
   const gradientStyle = {
     backgroundSize: '200% 200%',
     backgroundPosition: `${gradientPosition}% 0%`,
-    transition: 'background-position 0.2s ease'
+    transition: 'background-position 0.5s ease' // Smoother transition
   };
   
   return (
@@ -60,10 +70,10 @@ export default function AnimatedLogo({
       <span 
         style={gradientStyle}
         className={`
-          bg-gradient-to-r from-blue-900 via-blue-700 to-emerald-600 
-          dark:bg-gradient-to-r dark:from-blue-700 dark:via-blue-500 dark:to-emerald-500
-          text-transparent bg-clip-text transition-all duration-300 font-extrabold tracking-wider
-          ${isHovered ? 'scale-110 transform' : ''}
+          bg-gradient-to-r from-blue-900 via-blue-600 to-emerald-500 
+          dark:bg-gradient-to-r dark:from-blue-600 dark:via-teal-500 dark:to-emerald-400
+          text-transparent bg-clip-text transition-all duration-700 font-extrabold tracking-wider
+          ${isHovered ? 'scale-105 transform' : ''}
         `}
       >
         ADTS
