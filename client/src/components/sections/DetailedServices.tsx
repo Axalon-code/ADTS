@@ -56,7 +56,7 @@ const ServiceCard = ({ id, iconType, title, items }: ServiceCardProps) => (
   <Card id={id} className="bg-[hsl(var(--service-card-bg))] shadow-md">
     <CardContent className="p-8">
       <div className="flex items-center mb-6">
-        <div className="p-2 rounded-md mr-4 text-[hsl(var(--service-icon-color))]">
+        <div className="p-2 rounded-md mr-4 gradient-text gradient-text-hover">
           <ServiceIcon iconType={iconType} />
         </div>
         <h3 className="font-inter font-semibold text-2xl text-[hsl(var(--service-title-color))]">{title}</h3>
@@ -65,7 +65,7 @@ const ServiceCard = ({ id, iconType, title, items }: ServiceCardProps) => (
       <ul className="space-y-4 mb-6">
         {items.map((item, index) => (
           <li key={index} className="flex items-start">
-            <i className="fas fa-check text-[hsl(var(--service-icon-color))] mt-1 mr-3"></i>
+            <i className="fas fa-check gradient-text mt-1 mr-3"></i>
             <span className="text-foreground">{item}</span>
           </li>
         ))}
