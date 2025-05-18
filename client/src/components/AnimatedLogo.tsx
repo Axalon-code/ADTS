@@ -68,7 +68,7 @@ export default function AnimatedLogo({
       >
         ADTS
       </span>
-      <div className={`text-sm md:text-base font-normal mt-1 ${isHovered ? 'text-primary' : 'text-gray-700 dark:text-gray-300'} transition-colors`}>
+      <div className="text-sm md:text-base font-normal mt-1 text-primary dark:text-blue-400 transition-colors">
         Tailoring Your IT Requirements
       </div>
     </div>
