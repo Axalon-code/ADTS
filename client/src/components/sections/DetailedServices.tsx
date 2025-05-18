@@ -20,24 +20,14 @@ const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) =
     case "identity":
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="48" height="48">
-          {/* Microsoft Entra ID logo - diamond with light and dark blue sides */}
-          <defs>
-            <linearGradient id="entra-light-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#61E2FF" />
-              <stop offset="100%" stopColor="#61BFD9" />
-            </linearGradient>
-            <linearGradient id="entra-dark-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#0066CC" />
-              <stop offset="100%" stopColor="#0050A2" />
-            </linearGradient>
-          </defs>
-          <g transform="translate(12, 10) scale(0.7)">
+          {/* Microsoft Entra ID logo - diamond with site's gradient scheme */}
+          <g transform="translate(8, 8) scale(0.75)">
             {/* Main diamond shape */}
-            <path d="M20 2 L38 20 L20 38 L2 20 Z" fill="url(#entra-light-blue)" />
+            <path d="M32 4 L60 32 L32 60 L4 32 Z" fill="url(#blue-green-gradient)" />
             {/* Center square */}
-            <path d="M20 13 L27 20 L20 27 L13 20 Z" fill="#E5F4F8" />
-            {/* Dark blue right corner */}
-            <path d="M38 20 L20 38 L20 20 Z" fill="url(#entra-dark-blue)" />
+            <path d="M32 18 L46 32 L32 46 L18 32 Z" fill="var(--service-card-bg)" />
+            {/* Corner section with gradient */}
+            <path d="M60 32 L32 60 L32 32 Z" fill="url(#blue-green-gradient)" opacity="0.85" />
           </g>
         </svg>
       );
