@@ -318,7 +318,7 @@ export default function ServiceComparison() {
   };
 
   return (
-    <section id="service-comparison" className="py-16 bg-transparent dark:bg-gray-900">
+    <section id="service-comparison" className="py-16 bg-transparent dark:bg-transparent">
       {/* Screen reader announcement area */}
       <div aria-live="polite" className="sr-only" id="category-change-announcement"></div>
       <div className="container mx-auto px-4">

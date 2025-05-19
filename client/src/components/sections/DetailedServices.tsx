@@ -171,7 +171,7 @@ export default function DetailedServices() {
   ];
 
   return (
-    <section id="services" className="py-20 bg-transparent dark:bg-background">
+    <section id="services" className="py-20 bg-transparent dark:bg-transparent">
       {/* Include the SVG gradient definitions that will be used by all SVG icons */}
       <SvgGradientDefs />
       
