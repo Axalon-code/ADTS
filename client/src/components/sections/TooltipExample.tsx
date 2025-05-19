@@ -28,7 +28,7 @@ export default function TooltipExample() {
   `;
 
   return (
-    <section id="tooltip-example" className="py-16 bg-gray-50 dark:bg-gray-900">
+    <section id="tooltip-example" className="py-16 bg-gradient-to-tr from-[#0000BD]/10 to-white dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">
