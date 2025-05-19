@@ -10,7 +10,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-tr from-[#0000BD]/90 to-white dark:bg-[hsl(222,47%,11%)] dark:bg-none">
+    <section id="about" className="py-20 bg-transparent dark:bg-[hsl(222,47%,11%)]">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">

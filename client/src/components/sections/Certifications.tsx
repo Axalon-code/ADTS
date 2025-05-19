@@ -11,7 +11,7 @@ export default function Certifications() {
   ];
 
   return (
-    <section id="certifications" className="py-20 bg-gradient-to-tr from-[#0000BD]/90 to-white dark:bg-[hsl(222,47%,11%)] dark:bg-none">
+    <section id="certifications" className="py-20 bg-transparent dark:bg-[hsl(222,47%,11%)]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4 dark:text-white">Certifications & Expertise</h2>

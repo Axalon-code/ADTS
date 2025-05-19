@@ -66,7 +66,7 @@ export default function ServiceHighlights() {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-tr from-[#0000BD]/90 to-white dark:bg-gray-900 dark:bg-none">
+    <section className="py-16 bg-transparent dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4">IT Consultancy Services</h2>

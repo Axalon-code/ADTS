@@ -47,7 +47,7 @@ const ContactIcon = ({ type }: { type: "email" | "phone" | "linkedin" | "locatio
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 bg-gradient-to-tr from-[#0000BD]/90 to-white dark:bg-background dark:bg-none">
+    <section id="contact" className="py-20 bg-transparent dark:bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4">Contact Me</h2>

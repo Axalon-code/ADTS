@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global background gradient */
+.light {
+  background: linear-gradient(to top right, #0000BD 0%, rgba(255,255,255,0.9) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
 /* Custom gradient for icons */
 .gradient-text {
   background: linear-gradient(to right, #0000BD, #04fff2, #00cc42);
