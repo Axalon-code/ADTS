@@ -14,8 +14,8 @@ export default function Certifications() {
     <section id="certifications" className="py-20 bg-transparent dark:bg-transparent">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4 dark:text-white">Certifications & Expertise</h2>
-          <p className="text-lg text-muted-foreground dark:text-gray-300 max-w-3xl mx-auto">
+          <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4 text-white dark:text-white">Certifications & Expertise</h2>
+          <p className="text-lg text-white dark:text-gray-300 max-w-3xl mx-auto">
             Industry-recognized qualifications that demonstrate my technical proficiency.
           </p>
         </div>
@@ -39,24 +39,24 @@ export default function Certifications() {
           </Card>
           
           <div>
-            <h3 className="font-inter font-semibold text-2xl mb-6 dark:text-white">Microsoft Azure Fundamentals</h3>
-            <p className="text-muted-foreground dark:text-gray-300 mb-6">
+            <h3 className="font-inter font-semibold text-2xl mb-6 text-white dark:text-white">Microsoft Azure Fundamentals</h3>
+            <p className="text-white dark:text-gray-300 mb-6">
               The Microsoft Certified: Azure Fundamentals certification validates my foundational knowledge of cloud services and how those services are provided with Microsoft Azure.
             </p>
             
             <div className="mb-8">
-              <h4 className="font-inter font-medium text-lg mb-4 dark:text-white">Skills Validated:</h4>
+              <h4 className="font-inter font-medium text-lg mb-4 text-white dark:text-white">Skills Validated:</h4>
               <ul className="space-y-3">
                 {skills.map((skill, index) => (
                   <li key={index} className="flex items-start">
-                    <i className="fas fa-certificate text-primary dark:text-blue-500 mt-1 mr-3"></i>
-                    <span className="dark:text-gray-300">{skill}</span>
+                    <div className="bg-blue-500 dark:bg-blue-500 rounded-full w-4 h-4 mt-1 mr-3 flex-shrink-0"></div>
+                    <span className="text-white dark:text-gray-300">{skill}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
-            <p className="text-muted-foreground dark:text-gray-300">
+            <p className="text-white dark:text-gray-300">
               For more details about my complete professional background and additional certifications, please visit my LinkedIn profile.
             </p>
             
