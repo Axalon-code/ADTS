@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 /* Global background gradient */
-.light {
-  background: linear-gradient(to top right, #0000BD 0%, #0000BD 30%, #FFFFFF 100%);
+html.light {
+  background: linear-gradient(135deg, #0000BD 0%, #0000BD 20%, #FFFFFF 100%);
   background-attachment: fixed;
+  background-size: cover;
+}
+
+body, 
+#root {
   min-height: 100vh;
+  background-color: transparent;
 }
 
 /* Custom gradient for icons */
