@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Check } from "lucide-react";
 
 export default function About() {
   const expertiseList = [
@@ -19,13 +20,13 @@ export default function About() {
               I'm an independent IT consultant specializing in Microsoft technologies with extensive experience in designing, implementing, and optimizing cloud and hybrid solutions.
             </p>
             
-            <Card className="mb-8 border-0 shadow-none dark:bg-transparent">
-              <CardContent className="p-0">
+            <Card className="mb-8 border-0 shadow-none bg-gradient-to-r from-blue-950 to-cyan-950 dark:bg-transparent">
+              <CardContent className="p-6">
                 <h3 className="font-inter font-semibold text-xl mb-4 text-white dark:text-white">My Expertise</h3>
                 <ul className="space-y-3">
                   {expertiseList.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <i className="fas fa-check-circle text-primary dark:text-blue-500 mt-1 mr-3"></i>
+                      <Check className="text-sky-400 dark:text-blue-500 mt-1 mr-3 h-5 w-5" />
                       <span className="text-white dark:text-gray-300">{item}</span>
                     </li>
                   ))}
