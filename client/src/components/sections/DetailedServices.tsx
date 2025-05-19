@@ -185,8 +185,8 @@ export default function DetailedServices() {
       
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4">Comprehensive IT Services</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Tailored technology solutions to meet your business requirements.</p>
+          <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4 text-white dark:text-white">Comprehensive IT Services</h2>
+          <p className="text-lg text-white dark:text-gray-300 max-w-3xl mx-auto">Tailored technology solutions to meet your business requirements.</p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
