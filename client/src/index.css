@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global background gradient - Increased blue intensity */
+/* Global background gradient - Blue to cyan */
 html.light {
-  background: linear-gradient(135deg, #0000BD 0%, #0000BD 40%, #FFFFFF 100%);
+  background: linear-gradient(135deg, #0000BD 0%, #0000BD 40%, #04fff2 100%);
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
