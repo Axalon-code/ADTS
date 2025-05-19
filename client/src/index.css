@@ -2,9 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global background gradient - Darker blue to darker cyan */
-html.light, html.dark {
+/* Global background gradient - With separate colors for light and dark modes */
+html.light {
   background: linear-gradient(135deg, #00007A 0%, #00007A 40%, #00C5B0 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+html.dark {
+  background: linear-gradient(135deg, #000052 0%, #000052 40%, #006D61 100%);
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
