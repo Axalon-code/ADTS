@@ -7,6 +7,14 @@ interface ServiceCardProps {
   items: string[];
 }
 
+// Define the services type
+interface Service {
+  id: string;
+  iconType: "azure" | "identity" | "m365" | "automation" | "support";
+  title: string;
+  items: string[];
+}
+
 const ServiceIcon = ({ iconType }: { iconType: ServiceCardProps["iconType"] }) => {
   // Will use our gradient class instead of a single color
   switch (iconType) {
@@ -100,7 +108,7 @@ const SvgGradientDefs = () => (
 );
 
 export default function DetailedServices() {
-  const services = [
+  const services: Service[] = [
     {
       id: "azure-services",
       iconType: "azure",
