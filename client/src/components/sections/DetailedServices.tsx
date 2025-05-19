@@ -171,7 +171,7 @@ export default function DetailedServices() {
   ];
 
   return (
-    <section id="services" className="py-20 bg-background">
+    <section id="services" className="py-20 bg-gradient-to-b from-blue-900/5 via-blue-500/5 to-white dark:bg-background">
       {/* Include the SVG gradient definitions that will be used by all SVG icons */}
       <SvgGradientDefs />
       
