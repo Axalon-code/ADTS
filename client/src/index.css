@@ -2,17 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global background gradient */
+/* Global background gradient - Increased blue intensity */
 html.light {
-  background: linear-gradient(135deg, #0000BD 0%, #0000BD 20%, #FFFFFF 100%);
+  background: linear-gradient(135deg, #0000BD 0%, #0000BD 40%, #FFFFFF 100%);
   background-attachment: fixed;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 body, 
 #root {
   min-height: 100vh;
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 /* Custom gradient for icons */
