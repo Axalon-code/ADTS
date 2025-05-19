@@ -14,19 +14,19 @@ export default function About() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
-            <h2 className="font-inter font-bold text-3xl md:text-4xl mb-6 dark:text-white">About Me</h2>
-            <p className="text-lg text-muted-foreground dark:text-gray-300 mb-6">
+            <h2 className="font-inter font-bold text-3xl md:text-4xl mb-6 text-white dark:text-white">About Me</h2>
+            <p className="text-lg text-white dark:text-gray-300 mb-6">
               I'm an independent IT consultant specializing in Microsoft technologies with extensive experience in designing, implementing, and optimizing cloud and hybrid solutions.
             </p>
             
             <Card className="mb-8 border-0 shadow-none dark:bg-transparent">
               <CardContent className="p-0">
-                <h3 className="font-inter font-semibold text-xl mb-4 dark:text-white">My Expertise</h3>
+                <h3 className="font-inter font-semibold text-xl mb-4 text-white dark:text-white">My Expertise</h3>
                 <ul className="space-y-3">
                   {expertiseList.map((item, index) => (
                     <li key={index} className="flex items-start">
                       <i className="fas fa-check-circle text-primary dark:text-blue-500 mt-1 mr-3"></i>
-                      <span className="dark:text-gray-300">{item}</span>
+                      <span className="text-white dark:text-gray-300">{item}</span>
                     </li>
                   ))}
                 </ul>
