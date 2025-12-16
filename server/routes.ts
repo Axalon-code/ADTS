@@ -280,7 +280,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const service = await storage.updateService(serviceId, result.data);
+      // Sanitize user input to prevent XSS on updates
+      const sanitizedData: typeof result.data = {};
+      if (result.data.name !== undefined) {
+        sanitizedData.name = sanitizeString(result.data.name);
+      }
+      if (result.data.description !== undefined) {
+        sanitizedData.description = sanitizeRichText(result.data.description);
+      }
+      if (result.data.category !== undefined) {
+        sanitizedData.category = sanitizeString(result.data.category);
+      }
+      // Pass through non-string fields unchanged
+      if (result.data.duration !== undefined) {
+        sanitizedData.duration = result.data.duration;
+      }
+      if (result.data.price !== undefined) {
+        sanitizedData.price = result.data.price;
+      }
+      if (result.data.isActive !== undefined) {
+        sanitizedData.isActive = result.data.isActive;
+      }
+      
+      const service = await storage.updateService(serviceId, sanitizedData);
       return res.status(200).json({ 
         message: "Service updated successfully",
         service
