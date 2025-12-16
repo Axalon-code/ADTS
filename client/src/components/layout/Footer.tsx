@@ -24,7 +24,7 @@ export default function Footer() {
               <a href="https://www.linkedin.com/in/alexdevlyashevskiy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
                 <i className="fab fa-linkedin-in text-xl"></i>
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
+              <a href="https://github.com/Axalon-code" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
                 <i className="fab fa-github text-xl"></i>
               </a>
             </div>
