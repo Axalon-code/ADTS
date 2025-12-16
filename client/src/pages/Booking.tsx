@@ -227,14 +227,14 @@ export default function BookingPage() {
     <>
       <Header />
       <div className="container mx-auto py-12 px-4">
-        <h1 className="text-4xl font-bold text-center mb-2">Book a Consultation</h1>
-        <p className="text-muted-foreground text-center mb-8">
+        <h1 className="text-4xl font-bold text-center mb-2 text-foreground">Book a Consultation</h1>
+        <p className="text-foreground/70 text-center mb-8">
           Schedule a professional IT consultation tailored to your business needs
         </p>
         
         {/* Category Selector */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-4 text-center">Select a Service Category</h2>
+          <h2 className="text-lg font-semibold mb-4 text-center text-foreground">Select a Service Category</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {SERVICE_CATEGORIES.map((category) => (
               <button
