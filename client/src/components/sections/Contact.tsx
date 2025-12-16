@@ -75,8 +75,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-medium">Email</p>
-                      <a href="mailto:contact@adts.com" className="text-[hsl(var(--contact-link-color))] hover:text-[hsl(var(--contact-link-hover-color))] transition-colors">
-                        contact@adts.com
+                      <a href="mailto:AD@adtechservices.co.uk" className="text-[hsl(var(--contact-link-color))] hover:text-[hsl(var(--contact-link-hover-color))] transition-colors">
+                        AD@adtechservices.co.uk
                       </a>
                     </div>
                   </div>

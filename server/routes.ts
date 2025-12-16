@@ -54,8 +54,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Compose email with contact form data
       const mailOptions = {
-        from: process.env.EMAIL_FROM || "no-reply@adts.com",
-        to: process.env.EMAIL_TO || "contact@adts.com",
+        from: process.env.EMAIL_FROM || "no-reply@adtechservices.co.uk",
+        to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
         subject: `New Contact Form Submission: ${contactData.service} Inquiry`,
         text: `
           Name: ${contactData.name}
