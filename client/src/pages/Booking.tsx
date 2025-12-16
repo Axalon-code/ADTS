@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import { 
   Card, 
   CardContent, 
@@ -203,8 +205,10 @@ export default function BookingPage() {
   );
   
   return (
-    <div className="container mx-auto py-12 px-4">
-      <h1 className="text-4xl font-bold text-center mb-2">Book a Consultation</h1>
+    <>
+      <Header />
+      <div className="container mx-auto py-12 px-4">
+        <h1 className="text-4xl font-bold text-center mb-2">Book a Consultation</h1>
       <p className="text-muted-foreground text-center mb-8">
         Schedule a professional IT consultation tailored to your business needs
       </p>
@@ -556,6 +560,8 @@ export default function BookingPage() {
           </Card>
         </div>
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
