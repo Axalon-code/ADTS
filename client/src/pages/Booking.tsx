@@ -470,7 +470,10 @@ export default function BookingPage() {
                                 <div className="flex items-start gap-3">
                                   <Checkbox 
                                     checked={isSelected}
-                                    onCheckedChange={() => toggleService(service.id)}
+                                    onCheckedChange={(e) => {
+                                      e?.valueOf && e.stopPropagation?.();
+                                    }}
+                                    onClick={(e) => e.stopPropagation()}
                                     className="mt-1"
                                   />
                                   <div>
