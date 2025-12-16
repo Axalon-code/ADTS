@@ -227,8 +227,8 @@ export default function BookingPage() {
     <>
       <Header />
       <div className="container mx-auto py-12 px-4">
-        <h1 className="text-4xl font-bold text-center mb-2 text-foreground">Book a Consultation</h1>
-        <p className="text-foreground/70 text-center mb-8">
+        <h1 className="text-4xl font-bold text-center mb-2 text-primary">Book a Consultation</h1>
+        <p className="text-foreground/80 text-center mb-8">
           Schedule a professional IT consultation tailored to your business needs
         </p>
         
