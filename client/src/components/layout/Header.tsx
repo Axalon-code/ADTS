@@ -184,6 +184,16 @@ export default function Header() {
                 
                 <Button 
                   onClick={() => {
+                    window.location.href = "/clients";
+                  }}
+                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
+                  role="menuitem"
+                >
+                  Clients
+                </Button>
+                
+                <Button 
+                  onClick={() => {
                     window.location.href = "/blog";
                   }}
                   className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
