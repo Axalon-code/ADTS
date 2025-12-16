@@ -87,8 +87,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-medium">Phone</p>
-                      <a href="tel:+441234567890" className="text-[hsl(var(--contact-link-color))] hover:text-[hsl(var(--contact-link-hover-color))] transition-colors">
-                        +44 (0) 123 456 7890
+                      <a href="tel:+447492168197" className="text-[hsl(var(--contact-link-color))] hover:text-[hsl(var(--contact-link-hover-color))] transition-colors">
+                        +44 (0)7492 168197
                       </a>
                     </div>
                   </div>
