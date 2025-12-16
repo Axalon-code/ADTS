@@ -10,6 +10,7 @@ import {
   blockedDateSchema 
 } from "@shared/schema";
 import nodemailer from "nodemailer";
+import { sanitizeString, sanitizeRichText } from "./sanitize";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API routes for contact form
@@ -25,7 +26,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const contactData = result.data;
+      // Sanitize all user input to prevent XSS attacks
+      const contactData = {
+        ...result.data,
+        name: sanitizeString(result.data.name),
+        email: sanitizeString(result.data.email),
+        phone: result.data.phone ? sanitizeString(result.data.phone) : undefined,
+        company: sanitizeString(result.data.company),
+        service: sanitizeString(result.data.service),
+        message: sanitizeString(result.data.message),
+      };
       
       // Store the contact in the database
       const savedContact = await storage.createContact(contactData);
@@ -155,7 +165,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const postData = result.data;
+      // Sanitize user input - allow rich text for content and excerpt
+      const postData = {
+        ...result.data,
+        title: sanitizeString(result.data.title),
+        slug: sanitizeString(result.data.slug),
+        excerpt: sanitizeRichText(result.data.excerpt),
+        content: sanitizeRichText(result.data.content),
+        category: sanitizeString(result.data.category),
+        author: sanitizeString(result.data.author),
+        imageUrl: result.data.imageUrl ? sanitizeString(result.data.imageUrl) : undefined,
+      };
       
       // Store the blog post in the database
       const savedPost = await storage.createBlogPost(postData);
@@ -225,7 +245,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const service = await storage.createService(result.data);
+      // Sanitize user input to prevent XSS
+      const serviceData = {
+        ...result.data,
+        name: sanitizeString(result.data.name),
+        description: sanitizeRichText(result.data.description),
+        category: sanitizeString(result.data.category),
+      };
+      
+      const service = await storage.createService(serviceData);
       return res.status(201).json({ 
         message: "Service created successfully",
         service
@@ -418,7 +446,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const booking = await storage.createBooking(result.data);
+      // Sanitize user input to prevent XSS
+      const bookingData = {
+        ...result.data,
+        clientName: sanitizeString(result.data.clientName),
+        clientEmail: sanitizeString(result.data.clientEmail),
+        clientPhone: result.data.clientPhone ? sanitizeString(result.data.clientPhone) : undefined,
+        clientCompany: result.data.clientCompany ? sanitizeString(result.data.clientCompany) : undefined,
+        notes: result.data.notes ? sanitizeString(result.data.notes) : undefined,
+      };
+      
+      const booking = await storage.createBooking(bookingData);
       
       // In a production app, we would send confirmation emails here
       
