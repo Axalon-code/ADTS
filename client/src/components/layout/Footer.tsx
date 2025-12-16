@@ -86,11 +86,11 @@ export default function Footer() {
         <div className="border-t border-gray-700 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p>&copy; {currentYear} ADTS. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-6">
-            <Link href="/privacy">
-              <a className="text-sm hover:text-accent transition-colors">Privacy Policy</a>
+            <Link href="/privacy" className="text-sm hover:text-accent transition-colors">
+              Privacy Policy
             </Link>
-            <Link href="/terms">
-              <a className="text-sm hover:text-accent transition-colors">Terms of Service</a>
+            <Link href="/terms" className="text-sm hover:text-accent transition-colors">
+              Terms of Service
             </Link>
           </div>
         </div>
