@@ -234,7 +234,7 @@ export default function BookingPage() {
         
         {/* Category Selector */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-4 text-center text-foreground">Select a Service Category</h2>
+          <h2 className="text-lg font-semibold mb-4 text-center text-white">Select a Service Category</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {SERVICE_CATEGORIES.map((category) => (
               <button
