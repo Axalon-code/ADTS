@@ -50,13 +50,24 @@ interface TimeSlot {
   endTime: string;
 }
 
+// Service category definitions
+const SERVICE_CATEGORIES = [
+  { id: "azure", name: "Microsoft Azure", icon: "☁️", description: "Cloud infrastructure and services" },
+  { id: "identity", name: "Microsoft Entra", icon: "🔐", description: "Identity and access management" },
+  { id: "exchange", name: "Microsoft Exchange", icon: "📧", description: "Email and calendar solutions" },
+  { id: "m365", name: "Microsoft 365", icon: "📊", description: "Productivity and collaboration" },
+  { id: "licensing", name: "Licensing", icon: "📋", description: "License optimization and management" },
+  { id: "automation", name: "Automation", icon: "⚙️", description: "Process automation solutions" },
+];
+
 export default function BookingPage() {
   const [location] = useLocation();
   const params = new URLSearchParams(location.split('?')[1] || '');
   const initialServiceCategory = params.get("category") || "azure";
   const { toast } = useToast();
   
-  // State for booking form
+  // State for category and booking form
+  const [selectedCategory, setSelectedCategory] = useState(initialServiceCategory);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     // Default to tomorrow
     new Date(new Date().setDate(new Date().getDate() + 1))
@@ -74,9 +85,17 @@ export default function BookingPage() {
   
   // Fetch services by category
   const { data: services = [], isLoading: servicesLoading } = useQuery<Service[]>({
-    queryKey: [`/api/services/category/${initialServiceCategory}`],
-    enabled: !!initialServiceCategory
+    queryKey: [`/api/services/category/${selectedCategory}`],
+    enabled: !!selectedCategory
   });
+  
+  // Reset service selection when category changes
+  const handleCategoryChange = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setSelectedService(null);
+    setSelectedTimeSlot(null);
+    setStep("service");
+  };
   
   // Fetch available time slots for the selected date and service
   const { data: availableSlots = [], isLoading: slotsLoading } = useQuery<TimeSlot[]>({
@@ -209,11 +228,37 @@ export default function BookingPage() {
       <Header />
       <div className="container mx-auto py-12 px-4">
         <h1 className="text-4xl font-bold text-center mb-2">Book a Consultation</h1>
-      <p className="text-muted-foreground text-center mb-8">
-        Schedule a professional IT consultation tailored to your business needs
-      </p>
+        <p className="text-muted-foreground text-center mb-8">
+          Schedule a professional IT consultation tailored to your business needs
+        </p>
+        
+        {/* Category Selector */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold mb-4 text-center">Select a Service Category</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {SERVICE_CATEGORIES.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => handleCategoryChange(category.id)}
+                data-testid={`category-${category.id}`}
+                className={cn(
+                  "p-4 rounded-lg border-2 transition-all text-center hover:shadow-md",
+                  selectedCategory === category.id
+                    ? "border-primary bg-primary/10 shadow-md"
+                    : "border-border hover:border-primary/50"
+                )}
+              >
+                <div className="text-2xl mb-2">{category.icon}</div>
+                <div className="font-medium text-sm">{category.name}</div>
+                <div className="text-xs text-muted-foreground mt-1 hidden md:block">{category.description}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <Separator className="mb-8" />
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Left sidebar - booking steps */}
         <div className="md:col-span-1">
           <Card>
