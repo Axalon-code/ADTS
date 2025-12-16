@@ -340,6 +340,11 @@ export default function BookingPage() {
                     <div>
                       <span className="text-sm text-muted-foreground block">Service:</span>
                       <span className="font-medium">{selectedServiceDetails.name}</span>
+                      {selectedServiceDetails.price && (
+                        <span className="block text-sm text-primary font-medium mt-1">
+                          £{(selectedServiceDetails.price / 100).toFixed(0)}/hour
+                        </span>
+                      )}
                     </div>
                   )}
                   
@@ -407,9 +412,11 @@ export default function BookingPage() {
                               <div>
                                 <h3 className="font-medium text-lg">{service.name}</h3>
                                 <p className="text-muted-foreground mt-1">{service.description}</p>
-                                <div className="flex items-center mt-2 text-sm text-primary font-medium">
-                                  <span>Hourly rate applies</span>
-                                </div>
+                                {service.price && (
+                                  <div className="flex items-center mt-2 text-sm text-primary font-medium">
+                                    <span>£{(service.price / 100).toFixed(0)}/hour</span>
+                                  </div>
+                                )}
                               </div>
                               <div className={cn(
                                 "w-5 h-5 rounded-full border-2 flex items-center justify-center",
