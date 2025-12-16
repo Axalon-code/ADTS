@@ -242,15 +242,18 @@ export default function BookingPage() {
                 onClick={() => handleCategoryChange(category.id)}
                 data-testid={`category-${category.id}`}
                 className={cn(
-                  "p-4 rounded-lg border-2 transition-all text-center hover:shadow-md",
+                  "p-4 rounded-lg border-2 transition-all text-center hover:shadow-md bg-card text-card-foreground",
                   selectedCategory === category.id
-                    ? "border-primary bg-primary/10 shadow-md"
+                    ? "border-primary bg-primary text-primary-foreground shadow-md"
                     : "border-border hover:border-primary/50"
                 )}
               >
                 <div className="text-2xl mb-2">{category.icon}</div>
                 <div className="font-medium text-sm">{category.name}</div>
-                <div className="text-xs text-muted-foreground mt-1 hidden md:block">{category.description}</div>
+                <div className={cn(
+                  "text-xs mt-1 hidden md:block",
+                  selectedCategory === category.id ? "text-primary-foreground/80" : "text-muted-foreground"
+                )}>{category.description}</div>
               </button>
             ))}
           </div>
