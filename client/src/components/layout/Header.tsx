@@ -185,17 +185,6 @@ export default function Header() {
                   About Me
                 </Button>
                 
-                <Button
-                  onClick={() => {
-                    scrollToSection("certifications");
-                    setMenuOpen(false);
-                  }}
-                  className="bg-primary text-white hover:bg-accent transition-colors w-full text-left px-4 py-2"
-                  role="menuitem"
-                >
-                  Certifications
-                </Button>
-                
                 <Button 
                   onClick={() => {
                     window.location.href = "/blog";
