@@ -118,7 +118,8 @@ export type AvailabilitySlot = typeof availabilitySlots.$inferSelect;
 // Bookings
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
-  serviceId: integer("service_id").notNull(),
+  serviceId: integer("service_id"), // Deprecated - kept for backwards compatibility
+  serviceIds: integer("service_ids").array(), // Array of service IDs for bundle bookings
   clientName: text("client_name").notNull(),
   clientEmail: text("client_email").notNull(),
   clientPhone: text("client_phone"),
@@ -128,12 +129,14 @@ export const bookings = pgTable("bookings", {
   endTime: time("end_time").notNull(),
   status: text("status").notNull().default("pending"), // pending, confirmed, completed, cancelled
   notes: text("notes"),
+  totalPrice: integer("total_price"), // Total hourly rate in pence for the bundle
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
 });
 
 export const bookingSchema = createInsertSchema(bookings).pick({
   serviceId: true,
+  serviceIds: true,
   clientName: true,
   clientEmail: true,
   clientPhone: true,
@@ -142,7 +145,8 @@ export const bookingSchema = createInsertSchema(bookings).pick({
   startTime: true,
   endTime: true,
   status: true,
-  notes: true
+  notes: true,
+  totalPrice: true
 });
 
 export type InsertBooking = z.infer<typeof bookingSchema>;
