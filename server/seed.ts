@@ -44,7 +44,7 @@ const blogPostsData = [
     `,
     category: "Security",
     tags: ["Microsoft 365", "Conditional Access", "MFA", "Identity Protection"],
-    publishedAt: new Date(2023, 10, 15).toISOString(),
+    publishedAt: new Date(2023, 10, 15),
     featured: true,
     author: "Alex",
     imageUrl: "/blog-images/conditional-access.svg"
@@ -102,7 +102,7 @@ const blogPostsData = [
     `,
     category: "Cloud Management",
     tags: ["Azure", "Cost Optimization", "Cloud Governance", "Reserved Instances"],
-    publishedAt: new Date(2023, 11, 5).toISOString(),
+    publishedAt: new Date(2023, 11, 5),
     featured: true,
     author: "Alex",
     imageUrl: "/blog-images/azure-cost.svg"
@@ -163,7 +163,7 @@ const blogPostsData = [
     `,
     category: "Device Management",
     tags: ["Microsoft Intune", "MDM", "Compliance", "Device Security"],
-    publishedAt: new Date(2023, 9, 20).toISOString(),
+    publishedAt: new Date(2023, 9, 20),
     featured: false,
     author: "Alex",
     imageUrl: "/blog-images/intune-management.svg"
