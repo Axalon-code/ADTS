@@ -76,14 +76,13 @@ export default function Header() {
     }
 
     return (
-      <Link href={to}>
-        <a 
-          className={`nav-link border-b-2 text-base font-medium ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all w-full text-left`}
-          role="menuitem"
-          aria-current={isActive ? "page" : undefined}
-        >
-          {label}
-        </a>
+      <Link 
+        href={to}
+        className={`nav-link border-b-2 text-base font-medium ${isActive ? "border-primary dark:border-blue-500 font-medium" : "border-transparent hover:border-primary/50 dark:hover:border-blue-500/50"} transition-all w-full text-left`}
+        role="menuitem"
+        aria-current={isActive ? "page" : undefined}
+      >
+        {label}
       </Link>
     );
   };
@@ -100,12 +99,10 @@ export default function Header() {
       <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-[#0066FF]`}>
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <Link href="/">
-              <a className="flex items-center">
-                <div className="w-56 md:w-72">
-                  <AnimatedLogo size="large" />
-                </div>
-              </a>
+            <Link href="/" className="flex items-center">
+              <div className="w-56 md:w-72">
+                <AnimatedLogo size="large" />
+              </div>
             </Link>
             
             <div className="flex items-center gap-4">
