@@ -340,14 +340,6 @@ export default function BookingPage() {
                     <div>
                       <span className="text-sm text-muted-foreground block">Service:</span>
                       <span className="font-medium">{selectedServiceDetails.name}</span>
-                      {selectedServiceDetails.price && (
-                        <span className="ml-2 text-sm text-muted-foreground">
-                          (£{(selectedServiceDetails.price / 100).toFixed(2)})
-                        </span>
-                      )}
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Duration: {selectedServiceDetails.duration} minutes
-                      </p>
                     </div>
                   )}
                   
@@ -415,26 +407,16 @@ export default function BookingPage() {
                               <div>
                                 <h3 className="font-medium text-lg">{service.name}</h3>
                                 <p className="text-muted-foreground mt-1">{service.description}</p>
-                                <div className="flex items-center mt-2 text-sm">
-                                  <span className="text-muted-foreground">Duration: {service.duration} minutes</span>
-                                  {service.price && (
-                                    <>
-                                      <Separator orientation="vertical" className="mx-2 h-4" />
-                                      <span className="font-medium">£{(service.price / 100).toFixed(2)}</span>
-                                    </>
-                                  )}
+                                <div className="flex items-center mt-2 text-sm text-primary font-medium">
+                                  <span>Hourly rate applies</span>
                                 </div>
                               </div>
                               <div className={cn(
-                                "w-5 h-5 rounded-full border",
-                                selectedService === service.id 
-                                  ? "border-primary bg-primary" 
-                                  : "border-muted-foreground/50"
+                                "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                                selectedService === service.id ? "border-primary bg-primary" : "border-muted-foreground/30"
                               )}>
                                 {selectedService === service.id && (
-                                  <div className="w-full h-full flex items-center justify-center">
-                                    <div className="w-2 h-2 rounded-full bg-white"></div>
-                                  </div>
+                                  <div className="w-2 h-2 rounded-full bg-white"></div>
                                 )}
                               </div>
                             </div>
