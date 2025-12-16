@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import Header from "@/components/layout/Header";
@@ -10,28 +10,18 @@ import {
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
-import { CalendarIcon } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 
 // Service type definition
 interface Service {
@@ -72,7 +62,7 @@ export default function BookingPage() {
     // Default to tomorrow
     new Date(new Date().setDate(new Date().getDate() + 1))
   );
-  const [selectedService, setSelectedService] = useState<number | null>(null);
+  const [selectedServices, setSelectedServices] = useState<number[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null);
   const [step, setStep] = useState<"service" | "date" | "time" | "details">("service");
   
@@ -88,34 +78,58 @@ export default function BookingPage() {
     queryKey: [`/api/services/category/${selectedCategory}`],
     enabled: !!selectedCategory
   });
-  
-  // Reset service selection when category changes
-  const handleCategoryChange = (categoryId: string) => {
-    setSelectedCategory(categoryId);
-    setSelectedService(null);
-    setSelectedTimeSlot(null);
-    setStep("service");
-  };
-  
-  // Fetch available time slots for the selected date and service
-  const { data: availableSlots = [], isLoading: slotsLoading } = useQuery<TimeSlot[]>({
-    queryKey: [`/api/available-slots?date=${selectedDate?.toISOString().split('T')[0]}&serviceId=${selectedService}`],
-    enabled: !!selectedDate && !!selectedService
+
+  // Fetch all services to get details for selected ones across categories
+  const { data: allServices = [] } = useQuery<Service[]>({
+    queryKey: ['/api/services'],
   });
   
-  // Set initial selected service based on the first service loaded
-  useEffect(() => {
-    if (services.length > 0 && !selectedService) {
-      setSelectedService(services[0].id);
-    }
-  }, [services, selectedService]);
+  // Handle category change - doesn't clear selections from other categories
+  const handleCategoryChange = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+  };
+
+  // Toggle service selection
+  const toggleService = (serviceId: number) => {
+    setSelectedServices(prev => {
+      if (prev.includes(serviceId)) {
+        return prev.filter(id => id !== serviceId);
+      } else {
+        return [...prev, serviceId];
+      }
+    });
+  };
+
+  // Remove a service from selection
+  const removeService = (serviceId: number) => {
+    setSelectedServices(prev => prev.filter(id => id !== serviceId));
+  };
+
+  // Get selected service details
+  const getSelectedServiceDetails = () => {
+    return allServices.filter(s => selectedServices.includes(s.id));
+  };
+
+  // Calculate total hourly rate
+  const calculateTotalPrice = () => {
+    return getSelectedServiceDetails().reduce((total, service) => {
+      return total + (service.price || 0);
+    }, 0);
+  };
+  
+  // Fetch available time slots for the selected date (use first selected service for duration)
+  const firstSelectedService = selectedServices[0];
+  const { data: availableSlots = [], isLoading: slotsLoading } = useQuery<TimeSlot[]>({
+    queryKey: [`/api/available-slots?date=${selectedDate?.toISOString().split('T')[0]}&serviceId=${firstSelectedService}`],
+    enabled: !!selectedDate && selectedServices.length > 0
+  });
   
   // Step navigation functions
   const goToDateSelection = () => {
-    if (!selectedService) {
+    if (selectedServices.length === 0) {
       toast({
-        title: "Please select a service",
-        description: "You must select a service to continue.",
+        title: "Please select at least one service",
+        description: "You must select at least one service to continue.",
         variant: "destructive"
       });
       return;
@@ -151,7 +165,7 @@ export default function BookingPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!selectedService || !selectedDate || !selectedTimeSlot) {
+    if (selectedServices.length === 0 || !selectedDate || !selectedTimeSlot) {
       toast({
         title: "Missing required fields",
         description: "Please complete all required booking information.",
@@ -167,7 +181,8 @@ export default function BookingPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          serviceId: selectedService,
+          serviceIds: selectedServices,
+          totalPrice: calculateTotalPrice(),
           clientName,
           clientEmail,
           clientPhone,
@@ -180,14 +195,13 @@ export default function BookingPage() {
       });
       
       if (response.ok) {
-        const result = await response.json();
         toast({
           title: "Booking Successful!",
           description: "Your appointment has been scheduled. Check your email for confirmation details.",
         });
         
         // Reset form
-        setSelectedService(null);
+        setSelectedServices([]);
         setSelectedDate(undefined);
         setSelectedTimeSlot(null);
         setClientName("");
@@ -217,11 +231,11 @@ export default function BookingPage() {
     date.setMinutes(parseInt(minutes, 10));
     return format(date, 'h:mm a');
   };
-  
-  // Get currently selected service details
-  const selectedServiceDetails = services.find(
-    (service) => service.id === selectedService
-  );
+
+  // Get category name for a service
+  const getCategoryName = (categoryId: string) => {
+    return SERVICE_CATEGORIES.find(c => c.id === categoryId)?.name || categoryId;
+  };
   
   return (
     <>
@@ -331,7 +345,7 @@ export default function BookingPage() {
           </Card>
           
           {/* Selected booking summary */}
-          {(selectedService || selectedDate || selectedTimeSlot) && (
+          {(selectedServices.length > 0 || selectedDate || selectedTimeSlot) && (
             <Card className="mt-6">
               <CardHeader>
                 <CardTitle>Booking Summary</CardTitle>
@@ -339,14 +353,49 @@ export default function BookingPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {selectedServiceDetails && (
+                  {selectedServices.length > 0 && (
                     <div>
-                      <span className="text-sm text-muted-foreground block">Service:</span>
-                      <span className="font-medium">{selectedServiceDetails.name}</span>
-                      {selectedServiceDetails.price && (
-                        <span className="block text-sm text-primary font-medium mt-1">
-                          £{(selectedServiceDetails.price / 100).toFixed(0)}/hour
-                        </span>
+                      <span className="text-sm text-muted-foreground block mb-2">
+                        Services ({selectedServices.length}):
+                      </span>
+                      <div className="space-y-2">
+                        {getSelectedServiceDetails().map(service => (
+                          <div key={service.id} className="flex items-center justify-between bg-muted/50 p-2 rounded">
+                            <div className="flex-1">
+                              <span className="font-medium text-sm">{service.name}</span>
+                              <Badge variant="outline" className="ml-2 text-xs">
+                                {getCategoryName(service.category)}
+                              </Badge>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {service.price && (
+                                <span className="text-sm text-primary font-medium">
+                                  £{(service.price / 100).toFixed(0)}/hr
+                                </span>
+                              )}
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeService(service.id);
+                                }}
+                                className="text-muted-foreground hover:text-destructive"
+                                aria-label={`Remove ${service.name}`}
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {calculateTotalPrice() > 0 && (
+                        <div className="mt-3 pt-3 border-t">
+                          <div className="flex justify-between items-center">
+                            <span className="font-semibold">Total Hourly Rate:</span>
+                            <span className="text-lg font-bold text-primary">
+                              £{(calculateTotalPrice() / 100).toFixed(0)}/hour
+                            </span>
+                          </div>
+                        </div>
                       )}
                     </div>
                   )}
@@ -395,45 +444,62 @@ export default function BookingPage() {
               {/* Service Selection Step */}
               {step === "service" && (
                 <div>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Select one or more services. You can switch categories to add services from different areas.
+                  </p>
                   {servicesLoading ? (
                     <div className="py-8 text-center">Loading available services...</div>
                   ) : services.length > 0 ? (
                     <div className="space-y-6">
                       <div className="grid grid-cols-1 gap-4">
-                        {services.map((service) => (
-                          <div
-                            key={service.id}
-                            className={cn(
-                              "border rounded-lg p-4 cursor-pointer transition-colors",
-                              selectedService === service.id 
-                                ? "border-primary bg-primary/5" 
-                                : "hover:border-primary/50"
-                            )}
-                            onClick={() => setSelectedService(service.id)}
-                          >
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h3 className="font-medium text-lg">{service.name}</h3>
-                                <p className="text-muted-foreground mt-1">{service.description}</p>
-                                {service.price && (
-                                  <div className="flex items-center mt-2 text-sm text-primary font-medium">
-                                    <span>£{(service.price / 100).toFixed(0)}/hour</span>
+                        {services.map((service) => {
+                          const isSelected = selectedServices.includes(service.id);
+                          return (
+                            <div
+                              key={service.id}
+                              className={cn(
+                                "border rounded-lg p-4 cursor-pointer transition-colors",
+                                isSelected 
+                                  ? "border-primary bg-primary/5" 
+                                  : "hover:border-primary/50"
+                              )}
+                              onClick={() => toggleService(service.id)}
+                              data-testid={`service-${service.id}`}
+                            >
+                              <div className="flex justify-between items-start">
+                                <div className="flex items-start gap-3">
+                                  <Checkbox 
+                                    checked={isSelected}
+                                    onCheckedChange={() => toggleService(service.id)}
+                                    className="mt-1"
+                                  />
+                                  <div>
+                                    <h3 className="font-medium text-lg">{service.name}</h3>
+                                    <p className="text-muted-foreground mt-1">{service.description}</p>
+                                    {service.price && (
+                                      <div className="flex items-center mt-2 text-sm text-primary font-medium">
+                                        <span>£{(service.price / 100).toFixed(0)}/hour</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                {isSelected && (
+                                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                                    <Check className="w-4 h-4 text-white" />
                                   </div>
                                 )}
                               </div>
-                              <div className={cn(
-                                "w-5 h-5 rounded-full border-2 flex items-center justify-center",
-                                selectedService === service.id ? "border-primary bg-primary" : "border-muted-foreground/30"
-                              )}>
-                                {selectedService === service.id && (
-                                  <div className="w-2 h-2 rounded-full bg-white"></div>
-                                )}
-                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
-                      <Button className="w-full" onClick={goToDateSelection}>Continue to Date Selection</Button>
+                      <Button 
+                        className="w-full" 
+                        onClick={goToDateSelection}
+                        disabled={selectedServices.length === 0}
+                      >
+                        Continue to Date Selection ({selectedServices.length} service{selectedServices.length !== 1 ? 's' : ''} selected)
+                      </Button>
                     </div>
                   ) : (
                     <div className="py-8 text-center">
