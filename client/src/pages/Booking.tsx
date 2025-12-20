@@ -63,7 +63,7 @@ export default function BookingPage() {
     new Date(new Date().setDate(new Date().getDate() + 1))
   );
   const [selectedServices, setSelectedServices] = useState<number[]>([]);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null);
+  const [selectedTimeSlots, setSelectedTimeSlots] = useState<TimeSlot[]>([]);
   const [step, setStep] = useState<"service" | "date" | "time" | "details">("service");
   
   // Form details
@@ -150,22 +150,40 @@ export default function BookingPage() {
   };
   
   const goToDetailsForm = () => {
-    if (!selectedTimeSlot) {
+    if (selectedTimeSlots.length === 0) {
       toast({
-        title: "Please select a time slot",
-        description: "You must select a time slot to continue.",
+        title: "Please select at least one time slot",
+        description: "You must select at least one hour to continue.",
         variant: "destructive"
       });
       return;
     }
     setStep("details");
   };
+
+  // Toggle time slot selection
+  const toggleTimeSlot = (slot: TimeSlot) => {
+    setSelectedTimeSlots(prev => {
+      const exists = prev.some(s => s.startTime === slot.startTime && s.endTime === slot.endTime);
+      if (exists) {
+        return prev.filter(s => !(s.startTime === slot.startTime && s.endTime === slot.endTime));
+      } else {
+        return [...prev, slot].sort((a, b) => a.startTime.localeCompare(b.startTime));
+      }
+    });
+  };
+
+  // Filter to show only hourly slots (not 30-minute increments)
+  const hourlySlots = availableSlots.filter(slot => {
+    const startMinutes = parseInt(slot.startTime.split(':')[1], 10);
+    return startMinutes === 0;
+  });
   
   // Handle form submission - redirect to Stripe checkout
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (selectedServices.length === 0 || !selectedDate || !selectedTimeSlot) {
+    if (selectedServices.length === 0 || !selectedDate || selectedTimeSlots.length === 0) {
       toast({
         title: "Missing required fields",
         description: "Please complete all required booking information.",
@@ -202,11 +220,12 @@ export default function BookingPage() {
             clientPhone,
             clientCompany,
             bookingDate: selectedDate.toISOString().split('T')[0],
-            startTime: selectedTimeSlot.startTime,
-            endTime: selectedTimeSlot.endTime,
+            startTime: selectedTimeSlots[0].startTime,
+            endTime: selectedTimeSlots[selectedTimeSlots.length - 1].endTime,
+            timeSlots: selectedTimeSlots,
             notes
           },
-          totalPrice: calculateTotalPrice(),
+          totalPrice: calculateTotalPrice() * selectedTimeSlots.length,
           serviceNames
         }),
       });
@@ -355,7 +374,7 @@ export default function BookingPage() {
           </Card>
           
           {/* Selected booking summary */}
-          {(selectedServices.length > 0 || selectedDate || selectedTimeSlot) && (
+          {(selectedServices.length > 0 || selectedDate || selectedTimeSlots.length > 0) && (
             <Card className="mt-6">
               <CardHeader>
                 <CardTitle>Booking Summary</CardTitle>
@@ -419,12 +438,18 @@ export default function BookingPage() {
                     </div>
                   )}
                   
-                  {selectedTimeSlot && (
+                  {selectedTimeSlots.length > 0 && (
                     <div>
-                      <span className="text-sm text-muted-foreground block">Time:</span>
-                      <span className="font-medium">
-                        {formatTime(selectedTimeSlot.startTime)} - {formatTime(selectedTimeSlot.endTime)}
+                      <span className="text-sm text-muted-foreground block">
+                        Time Slots ({selectedTimeSlots.length} hour{selectedTimeSlots.length !== 1 ? 's' : ''}):
                       </span>
+                      <div className="space-y-1 mt-1">
+                        {selectedTimeSlots.map((slot, idx) => (
+                          <span key={idx} className="font-medium block">
+                            {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -539,35 +564,43 @@ export default function BookingPage() {
               {/* Time Selection Step */}
               {step === "time" && (
                 <div className="space-y-6">
+                  <p className="text-sm text-muted-foreground">
+                    Select one or more hourly slots for your consultation.
+                  </p>
                   {slotsLoading ? (
                     <div className="py-8 text-center">Loading available time slots...</div>
-                  ) : availableSlots.length > 0 ? (
+                  ) : hourlySlots.length > 0 ? (
                     <div>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
-                        {availableSlots.map((slot, index) => (
-                          <div
-                            key={index}
-                            className={cn(
-                              "border rounded-md p-3 text-center cursor-pointer transition-colors",
-                              selectedTimeSlot === slot
-                                ? "border-primary bg-primary/5"
-                                : "hover:border-primary/50"
-                            )}
-                            onClick={() => setSelectedTimeSlot(slot)}
-                          >
-                            <span className="font-medium">
-                              {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
-                            </span>
-                          </div>
-                        ))}
+                        {hourlySlots.map((slot, index) => {
+                          const isSelected = selectedTimeSlots.some(
+                            s => s.startTime === slot.startTime && s.endTime === slot.endTime
+                          );
+                          return (
+                            <div
+                              key={index}
+                              className={cn(
+                                "border rounded-md p-3 text-center cursor-pointer transition-colors",
+                                isSelected
+                                  ? "border-primary bg-primary/5"
+                                  : "hover:border-primary/50"
+                              )}
+                              onClick={() => toggleTimeSlot(slot)}
+                            >
+                              <span className="font-medium">
+                                {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                       
                       <div className="flex gap-2 mt-6">
                         <Button variant="outline" className="w-1/2" onClick={() => setStep("date")}>
                           Back
                         </Button>
-                        <Button className="w-1/2" onClick={goToDetailsForm}>
-                          Continue to Your Details
+                        <Button className="w-1/2" onClick={goToDetailsForm} disabled={selectedTimeSlots.length === 0}>
+                          Continue to Your Details ({selectedTimeSlots.length} hour{selectedTimeSlots.length !== 1 ? 's' : ''})
                         </Button>
                       </div>
                     </div>
