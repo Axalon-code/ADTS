@@ -50,7 +50,7 @@ export default function About() {
             <img 
               src={alexPhoto} 
               alt="Alex Devlyashevskiy - IT Consultant" 
-              className="rounded-xl shadow-lg w-full max-w-md h-auto object-cover"
+              className="rounded-xl shadow-lg w-full max-w-xs h-auto object-cover"
             />
           </div>
         </div>
