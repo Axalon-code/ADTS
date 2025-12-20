@@ -12,10 +12,68 @@ import {
 import nodemailer from "nodemailer";
 import { sanitizeString, sanitizeRichText } from "./sanitize";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
+import rateLimit from "express-rate-limit";
+
+// Rate limiters for different endpoints
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 contact form submissions per 15 minutes
+  message: { message: "Too many submissions, please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const bookingLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // 10 booking attempts per 15 minutes
+  message: { message: "Too many booking attempts, please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const apiLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60, // 60 requests per minute for general API
+  message: { message: "Too many requests, please slow down." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Helper to create email transporter with validation
+function createEmailTransporter() {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    console.warn("SMTP credentials not configured - emails will not be sent");
+    return null;
+  }
+  
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST || "smtp.office365.com",
+    port: parseInt(process.env.SMTP_PORT || "587"),
+    secure: process.env.SMTP_SECURE === "true",
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+}
+
+// Helper to escape HTML in email content to prevent XSS
+function escapeHtml(text: string): string {
+  const htmlEntities: { [key: string]: string } = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return text.replace(/[&<>"']/g, char => htmlEntities[char]);
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // API routes for contact form
-  app.post("/api/contact", async (req, res) => {
+  // Apply general rate limiting to all API routes
+  app.use('/api', apiLimiter);
+  // API routes for contact form (with rate limiting)
+  app.post("/api/contact", contactLimiter, async (req, res) => {
     try {
       // Validate request body using the schema
       const result = contactSchema.safeParse(req.body);
@@ -41,53 +99,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Store the contact in the database
       const savedContact = await storage.createContact(contactData);
       
-      // Set up nodemailer with environment variables
-      // This is a simulation - in production, use actual SMTP credentials
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || "smtp.example.com",
-        port: parseInt(process.env.SMTP_PORT || "587"),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: {
-          user: process.env.SMTP_USER || "user@example.com",
-          pass: process.env.SMTP_PASS || "password",
-        },
-      });
+      // Set up nodemailer with validated credentials
+      const transporter = createEmailTransporter();
       
-      // Compose email with contact form data
-      const mailOptions = {
-        from: process.env.SMTP_USER,
-        to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
-        replyTo: contactData.email,
-        subject: `New Contact Form Submission: ${contactData.service} Inquiry`,
-        text: `
-          Name: ${contactData.name}
-          Email: ${contactData.email}
-          Phone: ${contactData.phone || "Not provided"}
-          Company: ${contactData.company}
-          Service: ${contactData.service}
-          
-          Message:
-          ${contactData.message}
-        `,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Service:</strong> ${contactData.service}</p>
-          <p><strong>Name:</strong> ${contactData.name}</p>
-          <p><strong>Email:</strong> ${contactData.email}</p>
-          <p><strong>Phone:</strong> ${contactData.phone || "Not provided"}</p>
-          <p><strong>Company:</strong> ${contactData.company}</p>
-          <h3>Message:</h3>
-          <p>${contactData.message.replace(/\n/g, "<br>")}</p>
-        `,
-      };
-      
-      // Send the email notification
-      try {
-        await transporter.sendMail(mailOptions);
-        console.log("Contact form email sent successfully");
-      } catch (error) {
-        console.error("Error sending email:", error);
-        // Still return success since we've stored the contact
+      // Send email notification if transporter is configured
+      if (transporter) {
+        const mailOptions = {
+          from: process.env.SMTP_USER,
+          to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
+          replyTo: contactData.email,
+          subject: `New Contact Form Submission: ${escapeHtml(contactData.service)} Inquiry`,
+          text: `
+            Name: ${contactData.name}
+            Email: ${contactData.email}
+            Phone: ${contactData.phone || "Not provided"}
+            Company: ${contactData.company}
+            Service: ${contactData.service}
+            
+            Message:
+            ${contactData.message}
+          `,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>Service:</strong> ${escapeHtml(contactData.service)}</p>
+            <p><strong>Name:</strong> ${escapeHtml(contactData.name)}</p>
+            <p><strong>Email:</strong> ${escapeHtml(contactData.email)}</p>
+            <p><strong>Phone:</strong> ${escapeHtml(contactData.phone || "Not provided")}</p>
+            <p><strong>Company:</strong> ${escapeHtml(contactData.company)}</p>
+            <h3>Message:</h3>
+            <p>${escapeHtml(contactData.message).replace(/\n/g, "<br>")}</p>
+          `,
+        };
+        
+        try {
+          await transporter.sendMail(mailOptions);
+          console.log("Contact form email sent successfully");
+        } catch (error) {
+          console.error("Error sending email:", error);
+        }
       }
       
       return res.status(201).json({ 
@@ -556,8 +605,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create checkout session for booking payment
-  app.post("/api/create-checkout-session", async (req, res) => {
+  // Create checkout session for booking payment (with rate limiting)
+  app.post("/api/create-checkout-session", bookingLimiter, async (req, res) => {
     try {
       const { bookingData } = req.body;
       
@@ -675,9 +724,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Cleanup expired pending bookings (runs on each verify-payment call for simplicity)
+  // In production, this would be a scheduled job
+  const runPendingBookingCleanup = async () => {
+    try {
+      const cleaned = await storage.cleanupExpiredPendingBookings(24); // 24 hours
+      if (cleaned > 0) {
+        console.log(`Cleaned up ${cleaned} expired pending booking(s)`);
+      }
+    } catch (error) {
+      console.error("Error cleaning up pending bookings:", error);
+    }
+  };
+
+  // Rate limiter for payment verification (stricter to prevent brute force)
+  const verifyPaymentLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // 20 verification attempts per 15 minutes
+    message: { message: "Too many verification attempts, please try again later." },
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
   // Verify payment and confirm pending booking after successful checkout
   // This endpoint only confirms pre-existing pending bookings, not create new ones
-  app.post("/api/verify-payment", async (req, res) => {
+  app.post("/api/verify-payment", verifyPaymentLimiter, async (req, res) => {
+    // Run cleanup opportunistically
+    runPendingBookingCleanup();
     try {
       const { sessionId } = req.body;
       
@@ -743,70 +816,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Send email notification for confirmed booking
-      try {
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST || "smtp.example.com",
-          port: parseInt(process.env.SMTP_PORT || "587"),
-          secure: process.env.SMTP_SECURE === "true",
-          auth: {
-            user: process.env.SMTP_USER || "",
-            pass: process.env.SMTP_PASS || "",
-          },
-        });
+      const transporter = createEmailTransporter();
+      if (transporter) {
+        try {
+          // Email to admin about new booking (with HTML escaping for safety)
+          const adminMailOptions = {
+            from: process.env.SMTP_USER,
+            to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
+            subject: `New Booking Confirmed: ${escapeHtml(confirmedBooking.clientName)}`,
+            html: `
+              <h2>New Booking Confirmed</h2>
+              <p>A new consultation has been booked and paid for.</p>
+              
+              <h3>Client Details</h3>
+              <p><strong>Name:</strong> ${escapeHtml(confirmedBooking.clientName)}</p>
+              <p><strong>Email:</strong> ${escapeHtml(confirmedBooking.clientEmail)}</p>
+              <p><strong>Phone:</strong> ${escapeHtml(confirmedBooking.clientPhone || "Not provided")}</p>
+              <p><strong>Company:</strong> ${escapeHtml(confirmedBooking.clientCompany || "Not provided")}</p>
+              
+              <h3>Booking Details</h3>
+              <p><strong>Services:</strong> ${escapeHtml(serviceNames)}</p>
+              <p><strong>Date:</strong> ${formattedDate}</p>
+              <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
+              <p><strong>Total Paid:</strong> ${formattedPrice}</p>
+              
+              ${confirmedBooking.notes ? `<h3>Additional Notes</h3><p>${escapeHtml(confirmedBooking.notes)}</p>` : ''}
+            `,
+          };
 
-        // Email to admin about new booking
-        const adminMailOptions = {
-          from: process.env.SMTP_USER,
-          to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
-          subject: `New Booking Confirmed: ${confirmedBooking.clientName}`,
-          html: `
-            <h2>New Booking Confirmed</h2>
-            <p>A new consultation has been booked and paid for.</p>
-            
-            <h3>Client Details</h3>
-            <p><strong>Name:</strong> ${confirmedBooking.clientName}</p>
-            <p><strong>Email:</strong> ${confirmedBooking.clientEmail}</p>
-            <p><strong>Phone:</strong> ${confirmedBooking.clientPhone || "Not provided"}</p>
-            <p><strong>Company:</strong> ${confirmedBooking.clientCompany || "Not provided"}</p>
-            
-            <h3>Booking Details</h3>
-            <p><strong>Services:</strong> ${serviceNames}</p>
-            <p><strong>Date:</strong> ${formattedDate}</p>
-            <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
-            <p><strong>Total Paid:</strong> ${formattedPrice}</p>
-            
-            ${confirmedBooking.notes ? `<h3>Additional Notes</h3><p>${confirmedBooking.notes}</p>` : ''}
-          `,
-        };
+          // Confirmation email to client
+          const clientMailOptions = {
+            from: process.env.SMTP_USER,
+            to: confirmedBooking.clientEmail,
+            subject: `Booking Confirmed - ADTS Consultation`,
+            html: `
+              <h2>Your Booking is Confirmed</h2>
+              <p>Dear ${escapeHtml(confirmedBooking.clientName)},</p>
+              <p>Thank you for booking a consultation with ADTS. Your booking has been confirmed and payment received.</p>
+              
+              <h3>Booking Details</h3>
+              <p><strong>Services:</strong> ${escapeHtml(serviceNames)}</p>
+              <p><strong>Date:</strong> ${formattedDate}</p>
+              <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
+              <p><strong>Total Paid:</strong> ${formattedPrice}</p>
+              
+              <p>If you have any questions before your consultation, please don't hesitate to contact me at AD@adtechservices.co.uk or call +44 (0)7492 168197.</p>
+              
+              <p>Best regards,<br>Alex Devlyashevskiy<br>ADTS - IT Consultancy</p>
+            `,
+          };
 
-        // Confirmation email to client
-        const clientMailOptions = {
-          from: process.env.SMTP_USER,
-          to: confirmedBooking.clientEmail,
-          subject: `Booking Confirmed - ADTS Consultation`,
-          html: `
-            <h2>Your Booking is Confirmed</h2>
-            <p>Dear ${confirmedBooking.clientName},</p>
-            <p>Thank you for booking a consultation with ADTS. Your booking has been confirmed and payment received.</p>
-            
-            <h3>Booking Details</h3>
-            <p><strong>Services:</strong> ${serviceNames}</p>
-            <p><strong>Date:</strong> ${formattedDate}</p>
-            <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
-            <p><strong>Total Paid:</strong> ${formattedPrice}</p>
-            
-            <p>If you have any questions before your consultation, please don't hesitate to contact me at AD@adtechservices.co.uk or call +44 (0)7492 168197.</p>
-            
-            <p>Best regards,<br>Alex Devlyashevskiy<br>ADTS - IT Consultancy</p>
-          `,
-        };
-
-        await transporter.sendMail(adminMailOptions);
-        await transporter.sendMail(clientMailOptions);
-        console.log("Booking confirmation emails sent successfully");
-      } catch (emailError) {
-        console.error("Error sending booking confirmation emails:", emailError);
-        // Don't fail the booking confirmation if email fails
+          await transporter.sendMail(adminMailOptions);
+          await transporter.sendMail(clientMailOptions);
+          console.log("Booking confirmation emails sent successfully");
+        } catch (emailError) {
+          console.error("Error sending booking confirmation emails:", emailError);
+        }
       }
 
       return res.status(200).json({ 

@@ -44,6 +44,7 @@ export interface IStorage {
   getBookingByStripeSessionId(sessionId: string): Promise<Booking | undefined>;
   createBooking(booking: InsertBooking): Promise<Booking>;
   updateBookingStatus(id: number, status: string): Promise<Booking>;
+  cleanupExpiredPendingBookings(hoursOld: number): Promise<number>;
   
   // Blocked dates methods
   getBlockedDates(): Promise<BlockedDate[]>;
@@ -210,6 +211,20 @@ export class DatabaseStorage implements IStorage {
       .where(eq(bookings.id, id))
       .returning();
     return result[0];
+  }
+
+  async cleanupExpiredPendingBookings(hoursOld: number): Promise<number> {
+    const cutoffTime = new Date(Date.now() - hoursOld * 60 * 60 * 1000);
+    const result = await db
+      .delete(bookings)
+      .where(
+        and(
+          eq(bookings.status, 'pending_payment'),
+          lte(bookings.createdAt, cutoffTime)
+        )
+      )
+      .returning();
+    return result.length;
   }
 
   // Blocked dates methods
