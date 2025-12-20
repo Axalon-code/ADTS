@@ -14,44 +14,6 @@ import { sanitizeString, sanitizeRichText } from "./sanitize";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Test email endpoint (temporary - for configuration testing)
-  app.get("/api/test-email", async (req, res) => {
-    try {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || "smtp.example.com",
-        port: parseInt(process.env.SMTP_PORT || "587"),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: {
-          user: process.env.SMTP_USER || "",
-          pass: process.env.SMTP_PASS || "",
-        },
-      });
-
-      const mailOptions = {
-        from: process.env.SMTP_USER,
-        to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
-        subject: "ADTS Email Configuration Test",
-        text: "This is a test email to verify your SMTP configuration is working correctly.",
-        html: `
-          <h2>Email Configuration Test</h2>
-          <p>This is a test email from your ADTS website.</p>
-          <p>If you received this, your Microsoft 365 SMTP settings are configured correctly!</p>
-          <p><em>Sent at: ${new Date().toLocaleString()}</em></p>
-        `,
-      };
-
-      await transporter.sendMail(mailOptions);
-      res.json({ success: true, message: "Test email sent successfully!" });
-    } catch (error: any) {
-      console.error("Email test failed:", error);
-      res.status(500).json({ 
-        success: false, 
-        message: "Email test failed", 
-        error: error.message 
-      });
-    }
-  });
-
   // API routes for contact form
   app.post("/api/contact", async (req, res) => {
     try {
@@ -93,8 +55,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Compose email with contact form data
       const mailOptions = {
-        from: process.env.EMAIL_FROM || "no-reply@adtechservices.co.uk",
+        from: process.env.SMTP_USER,
         to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
+        replyTo: contactData.email,
         subject: `New Contact Form Submission: ${contactData.service} Inquiry`,
         text: `
           Name: ${contactData.name}
@@ -118,17 +81,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `,
       };
       
-      // In development mode, just log the email instead of sending it
-      if (process.env.NODE_ENV === "development") {
-        console.log("Email would be sent in production:", mailOptions);
-      } else {
-        // In production, attempt to send the email
-        try {
-          await transporter.sendMail(mailOptions);
-        } catch (error) {
-          console.error("Error sending email:", error);
-          // Still return success since we've stored the contact
-        }
+      // Send the email notification
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log("Contact form email sent successfully");
+      } catch (error) {
+        console.error("Error sending email:", error);
+        // Still return success since we've stored the contact
       }
       
       return res.status(201).json({ 
