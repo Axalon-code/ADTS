@@ -14,6 +14,44 @@ import { sanitizeString, sanitizeRichText } from "./sanitize";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Test email endpoint (temporary - for configuration testing)
+  app.get("/api/test-email", async (req, res) => {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST || "smtp.example.com",
+        port: parseInt(process.env.SMTP_PORT || "587"),
+        secure: process.env.SMTP_SECURE === "true",
+        auth: {
+          user: process.env.SMTP_USER || "",
+          pass: process.env.SMTP_PASS || "",
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.SMTP_USER,
+        to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
+        subject: "ADTS Email Configuration Test",
+        text: "This is a test email to verify your SMTP configuration is working correctly.",
+        html: `
+          <h2>Email Configuration Test</h2>
+          <p>This is a test email from your ADTS website.</p>
+          <p>If you received this, your Microsoft 365 SMTP settings are configured correctly!</p>
+          <p><em>Sent at: ${new Date().toLocaleString()}</em></p>
+        `,
+      };
+
+      await transporter.sendMail(mailOptions);
+      res.json({ success: true, message: "Test email sent successfully!" });
+    } catch (error: any) {
+      console.error("Email test failed:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Email test failed", 
+        error: error.message 
+      });
+    }
+  });
+
   // API routes for contact form
   app.post("/api/contact", async (req, res) => {
     try {
