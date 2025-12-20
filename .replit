@@ -38,3 +38,11 @@ waitForPort = 5000
 
 [agent]
 integrations = ["stripe:2.0.0"]
+
+[userenv]
+
+[userenv.shared]
+SMTP_HOST = "smtp.office365.com"
+SMTP_PORT = "587"
+SMTP_SECURE = "false"
+EMAIL_TO = "AD@adtechservices.co.uk"
