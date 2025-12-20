@@ -654,22 +654,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "One or more invalid service IDs" });
       }
 
-      // Calculate total price server-side (in pence)
-      const totalPrice = selectedServices.reduce((sum, service) => sum + (service.price || 0), 0);
+      // Calculate hourly rate from selected services (in pence)
+      const hourlyRate = selectedServices.reduce((sum, service) => sum + (service.price || 0), 0);
       const serviceNames = selectedServices.map(s => s.name).join(', ');
+      
+      // Calculate number of hours from time slots
+      const timeToMinutes = (time: string) => {
+        const [hours, minutes] = time.split(':').map(Number);
+        return hours * 60 + minutes;
+      };
+      const startMinutes = timeToMinutes(bookingData.startTime);
+      const endMinutes = timeToMinutes(bookingData.endTime);
+      const durationHours = Math.max(1, Math.ceil((endMinutes - startMinutes) / 60));
+      
+      // Total price = hourly rate × number of hours
+      const totalPrice = hourlyRate * durationHours;
 
       // Check if slot is available before proceeding (interval overlap detection)
       const bookingDateObj = new Date(bookingData.bookingDate);
       const existingBookings = await storage.getBookingsByDate(bookingDateObj);
       
-      // Helper to convert time strings to minutes for comparison
-      const timeToMinutes = (time: string) => {
-        const [hours, minutes] = time.split(':').map(Number);
-        return hours * 60 + minutes;
-      };
-      
-      const requestedStart = timeToMinutes(bookingData.startTime);
-      const requestedEnd = timeToMinutes(bookingData.endTime);
+      const requestedStart = startMinutes;
+      const requestedEnd = endMinutes;
       
       // Check for overlapping bookings (start < existingEnd && end > existingStart)
       const slotConflict = existingBookings.some(b => {
@@ -713,10 +719,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             price_data: {
               currency: 'gbp',
               product_data: {
-                name: 'IT Consultation Booking',
-                description: `Services: ${serviceNames}`,
+                name: `IT Consultation (${durationHours} hour${durationHours > 1 ? 's' : ''})`,
+                description: `Services: ${serviceNames} | Date: ${bookingData.bookingDate} | Time: ${bookingData.startTime} - ${bookingData.endTime}`,
               },
-              unit_amount: totalPrice, // Price in pence calculated server-side
+              unit_amount: totalPrice, // Total price in pence (hourly rate × hours)
             },
             quantity: 1,
           },
