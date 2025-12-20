@@ -1,4 +1,4 @@
-import { services, availabilitySlots } from "@shared/schema";
+import { services, availabilitySlots, monthlyPackages } from "@shared/schema";
 import { db } from "./db";
 import { log } from "./vite";
 import { eq } from "drizzle-orm";
@@ -208,6 +208,290 @@ export const allServices = [
 ];
 
 /**
+ * All monthly service packages offered by ADTS (exported for use in admin sync endpoint)
+ */
+export const allMonthlyPackages = [
+  // Azure Plans
+  {
+    name: "Azure Essentials",
+    description: "Core Azure migration and management services for small businesses",
+    price: "£500",
+    billingPeriod: "per month",
+    features: [
+      "Initial Azure environment setup",
+      "Basic workload migration (up to 5 VMs)",
+      "Standard security configuration",
+      "Monthly performance reports",
+      "Email support with 24-hour response time"
+    ],
+    category: "azure",
+    mostPopular: false,
+    tier: "essential",
+    isActive: true
+  },
+  {
+    name: "Azure Business",
+    description: "Comprehensive Azure solutions for growing organizations",
+    price: "£1,250",
+    billingPeriod: "per month",
+    features: [
+      "Complete Azure environment design and setup",
+      "Advanced workload migration (up to 20 VMs)",
+      "Enhanced security with threat monitoring",
+      "Disaster recovery planning",
+      "Weekly performance optimization",
+      "Dedicated support with 8-hour response time"
+    ],
+    category: "azure",
+    mostPopular: true,
+    tier: "business",
+    isActive: true
+  },
+  {
+    name: "Azure Enterprise",
+    description: "Advanced Azure cloud solutions with full management",
+    price: "£2,500+",
+    billingPeriod: "per month",
+    features: [
+      "Enterprise-grade Azure architecture",
+      "Unlimited workload migration",
+      "Advanced security with 24/7 monitoring",
+      "Comprehensive disaster recovery",
+      "Continuous cost optimization",
+      "Custom compliance frameworks",
+      "24/7 priority support with 1-hour response time"
+    ],
+    category: "azure",
+    mostPopular: false,
+    tier: "enterprise",
+    isActive: true
+  },
+  // Identity Plans
+  {
+    name: "Identity Essentials",
+    description: "Basic identity and access management for small teams",
+    price: "£300",
+    billingPeriod: "per month",
+    features: [
+      "Microsoft Entra ID setup and configuration",
+      "Basic authentication policies",
+      "Multi-factor authentication setup",
+      "Standard access reviews",
+      "Email support with 24-hour response time"
+    ],
+    category: "identity",
+    mostPopular: false,
+    tier: "essential",
+    isActive: true
+  },
+  {
+    name: "Identity Business",
+    description: "Comprehensive identity management for mid-sized organizations",
+    price: "£700",
+    billingPeriod: "per month",
+    features: [
+      "Advanced Entra ID implementation",
+      "Conditional access policies",
+      "Privileged identity management",
+      "Identity Protection configuration",
+      "Quarterly security assessments",
+      "Dedicated support with 8-hour response time"
+    ],
+    category: "identity",
+    mostPopular: true,
+    tier: "business",
+    isActive: true
+  },
+  {
+    name: "Identity Enterprise",
+    description: "Enterprise-grade identity security and governance",
+    price: "£1,500+",
+    billingPeriod: "per month",
+    features: [
+      "Zero Trust identity architecture",
+      "Custom security policies",
+      "Advanced threat protection",
+      "Comprehensive access governance",
+      "Regular compliance audits",
+      "Identity security training",
+      "24/7 priority support with 1-hour response time"
+    ],
+    category: "identity",
+    mostPopular: false,
+    tier: "enterprise",
+    isActive: true
+  },
+  // Microsoft 365 Plans
+  {
+    name: "M365 Essentials",
+    description: "Basic Microsoft 365 setup and management",
+    price: "£300",
+    billingPeriod: "per month",
+    features: [
+      "Microsoft 365 tenant setup",
+      "Email migration and configuration",
+      "Basic security policies",
+      "Standard Teams setup",
+      "Email support with 24-hour response time"
+    ],
+    category: "m365",
+    mostPopular: false,
+    tier: "essential",
+    isActive: true
+  },
+  {
+    name: "M365 Business",
+    description: "Comprehensive M365 management for business productivity",
+    price: "£600",
+    billingPeriod: "per month",
+    features: [
+      "Advanced M365 implementation",
+      "Full data migration",
+      "SharePoint and Teams optimization",
+      "Enhanced security configuration",
+      "Monthly admin training",
+      "Dedicated support with 8-hour response time"
+    ],
+    category: "m365",
+    mostPopular: true,
+    tier: "business",
+    isActive: true
+  },
+  {
+    name: "M365 Enterprise",
+    description: "Enterprise-grade Microsoft 365 solutions and governance",
+    price: "£1,300+",
+    billingPeriod: "per month",
+    features: [
+      "Enterprise M365 architecture",
+      "Advanced compliance configuration",
+      "Custom SharePoint and Teams development",
+      "Information governance implementation",
+      "End-user training program",
+      "Quarterly strategy reviews",
+      "24/7 priority support with 1-hour response time"
+    ],
+    category: "m365",
+    mostPopular: false,
+    tier: "enterprise",
+    isActive: true
+  },
+  // Automation Plans
+  {
+    name: "Automation Essentials",
+    description: "Basic process automation for small teams",
+    price: "£400",
+    billingPeriod: "per month",
+    features: [
+      "Process assessment and documentation",
+      "Basic Power Automate flows",
+      "Simple form automation",
+      "Standard notification systems",
+      "Email support with 24-hour response time"
+    ],
+    category: "automation",
+    mostPopular: false,
+    tier: "essential",
+    isActive: true
+  },
+  {
+    name: "Automation Business",
+    description: "Comprehensive automation solutions for business efficiency",
+    price: "£800",
+    billingPeriod: "per month",
+    features: [
+      "Detailed workflow analysis",
+      "Advanced Power Automate implementation",
+      "Custom Power Apps development",
+      "Process optimization",
+      "Monthly usage reports",
+      "Dedicated support with 8-hour response time"
+    ],
+    category: "automation",
+    mostPopular: true,
+    tier: "business",
+    isActive: true
+  },
+  {
+    name: "Automation Enterprise",
+    description: "Enterprise-grade automation with custom development",
+    price: "£1,600+",
+    billingPeriod: "per month",
+    features: [
+      "Enterprise workflow architecture",
+      "Advanced custom connectors",
+      "Integration with legacy systems",
+      "Robotic process automation",
+      "Continuous optimization",
+      "ROI tracking and reporting",
+      "24/7 priority support with 1-hour response time"
+    ],
+    category: "automation",
+    mostPopular: false,
+    tier: "enterprise",
+    isActive: true
+  },
+  // Tech Support Plans
+  {
+    name: "Support Essentials",
+    description: "Remote IT support for small businesses",
+    price: "£300",
+    billingPeriod: "per month",
+    features: [
+      "Remote helpdesk support",
+      "Email and phone support",
+      "Basic troubleshooting",
+      "Software installation assistance",
+      "Response within 24 hours",
+      "Price adjusts based on user count"
+    ],
+    category: "support",
+    mostPopular: false,
+    tier: "essential",
+    isActive: true
+  },
+  {
+    name: "Support Business",
+    description: "Comprehensive IT support with proactive monitoring",
+    price: "£600",
+    billingPeriod: "per month",
+    features: [
+      "Unlimited remote support",
+      "Proactive system monitoring",
+      "Patch management",
+      "Antivirus and security management",
+      "Monthly health reports",
+      "Response within 4 hours",
+      "Price adjusts based on user count"
+    ],
+    category: "support",
+    mostPopular: true,
+    tier: "business",
+    isActive: true
+  },
+  {
+    name: "Support Enterprise",
+    description: "Premium IT support with dedicated account management",
+    price: "£1,200+",
+    billingPeriod: "per month",
+    features: [
+      "24/7 priority support",
+      "Dedicated account manager",
+      "On-site support visits",
+      "Advanced security monitoring",
+      "Disaster recovery planning",
+      "Quarterly strategy reviews",
+      "Response within 1 hour",
+      "Price adjusts based on user count"
+    ],
+    category: "support",
+    mostPopular: false,
+    tier: "enterprise",
+    isActive: true
+  }
+];
+
+/**
  * Seed initial services and availability slots
  * This function now ensures all services exist, adding any missing ones
  */
@@ -227,6 +511,19 @@ export async function seedBookingData() {
       log(`Added ${servicesToAdd.length} new services`);
     } else {
       log("All services already exist, skipping seed");
+    }
+    
+    // Seed monthly packages
+    const existingPackages = await db.select().from(monthlyPackages);
+    const existingPackageNames = new Set(existingPackages.map(p => p.name));
+    
+    const packagesToAdd = allMonthlyPackages.filter(p => !existingPackageNames.has(p.name));
+    
+    if (packagesToAdd.length > 0) {
+      await db.insert(monthlyPackages).values(packagesToAdd);
+      log(`Added ${packagesToAdd.length} new monthly packages`);
+    } else {
+      log("All monthly packages already exist, skipping seed");
     }
     
     // Check if we already have availability slots

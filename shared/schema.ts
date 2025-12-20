@@ -171,3 +171,32 @@ export const blockedDateSchema = createInsertSchema(blockedDates).pick({
 
 export type InsertBlockedDate = z.infer<typeof blockedDateSchema>;
 export type BlockedDate = typeof blockedDates.$inferSelect;
+
+// Monthly Service Packages (managed service contracts)
+export const monthlyPackages = pgTable("monthly_packages", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  price: text("price").notNull(), // e.g., "£500", "£2,500+"
+  billingPeriod: text("billing_period").notNull().default("per month"),
+  features: text("features").array().notNull(),
+  category: text("category").notNull(), // azure, identity, m365, automation, support
+  mostPopular: boolean("most_popular").default(false).notNull(),
+  tier: text("tier").notNull(), // essential, business, enterprise
+  isActive: boolean("is_active").default(true).notNull()
+});
+
+export const monthlyPackageSchema = createInsertSchema(monthlyPackages).pick({
+  name: true,
+  description: true,
+  price: true,
+  billingPeriod: true,
+  features: true,
+  category: true,
+  mostPopular: true,
+  tier: true,
+  isActive: true
+});
+
+export type InsertMonthlyPackage = z.infer<typeof monthlyPackageSchema>;
+export type MonthlyPackage = typeof monthlyPackages.$inferSelect;
