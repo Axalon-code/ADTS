@@ -78,6 +78,24 @@ export default function ServiceComparison() {
     support: "Tech Support"
   };
 
+  const handleChoosePackage = (packageName: string, price: string) => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+      
+      // Pre-fill the service field and message after scrolling
+      setTimeout(() => {
+        const serviceSelect = document.querySelector('[data-testid="select-service"]') as HTMLButtonElement;
+        const messageTextarea = document.querySelector('[data-testid="input-message"]') as HTMLTextAreaElement;
+        
+        if (messageTextarea) {
+          messageTextarea.value = `I'm interested in the ${packageName} package (${price}/month). Please contact me to discuss this managed service.`;
+          messageTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }, 500);
+    }
+  };
+
   return (
     <section id="service-comparison" className="py-16 bg-transparent dark:bg-transparent">
       <div aria-live="polite" className="sr-only" id="category-change-announcement"></div>
@@ -158,6 +176,7 @@ export default function ServiceComparison() {
                   <CardFooter className="mt-auto">
                     <Button 
                       className="w-full bg-primary text-white hover:bg-accent"
+                      onClick={() => handleChoosePackage(plan.name, plan.price)}
                       data-testid={`button-choose-${plan.id}`}
                     >
                       Choose {plan.name}
