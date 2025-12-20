@@ -417,13 +417,29 @@ export default function BookingPage() {
                         ))}
                       </div>
                       {calculateTotalPrice() > 0 && (
-                        <div className="mt-3 pt-3 border-t">
+                        <div className="mt-3 pt-3 border-t space-y-2">
                           <div className="flex justify-between items-center">
-                            <span className="font-semibold">Total Hourly Rate:</span>
-                            <span className="text-lg font-bold text-primary">
+                            <span className="text-sm text-muted-foreground">Hourly Rate:</span>
+                            <span className="font-medium text-primary">
                               £{(calculateTotalPrice() / 100).toFixed(0)}/hour
                             </span>
                           </div>
+                          {selectedTimeSlots.length > 0 && (
+                            <>
+                              <div className="flex justify-between items-center">
+                                <span className="text-sm text-muted-foreground">Hours Selected:</span>
+                                <span className="font-medium">
+                                  {selectedTimeSlots.length} hour{selectedTimeSlots.length !== 1 ? 's' : ''}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center pt-2 border-t">
+                                <span className="font-semibold">Estimated Total:</span>
+                                <span className="text-lg font-bold text-primary">
+                                  £{((calculateTotalPrice() / 100) * selectedTimeSlots.length).toFixed(0)}
+                                </span>
+                              </div>
+                            </>
+                          )}
                         </div>
                       )}
                     </div>
