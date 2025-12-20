@@ -36,7 +36,7 @@ const servicePlans: ServicePlan[] = [
     id: "azure-essential",
     name: "Azure Essentials",
     description: "Core Azure migration and management services for small businesses",
-    price: "£495",
+    price: "£500",
     billingPeriod: "per month",
     features: [
       "Initial Azure environment setup",
@@ -92,7 +92,7 @@ const servicePlans: ServicePlan[] = [
     id: "identity-essential",
     name: "Identity Essentials",
     description: "Basic identity and access management for small teams",
-    price: "£295",
+    price: "£300",
     billingPeriod: "per month",
     features: [
       "Microsoft Entra ID setup and configuration",
@@ -109,7 +109,7 @@ const servicePlans: ServicePlan[] = [
     id: "identity-business",
     name: "Identity Business",
     description: "Comprehensive identity management for mid-sized organizations",
-    price: "£695",
+    price: "£700",
     billingPeriod: "per month",
     features: [
       "Advanced Entra ID implementation",
@@ -127,7 +127,7 @@ const servicePlans: ServicePlan[] = [
     id: "identity-enterprise",
     name: "Identity Enterprise",
     description: "Enterprise-grade identity security and governance",
-    price: "£1,495+",
+    price: "£1,500+",
     billingPeriod: "per month",
     features: [
       "Zero Trust identity architecture",
@@ -148,7 +148,7 @@ const servicePlans: ServicePlan[] = [
     id: "m365-essential",
     name: "M365 Essentials",
     description: "Basic Microsoft 365 setup and management",
-    price: "£295",
+    price: "£300",
     billingPeriod: "per month",
     features: [
       "Microsoft 365 tenant setup",
@@ -165,7 +165,7 @@ const servicePlans: ServicePlan[] = [
     id: "m365-business",
     name: "M365 Business",
     description: "Comprehensive M365 management for business productivity",
-    price: "£595",
+    price: "£600",
     billingPeriod: "per month",
     features: [
       "Advanced M365 implementation",
@@ -183,7 +183,7 @@ const servicePlans: ServicePlan[] = [
     id: "m365-enterprise",
     name: "M365 Enterprise",
     description: "Enterprise-grade Microsoft 365 solutions and governance",
-    price: "£1,295+",
+    price: "£1,300+",
     billingPeriod: "per month",
     features: [
       "Enterprise M365 architecture",
@@ -204,7 +204,7 @@ const servicePlans: ServicePlan[] = [
     id: "automation-essential",
     name: "Automation Essentials",
     description: "Basic process automation for small teams",
-    price: "£395",
+    price: "£400",
     billingPeriod: "per month",
     features: [
       "Process assessment and documentation",
@@ -221,7 +221,7 @@ const servicePlans: ServicePlan[] = [
     id: "automation-business",
     name: "Automation Business",
     description: "Comprehensive automation solutions for business efficiency",
-    price: "£895",
+    price: "£800",
     billingPeriod: "per month",
     features: [
       "Detailed workflow analysis",
@@ -239,7 +239,7 @@ const servicePlans: ServicePlan[] = [
     id: "automation-enterprise",
     name: "Automation Enterprise",
     description: "Enterprise-grade automation with custom development",
-    price: "£1,795+",
+    price: "£1,600+",
     billingPeriod: "per month",
     features: [
       "Enterprise workflow architecture",
