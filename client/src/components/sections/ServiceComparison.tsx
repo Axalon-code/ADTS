@@ -26,7 +26,7 @@ interface ServicePlan {
   billingPeriod: string;
   features: string[];
   mostPopular: boolean;
-  category: "azure" | "identity" | "m365" | "automation";
+  category: "azure" | "identity" | "m365" | "automation" | "support";
   detailsUrl: string;
 }
 
@@ -253,18 +253,74 @@ const servicePlans: ServicePlan[] = [
     mostPopular: false,
     category: "automation",
     detailsUrl: "/services/automation-enterprise"
+  },
+
+  // Tech Support Plans
+  {
+    id: "support-essential",
+    name: "Support Essentials",
+    description: "Remote IT support for small businesses",
+    price: "£250",
+    billingPeriod: "per month",
+    features: [
+      "Remote helpdesk support",
+      "Email and phone support",
+      "Basic troubleshooting",
+      "Software installation assistance",
+      "Response within 24 hours"
+    ],
+    mostPopular: false,
+    category: "support",
+    detailsUrl: "/services/support-essentials"
+  },
+  {
+    id: "support-business",
+    name: "Support Business",
+    description: "Comprehensive IT support with proactive monitoring",
+    price: "£500",
+    billingPeriod: "per month",
+    features: [
+      "Unlimited remote support",
+      "Proactive system monitoring",
+      "Patch management",
+      "Antivirus and security management",
+      "Monthly health reports",
+      "Response within 4 hours"
+    ],
+    mostPopular: true,
+    category: "support",
+    detailsUrl: "/services/support-business"
+  },
+  {
+    id: "support-enterprise",
+    name: "Support Enterprise",
+    description: "Premium IT support with dedicated account management",
+    price: "£1,000+",
+    billingPeriod: "per month",
+    features: [
+      "24/7 priority support",
+      "Dedicated account manager",
+      "On-site support visits",
+      "Advanced security monitoring",
+      "Disaster recovery planning",
+      "Quarterly strategy reviews",
+      "Response within 1 hour"
+    ],
+    mostPopular: false,
+    category: "support",
+    detailsUrl: "/services/support-enterprise"
   }
 ];
 
 export default function ServiceComparison() {
-  const [activeCategory, setActiveCategory] = useState<"azure" | "identity" | "m365" | "automation">("azure");
+  const [activeCategory, setActiveCategory] = useState<"azure" | "identity" | "m365" | "automation" | "support">("azure");
   const [animating, setAnimating] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   // Filter plans by active category
   const activePlans = servicePlans.filter(plan => plan.category === activeCategory);
 
-  const handleCategoryChange = (category: "azure" | "identity" | "m365" | "automation") => {
+  const handleCategoryChange = (category: "azure" | "identity" | "m365" | "automation" | "support") => {
     if (category === activeCategory || animating) return;
     
     setAnimating(true);
@@ -274,7 +330,8 @@ export default function ServiceComparison() {
       azure: "Azure Cloud",
       identity: "Identity and Access",
       m365: "Microsoft 365",
-      automation: "Process Automation"
+      automation: "Process Automation",
+      support: "Tech Support"
     };
     
     // Update announcement for screen readers
@@ -384,6 +441,19 @@ export default function ServiceComparison() {
               <span className="sr-only">{activeCategory === "automation" ? "Currently viewing " : "View "}</span>
               Process Automation
             </Button>
+            <Button 
+              variant={activeCategory === "support" ? "default" : "outline"}
+              onClick={() => handleCategoryChange("support")}
+              className={`${activeCategory === "support" ? "bg-primary text-white" : "text-primary hover:bg-primary/10"} px-6 py-3`}
+              disabled={animating}
+              role="tab"
+              id="tab-support"
+              aria-selected={activeCategory === "support"}
+              aria-controls="panel-support"
+            >
+              <span className="sr-only">{activeCategory === "support" ? "Currently viewing " : "View "}</span>
+              Tech Support
+            </Button>
           </div>
 
           {/* Service Plan Cards */}
@@ -399,7 +469,8 @@ export default function ServiceComparison() {
               Now displaying {activeCategory === "azure" ? "Azure Cloud" : 
                 activeCategory === "identity" ? "Identity and Access" : 
                 activeCategory === "m365" ? "Microsoft 365" : 
-                "Process Automation"} service packages
+                activeCategory === "automation" ? "Process Automation" :
+                "Tech Support"} service packages
             </div>
             {activePlans.map((plan) => (
               <Card 
