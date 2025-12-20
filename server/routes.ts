@@ -16,6 +16,7 @@ import { sanitizeString, sanitizeRichText } from "./sanitize";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
 import rateLimit from "express-rate-limit";
 import { db } from "./db";
+import { eq } from "drizzle-orm";
 import { allServices } from "./seed-booking";
 
 // Rate limiters for different endpoints
@@ -968,29 +969,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin endpoint to sync services to the database (for production use after deployment)
+  // This will add missing services AND update prices for existing ones
   app.post("/api/admin/sync-services", async (req, res) => {
     try {
       // Get existing services
       const existingServices = await storage.getServices();
-      const existingNames = new Set(existingServices.map(s => s.name));
+      const existingByName = new Map(existingServices.map(s => [s.name, s]));
       
-      // Find services that need to be added
-      const servicesToAdd = allServices.filter(s => !existingNames.has(s.name));
+      let added = 0;
+      let updated = 0;
+      const addedNames: string[] = [];
+      const updatedNames: string[] = [];
       
-      if (servicesToAdd.length > 0) {
-        await db.insert(services).values(servicesToAdd);
-        console.log(`Admin sync: Added ${servicesToAdd.length} new services`);
-        return res.status(200).json({ 
-          message: `Successfully added ${servicesToAdd.length} services`,
-          added: servicesToAdd.map(s => s.name),
-          total: existingServices.length + servicesToAdd.length
-        });
-      } else {
-        return res.status(200).json({ 
-          message: "All services already exist",
-          total: existingServices.length
-        });
+      for (const service of allServices) {
+        const existing = existingByName.get(service.name);
+        
+        if (!existing) {
+          // Add new service
+          await db.insert(services).values(service);
+          added++;
+          addedNames.push(service.name);
+        } else if (existing.price !== service.price || 
+                   existing.duration !== service.duration ||
+                   existing.description !== service.description) {
+          // Update existing service with new values
+          await db.update(services)
+            .set({ 
+              price: service.price, 
+              duration: service.duration,
+              description: service.description,
+              category: service.category,
+              isActive: service.isActive
+            })
+            .where(eq(services.id, existing.id));
+          updated++;
+          updatedNames.push(service.name);
+        }
       }
+      
+      console.log(`Admin sync: Added ${added}, updated ${updated} services`);
+      return res.status(200).json({ 
+        message: `Added ${added} services, updated ${updated} services`,
+        added: addedNames,
+        updated: updatedNames,
+        total: existingServices.length + added
+      });
     } catch (error) {
       console.error("Error syncing services:", error);
       return res.status(500).json({ message: "Failed to sync services" });
