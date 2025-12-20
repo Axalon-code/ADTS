@@ -16,7 +16,7 @@ export default function Clients() {
         <section className="bg-gradient-to-br from-primary/10 via-background to-accent/10 py-16">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">Clients & Case Studies</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-black dark:text-foreground max-w-2xl mx-auto">
               Real results from real businesses. See how we've helped organisations transform their IT infrastructure.
             </p>
           </div>
