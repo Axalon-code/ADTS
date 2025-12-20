@@ -46,7 +46,7 @@ export default function About() {
             </a>
           </div>
           
-          <div className="order-1 md:order-2 flex items-center justify-center">
+          <div className="order-1 md:order-2 flex items-start justify-center md:pt-[88px]">
             <img 
               src={alexPhoto} 
               alt="Alex Devlyashevskiy - IT Consultant" 
