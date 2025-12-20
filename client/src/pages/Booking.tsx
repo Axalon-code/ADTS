@@ -251,7 +251,7 @@ export default function BookingPage() {
           Schedule a professional IT consultation tailored to your business needs
         </p>
         <div className="text-center mb-8">
-          <Badge variant="outline" className="bg-primary/10 text-primary border-primary">
+          <Badge variant="outline" className="bg-primary/10 text-primary border-primary text-base px-4 py-2">
             Flexible hourly rates - pay only for the time you need
           </Badge>
         </div>
