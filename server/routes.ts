@@ -7,12 +7,15 @@ import {
   serviceSchema, 
   availabilitySlotSchema, 
   bookingSchema, 
-  blockedDateSchema 
+  blockedDateSchema,
+  services
 } from "@shared/schema";
 import nodemailer from "nodemailer";
 import { sanitizeString, sanitizeRichText } from "./sanitize";
 import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
 import rateLimit from "express-rate-limit";
+import { db } from "./db";
+import { allServices } from "./seed-booking";
 
 // Rate limiters for different endpoints
 const contactLimiter = rateLimit({
@@ -930,6 +933,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error verifying payment:", error);
       return res.status(500).json({ message: "Failed to verify payment" });
+    }
+  });
+
+  // Admin endpoint to sync services to the database (for production use after deployment)
+  app.post("/api/admin/sync-services", async (req, res) => {
+    try {
+      // Get existing services
+      const existingServices = await storage.getServices();
+      const existingNames = new Set(existingServices.map(s => s.name));
+      
+      // Find services that need to be added
+      const servicesToAdd = allServices.filter(s => !existingNames.has(s.name));
+      
+      if (servicesToAdd.length > 0) {
+        await db.insert(services).values(servicesToAdd);
+        console.log(`Admin sync: Added ${servicesToAdd.length} new services`);
+        return res.status(200).json({ 
+          message: `Successfully added ${servicesToAdd.length} services`,
+          added: servicesToAdd.map(s => s.name),
+          total: existingServices.length + servicesToAdd.length
+        });
+      } else {
+        return res.status(200).json({ 
+          message: "All services already exist",
+          total: existingServices.length
+        });
+      }
+    } catch (error) {
+      console.error("Error syncing services:", error);
+      return res.status(500).json({ message: "Failed to sync services" });
     }
   });
 

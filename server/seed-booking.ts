@@ -4,9 +4,9 @@ import { log } from "./vite";
 import { eq } from "drizzle-orm";
 
 /**
- * All services offered by ADTS
+ * All services offered by ADTS (exported for use in admin sync endpoint)
  */
-const allServices = [
+export const allServices = [
   // Azure Services
   {
     name: "Microsoft Azure Consultation",
