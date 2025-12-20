@@ -578,7 +578,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Calculate total price server-side (in pence)
-      const totalPrice = selectedServices.reduce((sum, service) => sum + service.price, 0);
+      const totalPrice = selectedServices.reduce((sum, service) => sum + (service.price || 0), 0);
       const serviceNames = selectedServices.map(s => s.name).join(', ');
 
       // Check if slot is available before proceeding (interval overlap detection)
@@ -729,6 +729,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Confirm the booking
       const confirmedBooking = await storage.updateBookingStatus(pendingBooking.id, 'confirmed');
+
+      // Get service names for the email
+      const services = await storage.getServices();
+      const bookedServices = services.filter(s => (confirmedBooking.serviceIds || []).includes(s.id));
+      const serviceNames = bookedServices.map(s => s.name).join(', ') || 'Consultation';
+      const formattedPrice = `£${((confirmedBooking.totalPrice || 0) / 100).toFixed(2)}`;
+      const formattedDate = new Date(confirmedBooking.date).toLocaleDateString('en-GB', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+
+      // Send email notification for confirmed booking
+      try {
+        const transporter = nodemailer.createTransport({
+          host: process.env.SMTP_HOST || "smtp.example.com",
+          port: parseInt(process.env.SMTP_PORT || "587"),
+          secure: process.env.SMTP_SECURE === "true",
+          auth: {
+            user: process.env.SMTP_USER || "",
+            pass: process.env.SMTP_PASS || "",
+          },
+        });
+
+        // Email to admin about new booking
+        const adminMailOptions = {
+          from: process.env.SMTP_USER,
+          to: process.env.EMAIL_TO || "AD@adtechservices.co.uk",
+          subject: `New Booking Confirmed: ${confirmedBooking.clientName}`,
+          html: `
+            <h2>New Booking Confirmed</h2>
+            <p>A new consultation has been booked and paid for.</p>
+            
+            <h3>Client Details</h3>
+            <p><strong>Name:</strong> ${confirmedBooking.clientName}</p>
+            <p><strong>Email:</strong> ${confirmedBooking.clientEmail}</p>
+            <p><strong>Phone:</strong> ${confirmedBooking.clientPhone || "Not provided"}</p>
+            <p><strong>Company:</strong> ${confirmedBooking.clientCompany || "Not provided"}</p>
+            
+            <h3>Booking Details</h3>
+            <p><strong>Services:</strong> ${serviceNames}</p>
+            <p><strong>Date:</strong> ${formattedDate}</p>
+            <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
+            <p><strong>Total Paid:</strong> ${formattedPrice}</p>
+            
+            ${confirmedBooking.notes ? `<h3>Additional Notes</h3><p>${confirmedBooking.notes}</p>` : ''}
+          `,
+        };
+
+        // Confirmation email to client
+        const clientMailOptions = {
+          from: process.env.SMTP_USER,
+          to: confirmedBooking.clientEmail,
+          subject: `Booking Confirmed - ADTS Consultation`,
+          html: `
+            <h2>Your Booking is Confirmed</h2>
+            <p>Dear ${confirmedBooking.clientName},</p>
+            <p>Thank you for booking a consultation with ADTS. Your booking has been confirmed and payment received.</p>
+            
+            <h3>Booking Details</h3>
+            <p><strong>Services:</strong> ${serviceNames}</p>
+            <p><strong>Date:</strong> ${formattedDate}</p>
+            <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
+            <p><strong>Total Paid:</strong> ${formattedPrice}</p>
+            
+            <p>If you have any questions before your consultation, please don't hesitate to contact me at AD@adtechservices.co.uk or call +44 (0)7492 168197.</p>
+            
+            <p>Best regards,<br>Alex Devlyashevskiy<br>ADTS - IT Consultancy</p>
+          `,
+        };
+
+        await transporter.sendMail(adminMailOptions);
+        await transporter.sendMail(clientMailOptions);
+        console.log("Booking confirmation emails sent successfully");
+      } catch (emailError) {
+        console.error("Error sending booking confirmation emails:", emailError);
+        // Don't fail the booking confirmation if email fails
+      }
 
       return res.status(200).json({ 
         message: "Booking confirmed successfully",
