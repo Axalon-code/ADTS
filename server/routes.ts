@@ -8,7 +8,8 @@ import {
   availabilitySlotSchema, 
   bookingSchema, 
   blockedDateSchema,
-  services
+  services,
+  availabilitySlots
 } from "@shared/schema";
 import nodemailer from "nodemailer";
 import { sanitizeString, sanitizeRichText } from "./sanitize";
@@ -933,6 +934,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error verifying payment:", error);
       return res.status(500).json({ message: "Failed to verify payment" });
+    }
+  });
+
+  // Admin endpoint to sync availability slots (8 AM to 8 PM UK GMT, hourly)
+  app.post("/api/admin/sync-availability", async (req, res) => {
+    try {
+      // Delete existing availability slots
+      await db.delete(availabilitySlots);
+      
+      // Create new slots for Monday-Friday, 8 AM to 8 PM
+      const slots = [];
+      for (let dayOfWeek = 1; dayOfWeek <= 5; dayOfWeek++) {
+        slots.push({
+          dayOfWeek,
+          startTime: "08:00:00",
+          endTime: "20:00:00",
+          isRecurring: true
+        });
+      }
+      
+      await db.insert(availabilitySlots).values(slots);
+      console.log("Admin sync: Updated availability slots to 8 AM - 8 PM");
+      
+      return res.status(200).json({ 
+        message: "Availability slots updated to 8 AM - 8 PM (UK GMT), Monday-Friday",
+        slotsCreated: slots.length
+      });
+    } catch (error) {
+      console.error("Error syncing availability slots:", error);
+      return res.status(500).json({ message: "Failed to sync availability slots" });
     }
   });
 

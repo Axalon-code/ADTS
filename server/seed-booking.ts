@@ -233,15 +233,15 @@ export async function seedBookingData() {
     const existingSlots = await db.select().from(availabilitySlots);
     
     if (existingSlots.length === 0) {
-      // Seed availability slots (Monday-Friday, 9 AM to 5 PM)
+      // Seed availability slots (Monday-Friday, 8 AM to 8 PM UK GMT)
       const slots = [];
       
       // For each weekday (1 = Monday, 5 = Friday)
       for (let dayOfWeek = 1; dayOfWeek <= 5; dayOfWeek++) {
         slots.push({
           dayOfWeek,
-          startTime: "09:00:00",
-          endTime: "17:00:00",
+          startTime: "08:00:00",
+          endTime: "20:00:00",
           isRecurring: true
         });
       }

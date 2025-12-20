@@ -309,8 +309,8 @@ export class DatabaseStorage implements IStorage {
           });
         }
         
-        // Move to the next possible slot (30-minute increments)
-        currentStartMinutes += 30;
+        // Move to the next possible slot (60-minute/hourly increments)
+        currentStartMinutes += 60;
       }
     }
     
