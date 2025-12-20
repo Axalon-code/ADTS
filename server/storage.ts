@@ -1,12 +1,13 @@
 import { 
-  users, contacts, blogPosts, services, availabilitySlots, bookings, blockedDates,
+  users, contacts, blogPosts, services, availabilitySlots, bookings, blockedDates, monthlyPackages,
   type User, type InsertUser, 
   type Contact, type InsertContact,
   type BlogPost, type InsertBlogPost,
   type Service, type InsertService,
   type AvailabilitySlot, type InsertAvailabilitySlot,
   type Booking, type InsertBooking,
-  type BlockedDate, type InsertBlockedDate
+  type BlockedDate, type InsertBlockedDate,
+  type MonthlyPackage, type InsertMonthlyPackage
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, gte, lte, sql } from "drizzle-orm";
@@ -53,6 +54,10 @@ export interface IStorage {
   
   // Availability checking
   getAvailableTimeSlots(date: Date, serviceId: number): Promise<{ startTime: string, endTime: string }[]>;
+  
+  // Monthly packages methods
+  getMonthlyPackages(): Promise<MonthlyPackage[]>;
+  getMonthlyPackagesByCategory(category: string): Promise<MonthlyPackage[]>;
 }
 
 // DatabaseStorage implementation using PostgreSQL
@@ -315,6 +320,20 @@ export class DatabaseStorage implements IStorage {
     }
     
     return availableTimeSlots;
+  }
+  
+  // Monthly packages methods
+  async getMonthlyPackages(): Promise<MonthlyPackage[]> {
+    return db.select().from(monthlyPackages).where(eq(monthlyPackages.isActive, true));
+  }
+  
+  async getMonthlyPackagesByCategory(category: string): Promise<MonthlyPackage[]> {
+    return db.select().from(monthlyPackages).where(
+      and(
+        eq(monthlyPackages.isActive, true),
+        eq(monthlyPackages.category, category)
+      )
+    );
   }
 }
 

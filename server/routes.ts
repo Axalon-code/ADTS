@@ -9,7 +9,8 @@ import {
   bookingSchema, 
   blockedDateSchema,
   services,
-  availabilitySlots
+  availabilitySlots,
+  monthlyPackages
 } from "@shared/schema";
 import nodemailer from "nodemailer";
 import { sanitizeString, sanitizeRichText } from "./sanitize";
@@ -17,7 +18,7 @@ import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClie
 import rateLimit from "express-rate-limit";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
-import { allServices } from "./seed-booking";
+import { allServices, allMonthlyPackages } from "./seed-booking";
 
 // Rate limiters for different endpoints
 const contactLimiter = rateLimit({
@@ -244,6 +245,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // ===== SERVICE BOOKING SYSTEM API ROUTES =====
+  
+  // Monthly packages routes
+  app.get("/api/monthly-packages", async (req, res) => {
+    try {
+      const packages = await storage.getMonthlyPackages();
+      return res.status(200).json(packages);
+    } catch (error) {
+      console.error("Error fetching monthly packages:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  app.get("/api/monthly-packages/category/:category", async (req, res) => {
+    try {
+      const { category } = req.params;
+      const packages = await storage.getMonthlyPackagesByCategory(category);
+      return res.status(200).json(packages);
+    } catch (error) {
+      console.error(`Error fetching monthly packages by category ${req.params.category}:`, error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
   
   // Service routes
   app.get("/api/services", async (req, res) => {
@@ -1017,6 +1040,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error syncing services:", error);
       return res.status(500).json({ message: "Failed to sync services" });
+    }
+  });
+  
+  // Admin endpoint to sync monthly packages to the database (for production use after deployment)
+  app.post("/api/admin/sync-packages", async (req, res) => {
+    try {
+      // Get existing packages
+      const existingPackages = await storage.getMonthlyPackages();
+      const existingByName = new Map(existingPackages.map(p => [p.name, p]));
+      
+      let added = 0;
+      let updated = 0;
+      const addedNames: string[] = [];
+      const updatedNames: string[] = [];
+      
+      for (const pkg of allMonthlyPackages) {
+        const existing = existingByName.get(pkg.name);
+        
+        if (!existing) {
+          // Add new package
+          await db.insert(monthlyPackages).values(pkg);
+          added++;
+          addedNames.push(pkg.name);
+        } else if (existing.price !== pkg.price || 
+                   existing.description !== pkg.description ||
+                   JSON.stringify(existing.features) !== JSON.stringify(pkg.features)) {
+          // Update existing package with new values
+          await db.update(monthlyPackages)
+            .set({ 
+              price: pkg.price, 
+              description: pkg.description,
+              billingPeriod: pkg.billingPeriod,
+              features: pkg.features,
+              category: pkg.category,
+              mostPopular: pkg.mostPopular,
+              tier: pkg.tier,
+              isActive: pkg.isActive
+            })
+            .where(eq(monthlyPackages.id, existing.id));
+          updated++;
+          updatedNames.push(pkg.name);
+        }
+      }
+      
+      console.log(`Admin sync: Added ${added}, updated ${updated} monthly packages`);
+      return res.status(200).json({ 
+        message: `Added ${added} packages, updated ${updated} packages`,
+        added: addedNames,
+        updated: updatedNames,
+        total: existingPackages.length + added
+      });
+    } catch (error) {
+      console.error("Error syncing monthly packages:", error);
+      return res.status(500).json({ message: "Failed to sync monthly packages" });
     }
   });
 
