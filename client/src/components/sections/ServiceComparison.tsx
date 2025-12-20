@@ -478,12 +478,10 @@ export default function ServiceComparison() {
             {activePlans.map((plan) => (
               <Card 
                 key={plan.id} 
-                className={`relative overflow-hidden transition-transform duration-300 hover:scale-105 ${
+                className={`relative overflow-hidden transition-transform duration-300 hover:scale-105 flex flex-col ${
                   plan.mostPopular ? 'border-primary shadow-lg' : 'border-gray-200 dark:border-gray-700'
                 }`}
               >
-
-
                 <CardHeader className="pb-4">
                   <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
                   <CardDescription className="mt-1 min-h-12">{plan.description}</CardDescription>
@@ -493,7 +491,7 @@ export default function ServiceComparison() {
                   </div>
                 </CardHeader>
 
-                <CardContent className="pb-6">
+                <CardContent className="pb-6 flex-grow">
                   <ul className="space-y-3">
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
@@ -504,7 +502,7 @@ export default function ServiceComparison() {
                   </ul>
                 </CardContent>
 
-                <CardFooter>
+                <CardFooter className="mt-auto">
                   <Button 
                     className="w-full bg-primary text-white hover:bg-accent"
                   >
