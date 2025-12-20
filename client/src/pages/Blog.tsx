@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { Link } from "wouter";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 // Define the blog post type based on our schema
 interface BlogPost {
@@ -47,6 +49,8 @@ export default function Blog() {
         <title>IT Resources & Tips | ADTS</title>
         <meta name="description" content="Explore our collection of IT resources, tips, and best practices for Microsoft 365, Azure, and Entra IAM to optimize your IT infrastructure." />
       </Helmet>
+      
+      <Header />
       
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
@@ -136,6 +140,8 @@ export default function Blog() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }
