@@ -46,11 +46,11 @@ export default function About() {
             </a>
           </div>
           
-          <div className="order-1 md:order-2">
+          <div className="order-1 md:order-2 flex items-center justify-center">
             <img 
               src={alexPhoto} 
               alt="Alex Devlyashevskiy - IT Consultant" 
-              className="rounded-xl shadow-lg w-full h-auto"
+              className="rounded-xl shadow-lg w-full max-w-md h-auto object-cover"
             />
           </div>
         </div>
