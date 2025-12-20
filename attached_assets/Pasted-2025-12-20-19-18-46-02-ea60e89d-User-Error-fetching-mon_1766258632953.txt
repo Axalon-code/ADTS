@@ -1,0 +1,160 @@
+2025-12-20 19:18:46.02
+ea60e89d
+User
+Error fetching monthly packages: error: relation "monthly_packages" does not exist
+2025-12-20 19:18:46.02
+ea60e89d
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-20 19:18:46.02
+ea60e89d
+User
+column: undefined,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+severity: 'ERROR',
+2025-12-20 19:18:46.02
+ea60e89d
+User
+where: undefined,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+at file:///home/runner/workspace/node_modules/@neondatabase/serverless/index.mjs:1345:74
+2025-12-20 19:18:46.02
+ea60e89d
+User
+internalPosition: undefined,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+length: 116,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+routine: 'parserOpenTable'
+2025-12-20 19:18:46.02
+ea60e89d
+User
+table: undefined,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+file: 'parse_relation.c',
+2025-12-20 19:18:46.02
+ea60e89d
+User
+line: '1449',
+2025-12-20 19:18:46.02
+ea60e89d
+User
+dataType: undefined,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+position: '129',
+2025-12-20 19:18:46.02
+ea60e89d
+User
+constraint: undefined,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+internalQuery: undefined,
+2025-12-20 19:18:46.02
+ea60e89d
+User
+}
+2025-12-20 19:20:43.32
+ea60e89d
+User
+dataType: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+routine: 'parserOpenTable'
+2025-12-20 19:20:43.32
+ea60e89d
+User
+file: 'parse_relation.c',
+2025-12-20 19:20:43.32
+ea60e89d
+User
+hint: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+at async NeonPreparedQuery.execute (file:///home/runner/workspace/node_modules/drizzle-orm/neon-serverless/session.js:76:20)
+2025-12-20 19:20:43.32
+ea60e89d
+User
+position: '129',
+2025-12-20 19:20:43.32
+ea60e89d
+User
+constraint: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+length: 116,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+at file:///home/runner/workspace/node_modules/@neondatabase/serverless/index.mjs:1345:74
+2025-12-20 19:20:43.32
+ea60e89d
+User
+column: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+internalPosition: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+internalQuery: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+table: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+severity: 'ERROR',
+2025-12-20 19:20:43.32
+ea60e89d
+User
+}
+2025-12-20 19:20:43.32
+ea60e89d
+User
+at async file:///home/runner/workspace/dist/index.js:1362:24 {
+2025-12-20 19:20:43.32
+ea60e89d
+User
+Error fetching monthly packages: error: relation "monthly_packages" does not exist
+2025-12-20 19:20:43.32
+ea60e89d
+User
+where: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+code: '42P01',
+2025-12-20 19:20:43.32
+ea60e89d
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-20 19:20:43.32
+ea60e89d
+User
+detail: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+schema: undefined,
+2025-12-20 19:20:43.32
+ea60e89d
+User
+line: '1449',

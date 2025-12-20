@@ -1,7 +1,32 @@
 import { services, availabilitySlots, monthlyPackages } from "@shared/schema";
 import { db } from "./db";
+import { pool } from "./db";
 import { log } from "./vite";
 import { eq } from "drizzle-orm";
+
+/**
+ * Ensure the monthly_packages table exists (for production database sync)
+ */
+async function ensureMonthlyPackagesTable() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS monthly_packages (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT NOT NULL,
+        price TEXT NOT NULL,
+        billing_period TEXT NOT NULL DEFAULT 'per month',
+        features TEXT[] NOT NULL,
+        category TEXT NOT NULL,
+        most_popular BOOLEAN NOT NULL DEFAULT false,
+        tier TEXT NOT NULL,
+        is_active BOOLEAN NOT NULL DEFAULT true
+      )
+    `);
+  } catch (error) {
+    console.error("Error ensuring monthly_packages table exists:", error);
+  }
+}
 
 /**
  * All services offered by ADTS (exported for use in admin sync endpoint)
@@ -512,6 +537,9 @@ export async function seedBookingData() {
     } else {
       log("All services already exist, skipping seed");
     }
+    
+    // Ensure monthly_packages table exists (for production database sync)
+    await ensureMonthlyPackagesTable();
     
     // Seed monthly packages
     const existingPackages = await db.select().from(monthlyPackages);

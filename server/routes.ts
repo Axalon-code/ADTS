@@ -252,13 +252,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const packages = await storage.getMonthlyPackages();
       return res.status(200).json(packages);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      const errorStack = error instanceof Error ? error.stack : '';
-      console.error("Error fetching monthly packages:", errorMessage, errorStack);
-      return res.status(500).json({ 
-        message: "Internal server error",
-        debug: errorMessage // Temporarily expose error for debugging
-      });
+      console.error("Error fetching monthly packages:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
   });
   
