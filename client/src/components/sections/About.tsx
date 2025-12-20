@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import alexPhoto from "@assets/Alex-Devlyashevskiy_(2)_1766234440507.jpg";
 
 export default function About() {
   const expertiseList = [
@@ -47,7 +48,7 @@ export default function About() {
           
           <div className="order-1 md:order-2">
             <img 
-              src="/attached_assets/Alex-Devlyashevskiy_(2)_1766234440507.jpg" 
+              src={alexPhoto} 
               alt="Alex Devlyashevskiy - IT Consultant" 
               className="rounded-xl shadow-lg w-full h-auto"
             />
