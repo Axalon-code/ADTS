@@ -55,6 +55,12 @@ export default function ServiceHighlights() {
       title: "Microsoft 365 Administration",
       description: "Office 365 configuration, Exchange administration, Intune device management, and licensing optimization.",
       linkId: "m365-services"
+    },
+    {
+      icon: "fas fa-headset",
+      title: "Tech Support",
+      description: "General IT system administration, desktop and laptop repairs, upgrades, servicing, and vendor communication management.",
+      linkId: "support-services"
     }
   ];
 
@@ -73,7 +79,7 @@ export default function ServiceHighlights() {
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Comprehensive Microsoft ecosystem solutions to optimize your IT infrastructure and enhance productivity.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <ServiceCard 
               key={index} 
