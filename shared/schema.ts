@@ -130,6 +130,7 @@ export const bookings = pgTable("bookings", {
   status: text("status").notNull().default("pending"), // pending, confirmed, completed, cancelled
   notes: text("notes"),
   totalPrice: integer("total_price"), // Total hourly rate in pence for the bundle
+  stripeSessionId: text("stripe_session_id"), // Stripe checkout session ID for payment tracking
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
 });
@@ -146,7 +147,8 @@ export const bookingSchema = createInsertSchema(bookings).pick({
   endTime: true,
   status: true,
   notes: true,
-  totalPrice: true
+  totalPrice: true,
+  stripeSessionId: true
 });
 
 export type InsertBooking = z.infer<typeof bookingSchema>;

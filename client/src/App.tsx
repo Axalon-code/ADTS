@@ -3,6 +3,7 @@ import Home from "@/pages/Home";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Booking from "@/pages/Booking";
+import BookingSuccess from "@/pages/BookingSuccess";
 import Glossary from "@/pages/Glossary";
 import Clients from "@/pages/Clients";
 import Privacy from "@/pages/Privacy";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={BlogPost} />
         <Route path="/booking" component={Booking} />
+        <Route path="/booking/success" component={BookingSuccess} />
         <Route path="/glossary" component={Glossary} />
         <Route path="/clients" component={Clients} />
         <Route path="/privacy" component={Privacy} />

@@ -11,6 +11,7 @@ import {
 } from "@shared/schema";
 import nodemailer from "nodemailer";
 import { sanitizeString, sanitizeRichText } from "./sanitize";
+import { getUncachableStripeClient, getStripePublishableKey } from "./stripeClient";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API routes for contact form
@@ -544,6 +545,121 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({ 
         message: error instanceof Error ? error.message : "Internal server error" 
       });
+    }
+  });
+
+  // Stripe payment routes
+  app.get("/api/stripe/publishable-key", async (req, res) => {
+    try {
+      const publishableKey = await getStripePublishableKey();
+      return res.status(200).json({ publishableKey });
+    } catch (error) {
+      console.error("Error getting Stripe publishable key:", error);
+      return res.status(500).json({ message: "Payment system not available" });
+    }
+  });
+
+  // Create checkout session for booking payment
+  app.post("/api/create-checkout-session", async (req, res) => {
+    try {
+      const { bookingData, totalPrice, serviceNames } = req.body;
+      
+      if (!bookingData || !totalPrice || !serviceNames) {
+        return res.status(400).json({ message: "Missing required booking information" });
+      }
+
+      const stripe = await getUncachableStripeClient();
+      
+      // Get the base URL for redirects
+      const baseUrl = `https://${process.env.REPLIT_DOMAINS?.split(',')[0]}`;
+      
+      // Create a checkout session with the booking details
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            price_data: {
+              currency: 'gbp',
+              product_data: {
+                name: 'IT Consultation Booking',
+                description: `Services: ${serviceNames}`,
+              },
+              unit_amount: totalPrice, // Price in pence
+            },
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/booking?cancelled=true`,
+        customer_email: bookingData.clientEmail,
+        metadata: {
+          clientName: bookingData.clientName,
+          clientEmail: bookingData.clientEmail,
+          clientPhone: bookingData.clientPhone || '',
+          clientCompany: bookingData.clientCompany || '',
+          serviceIds: JSON.stringify(bookingData.serviceIds),
+          bookingDate: bookingData.bookingDate,
+          startTime: bookingData.startTime,
+          endTime: bookingData.endTime,
+          notes: bookingData.notes || '',
+        },
+      });
+
+      return res.status(200).json({ url: session.url });
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+      return res.status(500).json({ message: "Failed to create checkout session" });
+    }
+  });
+
+  // Verify payment and create booking after successful checkout
+  app.get("/api/verify-payment/:sessionId", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      
+      const stripe = await getUncachableStripeClient();
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      
+      if (session.payment_status !== 'paid') {
+        return res.status(400).json({ message: "Payment not completed" });
+      }
+
+      // Check if booking already exists for this session
+      const existingBooking = await storage.getBookingByStripeSessionId(sessionId);
+      if (existingBooking) {
+        return res.status(200).json({ 
+          message: "Booking already exists",
+          booking: existingBooking
+        });
+      }
+
+      // Create the booking from session metadata
+      const metadata = session.metadata || {};
+      const bookingData = {
+        serviceIds: JSON.parse(metadata.serviceIds || '[]'),
+        bookingDate: metadata.bookingDate,
+        startTime: metadata.startTime,
+        endTime: metadata.endTime,
+        clientName: metadata.clientName,
+        clientEmail: metadata.clientEmail,
+        clientPhone: metadata.clientPhone || undefined,
+        clientCompany: metadata.clientCompany || undefined,
+        notes: metadata.notes || undefined,
+        totalPrice: session.amount_total || 0,
+        stripeSessionId: sessionId,
+        status: 'confirmed' as const,
+      };
+
+      const booking = await storage.createBooking(bookingData);
+
+      return res.status(201).json({ 
+        message: "Booking created successfully",
+        booking
+      });
+    } catch (error) {
+      console.error("Error verifying payment:", error);
+      return res.status(500).json({ message: "Failed to verify payment" });
     }
   });
 

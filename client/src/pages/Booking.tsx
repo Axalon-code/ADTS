@@ -161,7 +161,7 @@ export default function BookingPage() {
     setStep("details");
   };
   
-  // Handle form submission
+  // Handle form submission - redirect to Stripe checkout
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -173,51 +173,56 @@ export default function BookingPage() {
       });
       return;
     }
+
+    if (!clientName || !clientEmail) {
+      toast({
+        title: "Missing contact details",
+        description: "Please provide your name and email address.",
+        variant: "destructive"
+      });
+      return;
+    }
     
     try {
-      const response = await fetch('/api/bookings', {
+      // Get service names for the checkout description
+      const serviceNames = getSelectedServiceDetails()
+        .map(s => s.name)
+        .join(', ');
+
+      const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          serviceIds: selectedServices,
+          bookingData: {
+            serviceIds: selectedServices,
+            clientName,
+            clientEmail,
+            clientPhone,
+            clientCompany,
+            bookingDate: selectedDate.toISOString().split('T')[0],
+            startTime: selectedTimeSlot.startTime,
+            endTime: selectedTimeSlot.endTime,
+            notes
+          },
           totalPrice: calculateTotalPrice(),
-          clientName,
-          clientEmail,
-          clientPhone,
-          clientCompany,
-          date: selectedDate.toISOString().split('T')[0],
-          startTime: selectedTimeSlot.startTime,
-          endTime: selectedTimeSlot.endTime,
-          notes
+          serviceNames
         }),
       });
       
-      if (response.ok) {
-        toast({
-          title: "Booking Successful!",
-          description: "Your appointment has been scheduled. Check your email for confirmation details.",
-        });
-        
-        // Reset form
-        setSelectedServices([]);
-        setSelectedDate(undefined);
-        setSelectedTimeSlot(null);
-        setClientName("");
-        setClientEmail("");
-        setClientPhone("");
-        setClientCompany("");
-        setNotes("");
-        setStep("service");
+      const data = await response.json();
+      
+      if (response.ok && data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
       } else {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to create booking");
+        throw new Error(data.message || "Failed to create checkout session");
       }
     } catch (error) {
       toast({
-        title: "Booking Failed",
-        description: error instanceof Error ? error.message : "There was an error processing your booking. Please try again.",
+        title: "Payment Setup Failed",
+        description: error instanceof Error ? error.message : "There was an error setting up payment. Please try again.",
         variant: "destructive"
       });
     }
