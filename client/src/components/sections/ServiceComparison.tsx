@@ -260,7 +260,7 @@ const servicePlans: ServicePlan[] = [
     id: "support-essential",
     name: "Support Essentials",
     description: "Remote IT support for small businesses",
-    price: "£250",
+    price: "£300",
     billingPeriod: "per month",
     features: [
       "Remote helpdesk support",
@@ -277,7 +277,7 @@ const servicePlans: ServicePlan[] = [
     id: "support-business",
     name: "Support Business",
     description: "Comprehensive IT support with proactive monitoring",
-    price: "£500",
+    price: "£600",
     billingPeriod: "per month",
     features: [
       "Unlimited remote support",
@@ -295,7 +295,7 @@ const servicePlans: ServicePlan[] = [
     id: "support-enterprise",
     name: "Support Enterprise",
     description: "Premium IT support with dedicated account management",
-    price: "£1,000+",
+    price: "£1,200+",
     billingPeriod: "per month",
     features: [
       "24/7 priority support",
