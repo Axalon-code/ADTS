@@ -562,17 +562,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create checkout session for booking payment
   app.post("/api/create-checkout-session", async (req, res) => {
     try {
-      const { bookingData, totalPrice, serviceNames } = req.body;
+      const { bookingData } = req.body;
       
-      if (!bookingData || !totalPrice || !serviceNames) {
+      if (!bookingData || !bookingData.serviceIds || !Array.isArray(bookingData.serviceIds) || bookingData.serviceIds.length === 0) {
         return res.status(400).json({ message: "Missing required booking information" });
       }
+
+      if (!bookingData.clientName || !bookingData.clientEmail || !bookingData.bookingDate || !bookingData.startTime || !bookingData.endTime) {
+        return res.status(400).json({ message: "Missing required client or scheduling information" });
+      }
+
+      // Validate and calculate price server-side from service IDs
+      const services = await storage.getServices();
+      const selectedServices = services.filter(s => bookingData.serviceIds.includes(s.id));
+      
+      if (selectedServices.length !== bookingData.serviceIds.length) {
+        return res.status(400).json({ message: "One or more invalid service IDs" });
+      }
+
+      // Calculate total price server-side (in pence)
+      const totalPrice = selectedServices.reduce((sum, service) => sum + service.price, 0);
+      const serviceNames = selectedServices.map(s => s.name).join(', ');
 
       const stripe = await getUncachableStripeClient();
       
       // Get the base URL for redirects
       const baseUrl = `https://${process.env.REPLIT_DOMAINS?.split(',')[0]}`;
       
+      // Sanitize user inputs before storing in metadata
+      const sanitizedMetadata = {
+        clientName: sanitizeString(bookingData.clientName),
+        clientEmail: sanitizeString(bookingData.clientEmail),
+        clientPhone: bookingData.clientPhone ? sanitizeString(bookingData.clientPhone) : '',
+        clientCompany: bookingData.clientCompany ? sanitizeString(bookingData.clientCompany) : '',
+        serviceIds: JSON.stringify(bookingData.serviceIds),
+        bookingDate: sanitizeString(bookingData.bookingDate),
+        startTime: sanitizeString(bookingData.startTime),
+        endTime: sanitizeString(bookingData.endTime),
+        notes: bookingData.notes ? sanitizeString(bookingData.notes) : '',
+        totalPrice: totalPrice.toString(),
+      };
+
       // Create a checkout session with the booking details
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -584,7 +614,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 name: 'IT Consultation Booking',
                 description: `Services: ${serviceNames}`,
               },
-              unit_amount: totalPrice, // Price in pence
+              unit_amount: totalPrice, // Price in pence calculated server-side
             },
             quantity: 1,
           },
@@ -592,18 +622,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         mode: 'payment',
         success_url: `${baseUrl}/booking/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${baseUrl}/booking?cancelled=true`,
-        customer_email: bookingData.clientEmail,
-        metadata: {
-          clientName: bookingData.clientName,
-          clientEmail: bookingData.clientEmail,
-          clientPhone: bookingData.clientPhone || '',
-          clientCompany: bookingData.clientCompany || '',
-          serviceIds: JSON.stringify(bookingData.serviceIds),
-          bookingDate: bookingData.bookingDate,
-          startTime: bookingData.startTime,
-          endTime: bookingData.endTime,
-          notes: bookingData.notes || '',
-        },
+        customer_email: sanitizedMetadata.clientEmail,
+        metadata: sanitizedMetadata,
       });
 
       return res.status(200).json({ url: session.url });
@@ -618,6 +638,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { sessionId } = req.params;
       
+      // Validate session ID format (basic check)
+      if (!sessionId || !sessionId.startsWith('cs_')) {
+        return res.status(400).json({ message: "Invalid session ID" });
+      }
+
+      // Check if booking already exists for this session (idempotency)
+      const existingBooking = await storage.getBookingByStripeSessionId(sessionId);
+      if (existingBooking) {
+        return res.status(200).json({ 
+          message: "Booking already exists",
+          booking: {
+            id: existingBooking.id,
+            clientName: existingBooking.clientName,
+            clientEmail: existingBooking.clientEmail,
+            date: existingBooking.bookingDate,
+            startTime: existingBooking.startTime,
+            endTime: existingBooking.endTime,
+          }
+        });
+      }
+
       const stripe = await getUncachableStripeClient();
       const session = await stripe.checkout.sessions.retrieve(sessionId);
       
@@ -625,19 +666,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Payment not completed" });
       }
 
-      // Check if booking already exists for this session
-      const existingBooking = await storage.getBookingByStripeSessionId(sessionId);
-      if (existingBooking) {
-        return res.status(200).json({ 
-          message: "Booking already exists",
-          booking: existingBooking
-        });
+      // Validate metadata exists and has required fields
+      const metadata = session.metadata || {};
+      if (!metadata.serviceIds || !metadata.bookingDate || !metadata.startTime || !metadata.endTime || !metadata.clientName || !metadata.clientEmail) {
+        return res.status(400).json({ message: "Invalid session metadata" });
+      }
+
+      // Verify the amount matches what we stored in metadata
+      const storedPrice = parseInt(metadata.totalPrice || '0');
+      if (storedPrice !== session.amount_total) {
+        console.error(`Price mismatch: stored ${storedPrice}, paid ${session.amount_total}`);
+        return res.status(400).json({ message: "Payment amount mismatch" });
+      }
+
+      // Parse service IDs and validate they still exist
+      let serviceIds: number[];
+      try {
+        serviceIds = JSON.parse(metadata.serviceIds);
+        if (!Array.isArray(serviceIds) || serviceIds.length === 0) {
+          throw new Error('Invalid service IDs');
+        }
+      } catch {
+        return res.status(400).json({ message: "Invalid service data" });
       }
 
       // Create the booking from session metadata
-      const metadata = session.metadata || {};
       const bookingData = {
-        serviceIds: JSON.parse(metadata.serviceIds || '[]'),
+        serviceIds,
         bookingDate: metadata.bookingDate,
         startTime: metadata.startTime,
         endTime: metadata.endTime,
@@ -655,7 +710,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       return res.status(201).json({ 
         message: "Booking created successfully",
-        booking
+        booking: {
+          id: booking.id,
+          clientName: booking.clientName,
+          clientEmail: booking.clientEmail,
+          date: booking.bookingDate,
+          startTime: booking.startTime,
+          endTime: booking.endTime,
+        }
       });
     } catch (error) {
       console.error("Error verifying payment:", error);
