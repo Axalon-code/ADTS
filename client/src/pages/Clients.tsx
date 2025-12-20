@@ -103,7 +103,7 @@ export default function Clients() {
         </section>
 
         <section className="py-16 container mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold mb-4 text-foreground">Want to Be Featured?</h2>
+          <h2 className="text-2xl font-bold mb-4 text-white dark:text-foreground">Want to Be Featured?</h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-6">
             If you're a satisfied client and would like to share your experience, we'd love to hear from you.
           </p>
