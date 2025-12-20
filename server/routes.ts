@@ -815,6 +815,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         day: 'numeric' 
       });
 
+      // Calculate duration in hours for itemized billing
+      const startParts = confirmedBooking.startTime.split(':').map(Number);
+      const endParts = confirmedBooking.endTime.split(':').map(Number);
+      const startMinutes = startParts[0] * 60 + startParts[1];
+      const endMinutes = endParts[0] * 60 + endParts[1];
+      const durationHours = (endMinutes - startMinutes) / 60;
+
+      // Build itemized billing table (price is stored in pence)
+      const itemizedRows = bookedServices.map(service => {
+        const hourlyRate = (service.price || 0) / 100;
+        const lineTotal = hourlyRate * durationHours;
+        return `<tr>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">${escapeHtml(service.name)}</td>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: center;">£${hourlyRate.toFixed(2)}/hr</td>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: center;">${durationHours}</td>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: right;">£${lineTotal.toFixed(2)}</td>
+        </tr>`;
+      }).join('');
+
+      const itemizedBillingHtml = `
+        <h3>Itemised Billing Summary</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+          <thead>
+            <tr style="background-color: #f3f4f6;">
+              <th style="padding: 8px; text-align: left; border-bottom: 2px solid #d1d5db;">Service</th>
+              <th style="padding: 8px; text-align: center; border-bottom: 2px solid #d1d5db;">Rate</th>
+              <th style="padding: 8px; text-align: center; border-bottom: 2px solid #d1d5db;">Hours</th>
+              <th style="padding: 8px; text-align: right; border-bottom: 2px solid #d1d5db;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemizedRows}
+          </tbody>
+          <tfoot>
+            <tr style="font-weight: bold;">
+              <td colspan="3" style="padding: 8px; text-align: right; border-top: 2px solid #d1d5db;">Total:</td>
+              <td style="padding: 8px; text-align: right; border-top: 2px solid #d1d5db;">${formattedPrice}</td>
+            </tr>
+          </tfoot>
+        </table>
+      `;
+
       // Send email notification for confirmed booking
       const transporter = createEmailTransporter();
       if (transporter) {
@@ -835,10 +877,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
               <p><strong>Company:</strong> ${escapeHtml(confirmedBooking.clientCompany || "Not provided")}</p>
               
               <h3>Booking Details</h3>
-              <p><strong>Services:</strong> ${escapeHtml(serviceNames)}</p>
               <p><strong>Date:</strong> ${formattedDate}</p>
               <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
-              <p><strong>Total Paid:</strong> ${formattedPrice}</p>
+              
+              ${itemizedBillingHtml}
               
               ${confirmedBooking.notes ? `<h3>Additional Notes</h3><p>${escapeHtml(confirmedBooking.notes)}</p>` : ''}
             `,
@@ -855,10 +897,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
               <p>Thank you for booking a consultation with ADTS. Your booking has been confirmed and payment received.</p>
               
               <h3>Booking Details</h3>
-              <p><strong>Services:</strong> ${escapeHtml(serviceNames)}</p>
               <p><strong>Date:</strong> ${formattedDate}</p>
               <p><strong>Time:</strong> ${confirmedBooking.startTime} - ${confirmedBooking.endTime}</p>
-              <p><strong>Total Paid:</strong> ${formattedPrice}</p>
+              
+              ${itemizedBillingHtml}
               
               <p>If you have any questions before your consultation, please don't hesitate to contact me at AD@adtechservices.co.uk or call +44 (0)7492 168197.</p>
               
@@ -888,6 +930,119 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error verifying payment:", error);
       return res.status(500).json({ message: "Failed to verify payment" });
+    }
+  });
+
+  // Test endpoint to send sample booking confirmation email (for testing only)
+  app.post("/api/test-booking-email", async (req, res) => {
+    try {
+      const transporter = createEmailTransporter();
+      if (!transporter) {
+        return res.status(500).json({ message: "Email not configured" });
+      }
+
+      // Get some real services for the test
+      const services = await storage.getServices();
+      const testServices = services.filter(s => s.isActive).slice(0, 2);
+      
+      // Sample booking data
+      const testBooking = {
+        clientName: "Test Client",
+        clientEmail: process.env.SMTP_USER || "AD@adtechservices.co.uk",
+        clientPhone: "+44 7492 168197",
+        clientCompany: "Test Company Ltd",
+        date: new Date(),
+        startTime: "10:00",
+        endTime: "12:00",
+        notes: "This is a test booking to verify the itemised billing email format.",
+      };
+
+      const formattedDate = testBooking.date.toLocaleDateString('en-GB', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+
+      // Calculate duration
+      const durationHours = 2;
+
+      // Build itemized billing table
+      let totalInPence = 0;
+      const itemizedRows = testServices.map(service => {
+        const hourlyRate = (service.price || 0) / 100;
+        const lineTotal = hourlyRate * durationHours;
+        totalInPence += (service.price || 0) * durationHours;
+        return `<tr>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb;">${escapeHtml(service.name)}</td>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: center;">£${hourlyRate.toFixed(2)}/hr</td>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: center;">${durationHours}</td>
+          <td style="padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: right;">£${lineTotal.toFixed(2)}</td>
+        </tr>`;
+      }).join('');
+
+      const formattedPrice = `£${(totalInPence / 100).toFixed(2)}`;
+
+      const itemizedBillingHtml = `
+        <h3>Itemised Billing Summary</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+          <thead>
+            <tr style="background-color: #f3f4f6;">
+              <th style="padding: 8px; text-align: left; border-bottom: 2px solid #d1d5db;">Service</th>
+              <th style="padding: 8px; text-align: center; border-bottom: 2px solid #d1d5db;">Rate</th>
+              <th style="padding: 8px; text-align: center; border-bottom: 2px solid #d1d5db;">Hours</th>
+              <th style="padding: 8px; text-align: right; border-bottom: 2px solid #d1d5db;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemizedRows}
+          </tbody>
+          <tfoot>
+            <tr style="font-weight: bold;">
+              <td colspan="3" style="padding: 8px; text-align: right; border-top: 2px solid #d1d5db;">Total:</td>
+              <td style="padding: 8px; text-align: right; border-top: 2px solid #d1d5db;">${formattedPrice}</td>
+            </tr>
+          </tfoot>
+        </table>
+      `;
+
+      const testMailOptions = {
+        from: process.env.SMTP_USER,
+        to: process.env.SMTP_USER || "AD@adtechservices.co.uk",
+        subject: `[TEST] Booking Confirmed - ADTS Consultation`,
+        html: `
+          <h2>Your Booking is Confirmed</h2>
+          <p><em>This is a TEST email to preview the itemised billing format.</em></p>
+          <p>Dear ${escapeHtml(testBooking.clientName)},</p>
+          <p>Thank you for booking a consultation with ADTS. Your booking has been confirmed and payment received.</p>
+          
+          <h3>Booking Details</h3>
+          <p><strong>Date:</strong> ${formattedDate}</p>
+          <p><strong>Time:</strong> ${testBooking.startTime} - ${testBooking.endTime}</p>
+          
+          ${itemizedBillingHtml}
+          
+          <h3>Additional Notes</h3>
+          <p>${escapeHtml(testBooking.notes)}</p>
+          
+          <p>If you have any questions before your consultation, please don't hesitate to contact me at AD@adtechservices.co.uk or call +44 (0)7492 168197.</p>
+          
+          <p>Best regards,<br>Alex Devlyashevskiy<br>ADTS - IT Consultancy</p>
+        `,
+      };
+
+      await transporter.sendMail(testMailOptions);
+      console.log("Test booking email sent successfully");
+      
+      return res.status(200).json({ 
+        message: "Test booking confirmation email sent",
+        sentTo: testMailOptions.to,
+        services: testServices.map(s => s.name),
+        total: formattedPrice
+      });
+    } catch (error) {
+      console.error("Error sending test email:", error);
+      return res.status(500).json({ message: "Failed to send test email" });
     }
   });
 
