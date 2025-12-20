@@ -60,7 +60,7 @@ export default function FooterAnimatedLogo({
   
   return (
     <div 
-      className={`font-bold ${sizeClasses[size]} ${className}`}
+      className={`inline-flex flex-col items-center font-bold ${sizeClasses[size]} ${className}`}
       onMouseEnter={() => interactive && setIsHovered(true)}
       onMouseLeave={() => interactive && setIsHovered(false)}
     >
