@@ -323,9 +323,9 @@ export default function ServiceComparison() {
       <div aria-live="polite" className="sr-only" id="category-change-announcement"></div>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="font-bold text-3xl md:text-4xl mb-4">Service Packages</h2>
+          <h2 className="font-bold text-3xl md:text-4xl mb-4">Monthly Service Packages</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Choose the right level of support and service for your business needs
+            Choose a managed service package with predictable monthly costs for ongoing support
           </p>
         </div>
 
@@ -414,7 +414,8 @@ export default function ServiceComparison() {
                   <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
                   <CardDescription className="mt-1 min-h-12">{plan.description}</CardDescription>
                   <div className="mt-4">
-                    <span className="text-lg text-muted-foreground">Contact for pricing</span>
+                    <span className="text-3xl font-bold text-primary">{plan.price}</span>
+                    <span className="text-sm text-muted-foreground ml-1">/{plan.billingPeriod}</span>
                   </div>
                 </CardHeader>
 
@@ -441,9 +442,22 @@ export default function ServiceComparison() {
           </div>
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-6">
-            Need a custom solution? Contact us for a personalized service package tailored to your specific requirements.
+        <div className="text-center mt-12 space-y-6">
+          <div className="bg-muted/30 dark:bg-muted/10 rounded-lg p-6 max-w-2xl mx-auto">
+            <h3 className="font-semibold text-lg mb-2">Prefer Flexible Hourly Rates?</h3>
+            <p className="text-muted-foreground mb-4">
+              Book ad-hoc consultations at hourly rates for one-off projects or specific technical needs.
+            </p>
+            <Button
+              onClick={() => window.location.href = '/booking'}
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-white px-6 py-2"
+            >
+              View Hourly Consultations
+            </Button>
+          </div>
+          <p className="text-muted-foreground">
+            Need a custom solution? Contact us for a personalized package tailored to your specific requirements.
           </p>
           <Button
             onClick={() => {

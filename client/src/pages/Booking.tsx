@@ -246,10 +246,15 @@ export default function BookingPage() {
     <>
       <Header />
       <div className="container mx-auto py-12 px-4">
-        <h1 className="text-4xl font-bold text-center mb-2 text-white">Book a Consultation</h1>
-        <p className="text-white text-center mb-8">
+        <h1 className="text-4xl font-bold text-center mb-2 text-white">Book an Hourly Consultation</h1>
+        <p className="text-white text-center mb-4">
           Schedule a professional IT consultation tailored to your business needs
         </p>
+        <div className="text-center mb-8">
+          <Badge variant="outline" className="bg-primary/10 text-primary border-primary">
+            Flexible hourly rates - pay only for the time you need
+          </Badge>
+        </div>
         
         {/* Category Selector */}
         <div className="mb-8">
@@ -669,6 +674,23 @@ export default function BookingPage() {
               )}
             </CardContent>
           </Card>
+        </div>
+        
+        {/* Monthly packages option */}
+        <div className="mt-12 text-center p-6 bg-muted/30 dark:bg-muted/10 rounded-lg max-w-2xl mx-auto">
+          <h3 className="font-semibold text-lg mb-2">Looking for Ongoing Support?</h3>
+          <p className="text-muted-foreground mb-4">
+            Check out our monthly service packages for predictable costs and comprehensive managed services.
+          </p>
+          <Button
+            onClick={() => {
+              window.location.href = '/#service-comparison';
+            }}
+            variant="outline"
+            className="border-primary text-primary hover:bg-primary hover:text-white"
+          >
+            View Monthly Packages
+          </Button>
         </div>
       </div>
       </div>
