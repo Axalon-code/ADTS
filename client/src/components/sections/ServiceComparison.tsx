@@ -528,7 +528,7 @@ export default function ServiceComparison() {
             </Button>
           </div>
           <p className="text-muted-foreground">
-            Need a custom solution? Contact us for a personalized package tailored to your specific requirements.
+            Need a custom solution? Contact me for a personalized package tailored to your specific requirements.
           </p>
           <Button
             onClick={() => {
