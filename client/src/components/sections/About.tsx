@@ -47,8 +47,8 @@ export default function About() {
           
           <div className="order-1 md:order-2">
             <img 
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800" 
-              alt="IT professional working on technology solutions" 
+              src="/attached_assets/Alex-Devlyashevskiy_(2)_1766234440507.jpg" 
+              alt="Alex Devlyashevskiy - IT Consultant" 
               className="rounded-xl shadow-lg w-full h-auto"
             />
           </div>
