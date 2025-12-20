@@ -476,29 +476,12 @@ export default function BookingPage() {
                               onClick={() => toggleService(service.id)}
                               data-testid={`service-${service.id}`}
                             >
-                              <div className="flex justify-between items-start">
-                                <div className="flex items-start gap-3">
-                                  <Checkbox 
-                                    checked={isSelected}
-                                    onCheckedChange={(e) => {
-                                      e?.valueOf && e.stopPropagation?.();
-                                    }}
-                                    onClick={(e) => e.stopPropagation()}
-                                    className="mt-1"
-                                  />
-                                  <div>
-                                    <h3 className="font-medium text-lg">{service.name}</h3>
-                                    <p className="text-muted-foreground mt-1">{service.description}</p>
-                                    {service.price && (
-                                      <div className="flex items-center mt-2 text-sm text-primary font-medium">
-                                        <span>£{(service.price / 100).toFixed(0)}/hour</span>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                                {isSelected && (
-                                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                                    <Check className="w-4 h-4 text-white" />
+                              <div>
+                                <h3 className="font-medium text-lg">{service.name}</h3>
+                                <p className="text-muted-foreground mt-1">{service.description}</p>
+                                {service.price && (
+                                  <div className="flex items-center mt-2 text-sm text-primary font-medium">
+                                    <span>£{(service.price / 100).toFixed(0)}/hour</span>
                                   </div>
                                 )}
                               </div>
