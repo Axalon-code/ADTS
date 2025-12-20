@@ -678,8 +678,8 @@ export default function BookingPage() {
         
         {/* Monthly packages option */}
         <div className="mt-12 text-center p-6 bg-muted/30 dark:bg-muted/10 rounded-lg max-w-2xl mx-auto">
-          <h3 className="font-semibold text-lg mb-2">Looking for Ongoing Support?</h3>
-          <p className="text-muted-foreground mb-4">
+          <h3 className="font-semibold text-lg mb-2 text-white">Looking for Ongoing Support?</h3>
+          <p className="text-white mb-4">
             Check out our monthly service packages for predictable costs and comprehensive managed services.
           </p>
           <Button
