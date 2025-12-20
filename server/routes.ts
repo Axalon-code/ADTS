@@ -584,6 +584,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const totalPrice = selectedServices.reduce((sum, service) => sum + service.price, 0);
       const serviceNames = selectedServices.map(s => s.name).join(', ');
 
+      // Check if slot is available before proceeding (interval overlap detection)
+      const bookingDateObj = new Date(bookingData.bookingDate);
+      const existingBookings = await storage.getBookingsByDate(bookingDateObj);
+      
+      // Helper to convert time strings to minutes for comparison
+      const timeToMinutes = (time: string) => {
+        const [hours, minutes] = time.split(':').map(Number);
+        return hours * 60 + minutes;
+      };
+      
+      const requestedStart = timeToMinutes(bookingData.startTime);
+      const requestedEnd = timeToMinutes(bookingData.endTime);
+      
+      // Check for overlapping bookings (start < existingEnd && end > existingStart)
+      const slotConflict = existingBookings.some(b => {
+        if (b.status === 'cancelled') return false;
+        const existingStart = timeToMinutes(b.startTime);
+        const existingEnd = timeToMinutes(b.endTime);
+        return requestedStart < existingEnd && requestedEnd > existingStart;
+      });
+      
+      if (slotConflict) {
+        return res.status(409).json({ 
+          message: "This time slot is no longer available. Please select a different time.",
+          conflict: true 
+        });
+      }
+
       const stripe = await getUncachableStripeClient();
       
       // Get the base URL for redirects
@@ -626,6 +654,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         metadata: sanitizedMetadata,
       });
 
+      // Create a pending booking intent before redirecting to Stripe
+      // This ensures verify-payment only confirms pre-existing bookings
+      await storage.createBooking({
+        serviceIds: bookingData.serviceIds,
+        date: sanitizedMetadata.bookingDate,
+        startTime: sanitizedMetadata.startTime,
+        endTime: sanitizedMetadata.endTime,
+        clientName: sanitizedMetadata.clientName,
+        clientEmail: sanitizedMetadata.clientEmail,
+        clientPhone: sanitizedMetadata.clientPhone || undefined,
+        clientCompany: sanitizedMetadata.clientCompany || undefined,
+        notes: sanitizedMetadata.notes || undefined,
+        totalPrice,
+        stripeSessionId: session.id,
+        status: 'pending_payment' as const,
+      });
+
       return res.status(200).json({ url: session.url });
     } catch (error) {
       console.error("Error creating checkout session:", error);
@@ -633,30 +678,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Verify payment and create booking after successful checkout
-  app.get("/api/verify-payment/:sessionId", async (req, res) => {
+  // Verify payment and confirm pending booking after successful checkout
+  // This endpoint only confirms pre-existing pending bookings, not create new ones
+  app.post("/api/verify-payment", async (req, res) => {
     try {
-      const { sessionId } = req.params;
+      const { sessionId } = req.body;
       
       // Validate session ID format (basic check)
       if (!sessionId || !sessionId.startsWith('cs_')) {
         return res.status(400).json({ message: "Invalid session ID" });
       }
 
-      // Check if booking already exists for this session (idempotency)
-      const existingBooking = await storage.getBookingByStripeSessionId(sessionId);
-      if (existingBooking) {
+      // Find the pending booking by session ID
+      const pendingBooking = await storage.getBookingByStripeSessionId(sessionId);
+      
+      if (!pendingBooking) {
+        // No pending booking found - this session was never created through our system
+        return res.status(404).json({ message: "No booking found for this session" });
+      }
+
+      // If already confirmed, return the booking (idempotency)
+      if (pendingBooking.status === 'confirmed') {
         return res.status(200).json({ 
-          message: "Booking already exists",
+          message: "Booking already confirmed",
           booking: {
-            id: existingBooking.id,
-            clientName: existingBooking.clientName,
-            clientEmail: existingBooking.clientEmail,
-            date: existingBooking.bookingDate,
-            startTime: existingBooking.startTime,
-            endTime: existingBooking.endTime,
+            id: pendingBooking.id,
+            clientName: pendingBooking.clientName,
+            clientEmail: pendingBooking.clientEmail,
+            date: pendingBooking.date,
+            startTime: pendingBooking.startTime,
+            endTime: pendingBooking.endTime,
           }
         });
+      }
+
+      // If not pending_payment, something is wrong
+      if (pendingBooking.status !== 'pending_payment') {
+        return res.status(400).json({ message: "Invalid booking status" });
       }
 
       const stripe = await getUncachableStripeClient();
@@ -666,57 +724,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Payment not completed" });
       }
 
-      // Validate metadata exists and has required fields
-      const metadata = session.metadata || {};
-      if (!metadata.serviceIds || !metadata.bookingDate || !metadata.startTime || !metadata.endTime || !metadata.clientName || !metadata.clientEmail) {
-        return res.status(400).json({ message: "Invalid session metadata" });
-      }
-
-      // Verify the amount matches what we stored in metadata
-      const storedPrice = parseInt(metadata.totalPrice || '0');
-      if (storedPrice !== session.amount_total) {
-        console.error(`Price mismatch: stored ${storedPrice}, paid ${session.amount_total}`);
+      // Verify the amount matches what we stored
+      if (pendingBooking.totalPrice !== session.amount_total) {
+        console.error(`Price mismatch: stored ${pendingBooking.totalPrice}, paid ${session.amount_total}`);
         return res.status(400).json({ message: "Payment amount mismatch" });
       }
 
-      // Parse service IDs and validate they still exist
-      let serviceIds: number[];
-      try {
-        serviceIds = JSON.parse(metadata.serviceIds);
-        if (!Array.isArray(serviceIds) || serviceIds.length === 0) {
-          throw new Error('Invalid service IDs');
-        }
-      } catch {
-        return res.status(400).json({ message: "Invalid service data" });
-      }
+      // Confirm the booking
+      const confirmedBooking = await storage.updateBookingStatus(pendingBooking.id, 'confirmed');
 
-      // Create the booking from session metadata
-      const bookingData = {
-        serviceIds,
-        bookingDate: metadata.bookingDate,
-        startTime: metadata.startTime,
-        endTime: metadata.endTime,
-        clientName: metadata.clientName,
-        clientEmail: metadata.clientEmail,
-        clientPhone: metadata.clientPhone || undefined,
-        clientCompany: metadata.clientCompany || undefined,
-        notes: metadata.notes || undefined,
-        totalPrice: session.amount_total || 0,
-        stripeSessionId: sessionId,
-        status: 'confirmed' as const,
-      };
-
-      const booking = await storage.createBooking(bookingData);
-
-      return res.status(201).json({ 
-        message: "Booking created successfully",
+      return res.status(200).json({ 
+        message: "Booking confirmed successfully",
         booking: {
-          id: booking.id,
-          clientName: booking.clientName,
-          clientEmail: booking.clientEmail,
-          date: booking.bookingDate,
-          startTime: booking.startTime,
-          endTime: booking.endTime,
+          id: confirmedBooking.id,
+          clientName: confirmedBooking.clientName,
+          clientEmail: confirmedBooking.clientEmail,
+          date: confirmedBooking.date,
+          startTime: confirmedBooking.startTime,
+          endTime: confirmedBooking.endTime,
         }
       });
     } catch (error) {

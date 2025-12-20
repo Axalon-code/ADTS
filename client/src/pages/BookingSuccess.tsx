@@ -33,7 +33,11 @@ export default function BookingSuccess() {
       return;
     }
 
-    fetch(`/api/verify-payment/${sessionId}`)
+    fetch('/api/verify-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId }),
+    })
       .then(res => res.json())
       .then(data => {
         if (data.booking) {
