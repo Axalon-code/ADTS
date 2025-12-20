@@ -267,7 +267,8 @@ const servicePlans: ServicePlan[] = [
       "Email and phone support",
       "Basic troubleshooting",
       "Software installation assistance",
-      "Response within 24 hours"
+      "Response within 24 hours",
+      "Price adjusts based on user count"
     ],
     mostPopular: false,
     category: "support",
@@ -285,7 +286,8 @@ const servicePlans: ServicePlan[] = [
       "Patch management",
       "Antivirus and security management",
       "Monthly health reports",
-      "Response within 4 hours"
+      "Response within 4 hours",
+      "Price adjusts based on user count"
     ],
     mostPopular: true,
     category: "support",
@@ -304,7 +306,8 @@ const servicePlans: ServicePlan[] = [
       "Advanced security monitoring",
       "Disaster recovery planning",
       "Quarterly strategy reviews",
-      "Response within 1 hour"
+      "Response within 1 hour",
+      "Price adjusts based on user count"
     ],
     mostPopular: false,
     category: "support",
