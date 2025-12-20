@@ -50,6 +50,11 @@ export default function Header() {
 
   // Handle smooth scrolling for hash links
   const scrollToSection = (id: string) => {
+    // If not on homepage, navigate there first with the hash
+    if (location !== "/") {
+      window.location.href = `/#${id}`;
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
