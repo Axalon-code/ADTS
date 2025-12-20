@@ -60,7 +60,7 @@ export default function FooterAnimatedLogo({
   
   return (
     <div 
-      className={`inline-flex flex-col items-center font-bold ${sizeClasses[size]} ${className}`}
+      className={`flex flex-col items-start font-bold ${sizeClasses[size]} ${className}`}
       onMouseEnter={() => interactive && setIsHovered(true)}
       onMouseLeave={() => interactive && setIsHovered(false)}
     >
@@ -110,7 +110,7 @@ export default function FooterAnimatedLogo({
           ADTS
         </span>
       </span>
-      <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors text-center">
+      <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors text-left">
         Tailoring Your IT Requirements
       </div>
     </div>
