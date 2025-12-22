@@ -60,7 +60,7 @@ export default function AnimatedLogo({
   
   return (
     <div 
-      className={`font-bold ${sizeClasses[size]} ${className}`}
+      className={`font-bold ${sizeClasses[size]} ${className} inline-flex flex-col items-start`}
       onMouseEnter={() => interactive && setIsHovered(true)}
       onMouseLeave={() => interactive && setIsHovered(false)}
     >
@@ -70,7 +70,7 @@ export default function AnimatedLogo({
           transform: isHovered ? 'scale(1.05)' : 'scale(1)'
         }}
         className={`
-          inline-flex items-center justify-center gap-3
+          inline-flex items-center gap-2 sm:gap-3
           transition-all duration-700
         `}
       >
@@ -110,7 +110,7 @@ export default function AnimatedLogo({
           ADTS
         </span>
       </span>
-      <div className="xs:text-xs sm:text-sm md:text-base font-semibold sm:mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors text-center whitespace-nowrap mt-[10px] mb-[10px] text-[20px]">
+      <div className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm font-semibold mt-0 sm:mt-0.5 text-[#0066FF] dark:text-[#0066FF] transition-colors whitespace-nowrap pl-0">
         Tailoring Your IT Requirements
       </div>
     </div>
