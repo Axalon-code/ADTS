@@ -9,10 +9,10 @@ export default function CallToAction() {
   };
 
   return (
-    <section className="py-20 3xl:py-24 4xl:py-28 hero-gradient text-white">
+    <section className="py-12 sm:py-16 md:py-20 3xl:py-24 4xl:py-28 hero-gradient text-white">
       <div className="container-responsive text-center">
-        <h2 className="font-inter font-bold text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-6 3xl:mb-8">Ready to Optimize Your IT Infrastructure?</h2>
-        <p className="text-xl 3xl:text-2xl 4xl:text-3xl mb-10 3xl:mb-12 max-w-3xl 3xl:max-w-4xl mx-auto">
+        <h2 className="font-inter font-bold text-xl xs:text-2xl sm:text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-4 sm:mb-6 3xl:mb-8">Ready to Optimize Your IT Infrastructure?</h2>
+        <p className="text-base sm:text-lg md:text-xl 3xl:text-2xl 4xl:text-3xl mb-6 sm:mb-8 md:mb-10 3xl:mb-12 max-w-3xl 3xl:max-w-4xl mx-auto">
           Contact me today to discuss how I can help tailor Microsoft solutions to meet your specific business requirements.
         </p>
         <Button 

@@ -102,17 +102,17 @@ export default function Header() {
         Skip to main content
       </a>
       <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-[#0066FF]`}>
-        <div className="container mx-auto py-3 safe-area-inset">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 py-3">
           <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center">
-              <div className="w-40 sm:w-48 md:w-72">
+            <Link href="/" className="flex items-center flex-shrink-0">
+              <div className="w-32 xs:w-36 sm:w-44 md:w-56 lg:w-72">
                 <AnimatedLogo size="large" />
               </div>
             </Link>
             
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               {/* Theme Toggle - Always visible */}
-              <div className="flex items-center border-r-2 border-primary/30 dark:border-[#0066FF]/30 pr-2 sm:pr-3 md:pr-4">
+              <div className="flex items-center border-r-2 border-primary/30 dark:border-[#0066FF]/30 pr-2 sm:pr-3">
                 <ModeToggle />
               </div>
               
@@ -125,16 +125,16 @@ export default function Header() {
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu" 
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
-                className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-[#0066FF] rounded-md p-2 w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14"
+                className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-[#0066FF] rounded-md p-1.5 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12"
               >
                 <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
                 {menuOpen ? (
-                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                   </svg>
                 ) : (
-                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -149,7 +149,7 @@ export default function Header() {
             <div 
               id="mobile-menu"
               ref={menuRef}
-              className="absolute right-6 mt-2 w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-[#0066FF] py-3 px-4 z-50"
+              className="absolute right-4 sm:right-6 mt-2 w-56 sm:w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-[#0066FF] py-3 px-4 z-50"
               role="menu"
               aria-labelledby="menu-button"
             >

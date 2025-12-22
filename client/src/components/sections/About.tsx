@@ -12,12 +12,12 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-20 3xl:py-24 4xl:py-28 bg-transparent dark:bg-transparent">
+    <section id="about" className="py-12 sm:py-16 md:py-20 3xl:py-24 4xl:py-28 bg-transparent dark:bg-transparent">
       <div className="container-responsive">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 3xl:gap-16 4xl:gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 3xl:gap-16 4xl:gap-20 items-center">
           <div className="order-2 md:order-1">
-            <h2 className="font-inter font-bold text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-6 3xl:mb-8 text-white dark:text-white">About Me</h2>
-            <p className="text-lg 3xl:text-xl 4xl:text-2xl text-white dark:text-gray-300 mb-6 3xl:mb-8">
+            <h2 className="font-inter font-bold text-2xl xs:text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-4 sm:mb-6 3xl:mb-8 text-white dark:text-white">About Me</h2>
+            <p className="text-base sm:text-lg 3xl:text-xl 4xl:text-2xl text-white dark:text-gray-300 mb-4 sm:mb-6 3xl:mb-8">
               I'm an independent IT consultant specializing in Microsoft technologies with extensive experience in designing, implementing, and optimizing cloud and hybrid solutions.
             </p>
             

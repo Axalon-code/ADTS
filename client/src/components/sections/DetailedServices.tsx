@@ -179,17 +179,17 @@ export default function DetailedServices() {
   ];
 
   return (
-    <section id="services" className="py-20 bg-transparent dark:bg-transparent">
+    <section id="services" className="py-12 sm:py-16 md:py-20 bg-transparent dark:bg-transparent">
       {/* Include the SVG gradient definitions that will be used by all SVG icons */}
       <SvgGradientDefs />
       
       <div className="container-responsive">
-        <div className="text-center mb-16 3xl:mb-20">
-          <h2 className="font-inter font-bold text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-4 3xl:mb-6 text-white dark:text-white">Comprehensive IT Services</h2>
-          <p className="text-lg 3xl:text-xl 4xl:text-2xl text-white dark:text-gray-300 max-w-3xl 3xl:max-w-4xl mx-auto">Tailored technology solutions to meet your business requirements.</p>
+        <div className="text-center mb-10 sm:mb-16 3xl:mb-20">
+          <h2 className="font-inter font-bold text-2xl xs:text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-3 sm:mb-4 3xl:mb-6 text-white dark:text-white">Comprehensive IT Services</h2>
+          <p className="text-sm sm:text-base md:text-lg 3xl:text-xl 4xl:text-2xl text-white dark:text-gray-300 max-w-3xl 3xl:max-w-4xl mx-auto">Tailored technology solutions to meet your business requirements.</p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 3xl:gap-12 4xl:gap-14">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 3xl:gap-12 4xl:gap-14">
           {services.map((service, index) => (
             <ServiceCard 
               key={index}

@@ -33,17 +33,17 @@ export default function Glossary() {
       </Helmet>
       <Header />
       <main id="main-content" className="min-h-screen pt-8 pb-16">
-        <div className="container mx-auto px-4">
+        <div className="px-4 sm:px-6 md:px-8 lg:container lg:mx-auto">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">IT Terminology Glossary</h1>
-            <p className="text-center text-gray-600 dark:text-gray-400 mb-8">
+            <h1 className="text-2xl xs:text-3xl md:text-4xl font-bold mb-2 text-center">IT Terminology Glossary</h1>
+            <p className="text-center text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
               A comprehensive guide to technical terms used in IT consultancy, with easy-to-understand explanations.
             </p>
             
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <Input
                 type="text"
-                placeholder="Search for terms or explanations..."
+                placeholder="Search for terms..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full"
@@ -51,9 +51,13 @@ export default function Glossary() {
             </div>
             
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-6">
+              <TabsList className="flex flex-wrap gap-2 h-auto p-2 mb-6 justify-center">
                 {categories.map(category => (
-                  <TabsTrigger key={category.id} value={category.id} className="text-xs md:text-sm">
+                  <TabsTrigger 
+                    key={category.id} 
+                    value={category.id} 
+                    className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap"
+                  >
                     {category.name}
                   </TabsTrigger>
                 ))}

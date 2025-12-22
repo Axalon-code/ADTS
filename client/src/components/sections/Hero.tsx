@@ -10,11 +10,11 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero-gradient text-white">
-      <div className="container-responsive py-20 3xl:py-28 4xl:py-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 3xl:gap-16 4xl:gap-20 items-center">
+      <div className="container-responsive py-12 sm:py-16 md:py-20 3xl:py-28 4xl:py-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 3xl:gap-16 4xl:gap-20 items-center">
           <div>
-            <h1 className="font-inter font-bold text-4xl md:text-5xl 3xl:text-6xl 4xl:text-7xl mb-6 3xl:mb-8 leading-tight">Expert IT Consultancy for Your Business</h1>
-            <p className="text-xl 3xl:text-2xl 4xl:text-3xl mb-8 3xl:mb-10">Specializing in Microsoft 365, Azure, and Enterprise Identity Management solutions tailored to your requirements.</p>
+            <h1 className="font-inter font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl 3xl:text-6xl 4xl:text-7xl mb-4 sm:mb-6 3xl:mb-8 leading-tight">Expert IT Consultancy for Your Business</h1>
+            <p className="text-base sm:text-lg md:text-xl 3xl:text-2xl 4xl:text-3xl mb-6 sm:mb-8 3xl:mb-10">Specializing in Microsoft 365, Azure, and Enterprise Identity Management solutions tailored to your requirements.</p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button 
                 onClick={() => scrollToSection("services")} 
