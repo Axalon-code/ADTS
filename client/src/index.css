@@ -3,9 +3,24 @@
 @tailwind utilities;
 
 /* Safe area insets for mobile devices with curved edges or notches */
+/* Uses minimum padding values that match Tailwind breakpoints, plus safe-area additions */
 .safe-area-inset {
-  padding-left: max(env(safe-area-inset-left), 0px);
-  padding-right: max(env(safe-area-inset-right), 0px);
+  padding-left: max(env(safe-area-inset-left), 1.5rem);
+  padding-right: max(env(safe-area-inset-right), 1.5rem);
+}
+
+@media (min-width: 640px) {
+  .safe-area-inset {
+    padding-left: max(env(safe-area-inset-left), 2rem);
+    padding-right: max(env(safe-area-inset-right), 2rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .safe-area-inset {
+    padding-left: max(env(safe-area-inset-left), 3rem);
+    padding-right: max(env(safe-area-inset-right), 3rem);
+  }
 }
 
 /* Responsive container that scales for larger screens */

@@ -102,7 +102,7 @@ export default function Header() {
         Skip to main content
       </a>
       <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-[#0066FF]`}>
-        <div className="container mx-auto px-6 sm:px-8 lg:px-12 3xl:px-16 py-3 safe-area-inset">
+        <div className="container mx-auto py-3 safe-area-inset">
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center">
               <div className="w-56 md:w-72">
@@ -149,7 +149,7 @@ export default function Header() {
             <div 
               id="mobile-menu"
               ref={menuRef}
-              className="absolute right-6 sm:right-8 lg:right-12 mt-2 w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-[#0066FF] py-3 px-4 z-50"
+              className="absolute right-6 mt-2 w-64 bg-white dark:bg-gray-900 shadow-lg rounded-md border-2 border-primary dark:border-[#0066FF] py-3 px-4 z-50"
               role="menu"
               aria-labelledby="menu-button"
             >
