@@ -105,14 +105,14 @@ export default function Header() {
         <div className="container mx-auto py-3 safe-area-inset">
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center">
-              <div className="w-56 md:w-72">
+              <div className="w-40 sm:w-48 md:w-72">
                 <AnimatedLogo size="large" />
               </div>
             </Link>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {/* Theme Toggle - Always visible */}
-              <div className="flex items-center border-r-2 border-primary/30 dark:border-[#0066FF]/30 pr-4">
+              <div className="flex items-center border-r-2 border-primary/30 dark:border-[#0066FF]/30 pr-2 sm:pr-3 md:pr-4">
                 <ModeToggle />
               </div>
               
@@ -125,7 +125,7 @@ export default function Header() {
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu" 
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
-                className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-[#0066FF] rounded-md p-3 w-14 h-14"
+                className="bg-[hsl(var(--mobile-menu-bg))] text-[hsl(var(--mobile-menu-color))] hover:bg-[hsl(var(--mobile-menu-bg-hover))] hover:text-[hsl(var(--mobile-menu-hover-color))] border-2 border-primary dark:border-[#0066FF] rounded-md p-2 w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14"
               >
                 <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
                 {menuOpen ? (
