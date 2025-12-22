@@ -89,7 +89,7 @@ export default function Footer() {
             <Link href="/privacy" className="hover:text-accent transition-colors text-[20px]">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-sm hover:text-accent transition-colors">
+            <Link href="/terms" className="hover:text-accent transition-colors text-[20px]">
               Terms of Service
             </Link>
           </div>
