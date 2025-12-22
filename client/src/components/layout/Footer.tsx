@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="font-inter font-semibold text-lg mb-4">Services</h4>
+            <h4 className="font-inter font-semibold mb-4 text-[20px]">Services</h4>
             <ul className="space-y-2">
               <li>
                 <button onClick={() => scrollToSection("azure-services")} className="hover:text-accent transition-colors">
