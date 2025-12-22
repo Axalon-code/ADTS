@@ -70,12 +70,12 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection("m365-services")} className="hover:text-accent transition-colors">
+                <button onClick={() => scrollToSection("m365-services")} className="hover:text-accent transition-colors text-[18px]">
                   Microsoft 365
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection("automation-services")} className="hover:text-accent transition-colors">
+                <button onClick={() => scrollToSection("automation-services")} className="hover:text-accent transition-colors text-[18px]">
                   IT Automation
                 </button>
               </li>
