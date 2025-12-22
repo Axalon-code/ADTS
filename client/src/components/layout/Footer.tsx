@@ -33,7 +33,7 @@ export default function Footer() {
           <div>
             <h4 className="font-inter font-semibold mb-4 text-[20px]">Quick Links</h4>
             <ul className="space-y-2">
-              <li>
+              <li className="text-[18px]">
                 <button onClick={() => scrollToSection("home")} className="hover:text-accent transition-colors">
                   Home
                 </button>
