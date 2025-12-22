@@ -110,7 +110,7 @@ export default function FooterAnimatedLogo({
           ADTS
         </span>
       </span>
-      <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors text-left">
+      <div className="md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors text-left text-[20px]">
         Tailoring Your IT Requirements
       </div>
     </div>
