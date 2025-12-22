@@ -29,20 +29,19 @@ export function ModeToggle() {
   if (!mounted) return null;
 
   return (
-    <div className="relative">
-      <Button 
-        variant="ghost" 
-        size="sm" 
-        onClick={toggleTheme}
-        aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-        aria-live="polite"
-        disabled={isAnimating}
-        className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-md overflow-hidden transition-all duration-500 border-2 p-1.5 ${
-          theme === "dark" 
-            ? "bg-blue-900 border-primary dark:border-[#0066FF] hover:bg-blue-800 shadow-inner shadow-blue-800" 
-            : "bg-blue-100 border-primary dark:border-[#0066FF] hover:bg-blue-200"
-        }`}
-      >
+    <Button 
+      variant="ghost" 
+      size="sm" 
+      onClick={toggleTheme}
+      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-live="polite"
+      disabled={isAnimating}
+      className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-md overflow-hidden transition-all duration-500 border-2 p-1.5 ${
+        theme === "dark" 
+          ? "bg-blue-900 border-primary dark:border-[#0066FF] hover:bg-blue-800 shadow-inner shadow-blue-800" 
+          : "bg-blue-100 border-primary dark:border-[#0066FF] hover:bg-blue-200"
+      }`}
+    >
         {/* Hidden text for screen readers */}
         <span className="sr-only">
           {theme === "dark" ? "Currently in dark mode" : "Currently in light mode"}
@@ -81,7 +80,6 @@ export function ModeToggle() {
         >
           <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-blue-300" />
         </span>
-      </Button>
-    </div>
+    </Button>
   );
 }
