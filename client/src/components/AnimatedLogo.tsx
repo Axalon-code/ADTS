@@ -110,8 +110,8 @@ export default function AnimatedLogo({
           ADTS
         </span>
       </span>
-      <div className="text-sm md:text-base font-semibold mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors">
-        <div style={{ textAlign: 'center', marginLeft: '-1.6rem' }}>Tailoring Your IT Requirements</div>
+      <div className="text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold mt-0.5 sm:mt-1 text-[#0066FF] dark:text-[#0066FF] transition-colors text-center whitespace-nowrap">
+        Tailoring Your IT Requirements
       </div>
     </div>
   );
