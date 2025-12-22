@@ -31,13 +31,13 @@ export function ModeToggle() {
   return (
     <div className="relative">
       <Button 
-        variant="outline" 
-        size="icon" 
+        variant="ghost" 
+        size="sm" 
         onClick={toggleTheme}
         aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
         aria-live="polite"
         disabled={isAnimating}
-        className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-md overflow-hidden transition-all duration-500 border-2 ${
+        className={`relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-md overflow-hidden transition-all duration-500 border-2 p-1.5 ${
           theme === "dark" 
             ? "bg-blue-900 border-primary dark:border-[#0066FF] hover:bg-blue-800 shadow-inner shadow-blue-800" 
             : "bg-blue-100 border-primary dark:border-[#0066FF] hover:bg-blue-200"
