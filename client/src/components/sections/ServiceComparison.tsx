@@ -97,17 +97,17 @@ export default function ServiceComparison() {
   };
 
   return (
-    <section id="service-comparison" className="py-16 bg-transparent dark:bg-transparent">
+    <section id="service-comparison" className="py-16 3xl:py-20 4xl:py-24 bg-transparent dark:bg-transparent">
       <div aria-live="polite" className="sr-only" id="category-change-announcement"></div>
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-bold text-3xl md:text-4xl mb-4">Monthly Service Packages</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+      <div className="container-responsive">
+        <div className="text-center mb-12 3xl:mb-16">
+          <h2 className="font-bold text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-4 3xl:mb-6">Monthly Service Packages</h2>
+          <p className="text-lg 3xl:text-xl 4xl:text-2xl text-muted-foreground max-w-3xl 3xl:max-w-4xl mx-auto">
             Choose a managed service package with predictable monthly costs for ongoing support
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto mb-12">
+        <div className="max-w-6xl 3xl:max-w-7xl 4xl:max-w-[90rem] mx-auto mb-12 3xl:mb-16">
           <div role="tablist" aria-label="Service categories" className="flex flex-wrap justify-center gap-2 mb-8">
             {(["azure", "identity", "m365", "automation", "support"] as Category[]).map((cat) => (
               <Button 
@@ -136,7 +136,7 @@ export default function ServiceComparison() {
           ) : (
             <div 
               ref={sliderRef}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 transition-all duration-300 ease-in-out"
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 3xl:gap-10 4xl:gap-12 transition-all duration-300 ease-in-out"
               role="tabpanel"
               id={`panel-${activeCategory}`}
               aria-labelledby={`tab-${activeCategory}`}

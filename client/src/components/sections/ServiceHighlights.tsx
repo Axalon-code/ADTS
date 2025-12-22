@@ -72,14 +72,14 @@ export default function ServiceHighlights() {
   };
 
   return (
-    <section className="py-16 bg-transparent dark:bg-transparent">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4">IT Consultancy Services</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Comprehensive Microsoft ecosystem solutions to optimize your IT infrastructure and enhance productivity.</p>
+    <section className="py-16 3xl:py-20 4xl:py-24 bg-transparent dark:bg-transparent">
+      <div className="container-responsive">
+        <div className="text-center mb-16 3xl:mb-20">
+          <h2 className="font-inter font-bold text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-4 3xl:mb-6">IT Consultancy Services</h2>
+          <p className="text-lg 3xl:text-xl 4xl:text-2xl text-muted-foreground max-w-3xl 3xl:max-w-4xl 4xl:max-w-5xl mx-auto">Comprehensive Microsoft ecosystem solutions to optimize your IT infrastructure and enhance productivity.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 3xl:gap-10 4xl:gap-12">
           {services.map((service, index) => (
             <ServiceCard 
               key={index} 

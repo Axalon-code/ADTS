@@ -47,16 +47,16 @@ const ContactIcon = ({ type }: { type: "email" | "phone" | "linkedin" | "locatio
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 bg-transparent dark:bg-transparent">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="font-inter font-bold text-3xl md:text-4xl mb-4">Contact Me</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+    <section id="contact" className="py-20 3xl:py-24 4xl:py-28 bg-transparent dark:bg-transparent">
+      <div className="container-responsive">
+        <div className="text-center mb-16 3xl:mb-20">
+          <h2 className="font-inter font-bold text-3xl md:text-4xl 3xl:text-5xl 4xl:text-6xl mb-4 3xl:mb-6">Contact Me</h2>
+          <p className="text-lg 3xl:text-xl 4xl:text-2xl text-muted-foreground max-w-3xl 3xl:max-w-4xl mx-auto">
             Reach out to discuss your IT requirements and how I can help your business succeed.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 3xl:gap-16 4xl:gap-20 items-start">
           <Card className="bg-[hsl(var(--card-bg))] shadow-md">
             <CardContent className="p-8">
               <ContactForm />

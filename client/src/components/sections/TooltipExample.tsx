@@ -28,10 +28,10 @@ export default function TooltipExample() {
   `;
 
   return (
-    <section id="tooltip-example" className="py-16 bg-transparent dark:bg-transparent">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">
+    <section id="tooltip-example" className="py-16 3xl:py-20 4xl:py-24 bg-transparent dark:bg-transparent">
+      <div className="container-responsive">
+        <div className="max-w-4xl 3xl:max-w-5xl 4xl:max-w-6xl mx-auto">
+          <h2 className="text-3xl 3xl:text-4xl 4xl:text-5xl font-bold mb-6 3xl:mb-8 text-center">
             Interactive IT Terminology System
           </h2>
           

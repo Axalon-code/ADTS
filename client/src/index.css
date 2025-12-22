@@ -2,6 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Safe area insets for mobile devices with curved edges or notches */
+.safe-area-inset {
+  padding-left: max(env(safe-area-inset-left), 0px);
+  padding-right: max(env(safe-area-inset-right), 0px);
+}
+
+/* Responsive container that scales for larger screens */
+@layer utilities {
+  .container-responsive {
+    @apply w-full mx-auto px-6 sm:px-8 lg:px-12;
+    max-width: 100%;
+  }
+  
+  @screen lg {
+    .container-responsive {
+      max-width: 1024px;
+    }
+  }
+  
+  @screen xl {
+    .container-responsive {
+      max-width: 1280px;
+    }
+  }
+  
+  @screen 2xl {
+    .container-responsive {
+      max-width: 1400px;
+    }
+  }
+  
+  @screen 3xl {
+    .container-responsive {
+      max-width: 1600px;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+  
+  @screen 4xl {
+    .container-responsive {
+      max-width: 2000px;
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+}
+
 /* Global background gradient - With separate colors for light and dark modes */
 html.light {
   background: linear-gradient(135deg, #00007A 0%, #00007A 40%, #00C5B0 100%);
@@ -25,13 +73,17 @@ body,
 
 /* Light mode text adjustments for better contrast against gradient background */
 html.light section > .container > .text-center > h2,
-html.light section > .container > div > h2:not(.font-semibold) {
+html.light section > .container > div > h2:not(.font-semibold),
+html.light section > .container-responsive > .text-center > h2,
+html.light section > .container-responsive > div > h2:not(.font-semibold) {
   color: white;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 html.light section > .container > .text-center > p,
-html.light section > .container > div > p:not(.text-sm) {
+html.light section > .container > div > p:not(.text-sm),
+html.light section > .container-responsive > .text-center > p,
+html.light section > .container-responsive > div > p:not(.text-sm) {
   color: white;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }

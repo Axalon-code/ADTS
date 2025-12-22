@@ -12,9 +12,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-secondary text-white py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-secondary text-white py-12 3xl:py-16 4xl:py-20">
+      <div className="container-responsive">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 3xl:gap-10 4xl:gap-12">
           <div className="col-span-1 md:col-span-2">
             <div className="mb-2">
               <FooterAnimatedLogo size="large" />
