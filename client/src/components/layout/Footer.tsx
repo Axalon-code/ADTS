@@ -19,7 +19,7 @@ export default function Footer() {
             <div className="mb-2">
               <FooterAnimatedLogo size="large" />
             </div>
-            <p className="mb-6">Independent IT consultancy specializing in Microsoft technologies, providing tailored solutions for your business needs.</p>
+            <p className="mb-6 text-[18px]">Independent IT consultancy specializing in Microsoft technologies, providing tailored solutions for your business needs.</p>
             <div className="flex space-x-4">
               <a href="https://www.linkedin.com/in/alexdevlyashevskiy/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">
                 <i className="fab fa-linkedin-in text-xl"></i>
