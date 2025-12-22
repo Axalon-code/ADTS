@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 /* Safe area insets for mobile devices with curved edges or notches */
-/* Uses clamp for fluid padding that scales with viewport width */
+/* Uses clamp for fluid padding - minimum 1.5rem (24px) ensures content stays clear of edges */
 .safe-area-inset {
-  padding-left: clamp(1rem, 4vw, 3rem);
-  padding-right: clamp(1rem, 4vw, 3rem);
+  padding-left: clamp(1.5rem, 5vw, 3rem);
+  padding-right: clamp(1.5rem, 5vw, 3rem);
 }
 
 /* Add safe-area support for notched devices */
 @supports (padding: max(0px)) {
   .safe-area-inset {
-    padding-left: max(env(safe-area-inset-left, 0px), clamp(1rem, 4vw, 3rem));
-    padding-right: max(env(safe-area-inset-right, 0px), clamp(1rem, 4vw, 3rem));
+    padding-left: max(env(safe-area-inset-left, 0px), clamp(1.5rem, 5vw, 3rem));
+    padding-right: max(env(safe-area-inset-right, 0px), clamp(1.5rem, 5vw, 3rem));
   }
 }
 
@@ -78,6 +78,11 @@ body,
 #root {
   min-height: 100vh;
   background-color: transparent !important;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 /* Light mode text adjustments for better contrast against gradient background */
