@@ -40,7 +40,7 @@ export default function Glossary() {
         <div className="px-4 sm:px-6 md:px-8 lg:container lg:mx-auto">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-2xl xs:text-3xl md:text-4xl font-bold mb-2 text-center text-white">IT Terminology Glossary</h1>
-            <p className="text-center text-gray-700 dark:text-white/80 mb-6 sm:mb-8 text-sm sm:text-base">
+            <p className="text-center text-white/80 mb-6 sm:mb-8 text-sm sm:text-base">
               A comprehensive guide to technical terms used in IT consultancy, with easy-to-understand explanations.
             </p>
             
