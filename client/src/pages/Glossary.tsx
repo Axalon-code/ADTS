@@ -60,7 +60,7 @@ export default function Glossary() {
                   <TabsTrigger 
                     key={category.id} 
                     value={category.id} 
-                    className="text-xs sm:text-sm px-3 py-2 whitespace-nowrap text-black dark:text-white"
+                    className="text-sm sm:text-base px-3 py-2 whitespace-nowrap text-black dark:text-white"
                   >
                     {category.name}
                   </TabsTrigger>
