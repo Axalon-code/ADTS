@@ -169,15 +169,6 @@ export default function DetailedServices() {
     }
   ];
 
-  const servicesNotOffered = [
-    "Building SQL databases from scratch",
-    "Restoring failed databases",
-    "Palo Alto and Checkpoint firewall configuration",
-    "Cisco or Juniper routers and switches",
-    "Recovery from compromised ransomware attacks",
-    "EOL Hardware, Software and Operating Systems"
-  ];
-
   return (
     <section id="services" className="py-12 sm:py-16 md:py-20 bg-transparent dark:bg-transparent">
       {/* Include the SVG gradient definitions that will be used by all SVG icons */}
@@ -201,36 +192,6 @@ export default function DetailedServices() {
           ))}
         </div>
         
-        <div className="mt-16">
-          <Card className="bg-[hsl(var(--service-card-bg))] shadow-md">
-            <CardContent className="p-8">
-              <h3 className="font-inter font-semibold text-2xl mb-6 text-[hsl(var(--service-title-color))]">Services Not Offered</h3>
-              <p className="text-muted-foreground mb-6">
-                To ensure I deliver the highest quality service, I focus on my core expertise. The following services are outside my current consultation offerings:
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ul className="space-y-3">
-                  {servicesNotOffered.slice(0, 3).map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <i className="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
-                      <span className="text-foreground">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <ul className="space-y-3">
-                  {servicesNotOffered.slice(3).map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <i className="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
-                      <span className="text-foreground">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </section>
   );
