@@ -14,10 +14,14 @@ export default function Glossary() {
   const categories = [
     { id: "all", name: "All Terms" },
     { id: "azure", name: "Azure" },
-    { id: "identity", name: "Identity Management" },
+    { id: "identity", name: "Identity" },
     { id: "m365", name: "Microsoft 365" },
-    { id: "automation", name: "IT Automation" },
+    { id: "automation", name: "Automation" },
     { id: "general", name: "General IT" },
+    { id: "networking", name: "Networking" },
+    { id: "security", name: "Security" },
+    { id: "hardware", name: "Hardware" },
+    { id: "backup", name: "Backup & DR" },
   ];
   
   const filteredTerms = allTerms.filter(term => 
