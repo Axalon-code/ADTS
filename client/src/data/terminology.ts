@@ -130,6 +130,126 @@ export const terminologyData: Terminology[] = [
     explanation: "A business analytics service by Microsoft that provides interactive visualizations and business intelligence capabilities with a simple interface for creating reports and dashboards.",
     category: "m365"
   },
+  {
+    term: "Microsoft Word",
+    explanation: "A word processing application for creating, editing, and formatting documents, part of the Microsoft 365 suite of productivity tools.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Excel",
+    explanation: "A spreadsheet application for data analysis, calculations, and visualisation, featuring formulas, charts, pivot tables, and extensive data manipulation capabilities.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft PowerPoint",
+    explanation: "A presentation application for creating slideshows with text, graphics, animations, and multimedia, used for business and educational presentations.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Outlook",
+    explanation: "An email and calendar application that integrates with Exchange Online, providing email management, scheduling, contacts, and task management.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft OneNote",
+    explanation: "A digital note-taking application that allows users to create, organise, and share notes across devices, supporting text, images, audio, and handwriting.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Planner",
+    explanation: "A task management tool that provides a visual way to organise teamwork, create plans, assign tasks, and track progress using boards and charts.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Lists",
+    explanation: "An application for tracking information and organising work, creating customisable lists for issues, assets, routines, contacts, and inventory.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Forms",
+    explanation: "A tool for creating surveys, quizzes, and polls, collecting responses in real-time and analysing results with built-in analytics.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Bookings",
+    explanation: "An appointment scheduling application that allows businesses to manage bookings, send reminders, and integrate with Outlook calendars.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Stream",
+    explanation: "An enterprise video service for uploading, sharing, and managing videos securely within an organisation, integrated with Teams and SharePoint.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Whiteboard",
+    explanation: "A digital collaborative canvas for brainstorming, planning, and visual collaboration in meetings, integrated with Microsoft Teams.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft To Do",
+    explanation: "A personal task management application that syncs across devices, allowing users to create lists, set reminders, and plan their day.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Viva",
+    explanation: "An employee experience platform providing tools for learning, wellbeing, knowledge sharing, and goals within the Microsoft 365 environment.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Loop",
+    explanation: "A co-creation app with portable components that stay in sync across Teams, Outlook, and other Microsoft 365 apps, enabling flexible collaboration.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Copilot",
+    explanation: "An AI-powered assistant integrated across Microsoft 365 apps that helps users write, analyse data, create presentations, and automate tasks using natural language.",
+    category: "m365"
+  },
+  {
+    term: "Power Apps",
+    explanation: "A low-code platform for building custom business applications without extensive programming knowledge, connecting to data sources across Microsoft 365.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Purview",
+    explanation: "A unified data governance solution providing data loss prevention, information protection, compliance management, and risk assessment capabilities.",
+    category: "m365"
+  },
+  {
+    term: "Yammer",
+    explanation: "An enterprise social networking service (now part of Viva Engage) for company-wide communication, knowledge sharing, and community building.",
+    category: "m365"
+  },
+  {
+    term: "Delve",
+    explanation: "A content discovery tool that uses the Microsoft Graph to surface relevant documents and information based on your work patterns and connections.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Access",
+    explanation: "A database management application for creating and managing databases, building forms and reports, available on Windows within certain Microsoft 365 plans.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Publisher",
+    explanation: "A desktop publishing application for creating professional publications like newsletters, brochures, and flyers, available on Windows.",
+    category: "m365"
+  },
+  {
+    term: "Clipchamp",
+    explanation: "A video editing application included in Microsoft 365 for creating and editing videos with templates, filters, and stock media.",
+    category: "m365"
+  },
+  {
+    term: "Microsoft Designer",
+    explanation: "An AI-powered graphic design tool for creating social media posts, invitations, and other visual content using templates and generated images.",
+    category: "m365"
+  },
+  {
+    term: "Sway",
+    explanation: "A digital storytelling application for creating interactive, web-based presentations and reports that adapt to any screen size.",
+    category: "m365"
+  },
   
   // IT Automation terms
   {
