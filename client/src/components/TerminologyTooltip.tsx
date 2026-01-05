@@ -22,7 +22,7 @@ export default function TerminologyTooltip({
       <Tooltip delayDuration={300}>
         <TooltipTrigger asChild>
           <span 
-            className="border-dotted border-b border-primary dark:border-[#0066FF] cursor-help inline-flex items-center text-[22px] text-[#00ffae]" 
+            className="border-dotted border-b border-[#0066FF] dark:border-[#00ffae] cursor-help inline-flex items-center text-[22px] text-[#0066FF] dark:text-[#00ffae]" 
             aria-label={`${term}: ${explanation}`}
           >
             {children}
@@ -36,7 +36,7 @@ export default function TerminologyTooltip({
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="ml-1 h-5 w-5 text-[#00ffae]"
+              className="ml-1 h-5 w-5 text-[#0066FF] dark:text-[#00ffae]"
               aria-hidden="true"
             >
               <circle cx="12" cy="12" r="10" />
