@@ -35,8 +35,8 @@ export default function Glossary() {
       <main id="main-content" className="min-h-screen pt-8 pb-16">
         <div className="px-4 sm:px-6 md:px-8 lg:container lg:mx-auto">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-2xl xs:text-3xl md:text-4xl font-bold mb-2 text-center">IT Terminology Glossary</h1>
-            <p className="text-center text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
+            <h1 className="text-2xl xs:text-3xl md:text-4xl font-bold mb-2 text-center text-white">IT Terminology Glossary</h1>
+            <p className="text-center text-white/80 mb-6 sm:mb-8 text-sm sm:text-base">
               A comprehensive guide to technical terms used in IT consultancy, with easy-to-understand explanations.
             </p>
             
@@ -72,21 +72,21 @@ export default function Glossary() {
                       .map((term, index) => (
                         <div 
                           key={index} 
-                          className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+                          className="bg-white/10 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-white/20"
                         >
-                          <h3 className="text-lg font-semibold text-primary dark:text-[#0066FF] mb-2">
+                          <h3 className="text-lg font-semibold text-[#0066FF] mb-2">
                             <TerminologyTooltip term={term.term} explanation={term.explanation}>
                               {term.term}
                             </TerminologyTooltip>
                           </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">{term.explanation}</p>
+                          <p className="text-sm text-white/90">{term.explanation}</p>
                         </div>
                       ))}
                   </div>
                   
                   {filteredTerms.filter(term => category.id === "all" || term.category === category.id).length === 0 && (
                     <div className="text-center py-8">
-                      <p className="text-gray-500 dark:text-gray-400">
+                      <p className="text-white/70">
                         {searchTerm ? "No matching terms found." : "No terms in this category."}
                       </p>
                     </div>
