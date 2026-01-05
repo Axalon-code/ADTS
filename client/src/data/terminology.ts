@@ -172,12 +172,12 @@ export const terminologyData: Terminology[] = [
   {
     term: "VPN",
     explanation: "Virtual Private Network - a service that encrypts your internet connection and disguises your online identity, allowing you to use public Wi-Fi hotspots safely.",
-    category: "general"
+    category: "networking"
   },
   {
     term: "SSL/TLS",
     explanation: "Secure Sockets Layer/Transport Layer Security - encryption protocols designed to secure communications between web servers and browsers.",
-    category: "general"
+    category: "networking"
   },
   {
     term: "API",
@@ -187,17 +187,17 @@ export const terminologyData: Terminology[] = [
   {
     term: "IP Address",
     explanation: "Internet Protocol Address - a unique string of numbers separated by periods that identifies each computer using the Internet Protocol to communicate over a network.",
-    category: "general"
+    category: "networking"
   },
   {
     term: "DNS",
     explanation: "Domain Name System - the internet's phonebook that translates human-readable domain names (like www.example.com) into IP addresses that computers use to communicate.",
-    category: "general"
+    category: "networking"
   },
   {
     term: "DHCP",
     explanation: "Dynamic Host Configuration Protocol - a network management protocol that automatically assigns IP addresses and other network configuration parameters to devices on a network.",
-    category: "general"
+    category: "networking"
   },
   {
     term: "SLA",
