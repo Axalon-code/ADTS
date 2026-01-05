@@ -22,7 +22,7 @@ export default function TerminologyTooltip({
       <Tooltip delayDuration={300}>
         <TooltipTrigger asChild>
           <span 
-            className="border-dotted border-b border-primary dark:border-[#0066FF] cursor-help inline-flex items-center" 
+            className="border-dotted border-b border-primary dark:border-[#0066FF] cursor-help inline-flex items-center text-[22px]" 
             aria-label={`${term}: ${explanation}`}
           >
             {children}
