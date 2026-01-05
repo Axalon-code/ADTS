@@ -472,6 +472,23 @@ export default function BookingPage() {
               </CardContent>
             </Card>
           )}
+          
+          {/* Monthly packages option */}
+          <div className="mt-6 text-center p-6 bg-muted/30 dark:bg-muted/10 rounded-lg">
+            <h3 className="font-semibold text-lg mb-2 text-white">Looking for Ongoing Support?</h3>
+            <p className="text-white mb-4">
+              Check out our monthly service packages for predictable costs and comprehensive managed services.
+            </p>
+            <Button
+              onClick={() => {
+                window.location.href = '/#service-comparison';
+              }}
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-white"
+            >
+              View Monthly Packages
+            </Button>
+          </div>
         </div>
         
         {/* Right content - booking form */}
@@ -706,23 +723,6 @@ export default function BookingPage() {
               )}
             </CardContent>
           </Card>
-        </div>
-        
-        {/* Monthly packages option */}
-        <div className="mt-12 text-center p-6 bg-muted/30 dark:bg-muted/10 rounded-lg max-w-2xl mx-auto">
-          <h3 className="font-semibold text-lg mb-2 text-white">Looking for Ongoing Support?</h3>
-          <p className="text-white mb-4">
-            Check out our monthly service packages for predictable costs and comprehensive managed services.
-          </p>
-          <Button
-            onClick={() => {
-              window.location.href = '/#service-comparison';
-            }}
-            variant="outline"
-            className="border-primary text-primary hover:bg-primary hover:text-white"
-          >
-            View Monthly Packages
-          </Button>
         </div>
       </div>
       </div>
