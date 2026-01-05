@@ -209,6 +209,171 @@ export const terminologyData: Terminology[] = [
     explanation: "The process of identifying, acquiring, installing, and verifying software updates (patches) to fix vulnerabilities, bugs, or improve functionality in operating systems and applications.",
     category: "general"
   },
+  {
+    term: "ITIL",
+    explanation: "IT Infrastructure Library - a set of best practices for delivering IT services, providing a framework for IT service management (ITSM) that focuses on aligning IT with business needs.",
+    category: "general"
+  },
+  {
+    term: "ITSM",
+    explanation: "IT Service Management - how IT teams manage the end-to-end delivery of IT services through people, processes, and technology, encompassing design, creation, delivery, and support.",
+    category: "general"
+  },
+  {
+    term: "Service Desk",
+    explanation: "A single point of contact between IT and users that handles incidents, service requests, and communication. More strategic than a help desk, following ITIL principles.",
+    category: "general"
+  },
+  {
+    term: "Help Desk",
+    explanation: "A first point of contact for end users needing technical support, focused primarily on break-fix troubleshooting and resolving immediate technical issues.",
+    category: "general"
+  },
+  {
+    term: "Incident",
+    explanation: "An unplanned interruption to an IT service or reduction in service quality that requires immediate attention to restore normal operations.",
+    category: "general"
+  },
+  {
+    term: "Incident Management",
+    explanation: "The process of managing the lifecycle of all incidents to restore normal service operation as quickly as possible while minimizing business impact.",
+    category: "general"
+  },
+  {
+    term: "Problem Management",
+    explanation: "The process of identifying root causes of recurring incidents and implementing permanent solutions to prevent future occurrences.",
+    category: "general"
+  },
+  {
+    term: "Change Management",
+    explanation: "A systematic approach to managing all changes to IT infrastructure and services, controlling risk and minimizing disruptions to business operations.",
+    category: "general"
+  },
+  {
+    term: "Service Request",
+    explanation: "A formal request from a user for something to be provided, such as access to a service, information, advice, or a standard change like a password reset.",
+    category: "general"
+  },
+  {
+    term: "Escalation",
+    explanation: "The process of transferring an issue to a higher level of support or management when it cannot be resolved at the current level or requires specialist expertise.",
+    category: "general"
+  },
+  {
+    term: "First Line Support",
+    explanation: "The initial point of contact for IT issues, handling basic inquiries, troubleshooting, and logging tickets before escalating complex issues to higher tiers.",
+    category: "general"
+  },
+  {
+    term: "Second Line Support",
+    explanation: "Specialized technical support that handles more complex issues escalated from first line, with deeper expertise in specific systems or applications.",
+    category: "general"
+  },
+  {
+    term: "Third Line Support",
+    explanation: "Expert-level support for the most complex technical problems, often involving vendor specialists, developers, or architects with deep system knowledge.",
+    category: "general"
+  },
+  {
+    term: "Ticket",
+    explanation: "A record of a reported issue, service request, or task in a service desk system, tracking its status from creation to resolution.",
+    category: "general"
+  },
+  {
+    term: "Ticketing System",
+    explanation: "Software used to record, track, and manage user requests and incidents, ensuring proper follow-up, prioritization, and resolution.",
+    category: "general"
+  },
+  {
+    term: "Knowledge Base",
+    explanation: "A centralized repository of information containing FAQs, how-to guides, troubleshooting steps, and documentation to help users and support staff resolve issues.",
+    category: "general"
+  },
+  {
+    term: "Self-Service Portal",
+    explanation: "A website or application enabling users to perform common tasks independently, such as password resets, ticket submission, and accessing knowledge articles.",
+    category: "general"
+  },
+  {
+    term: "Service Catalog",
+    explanation: "A structured list of all IT services available to users, describing each service, its features, and how to request it.",
+    category: "general"
+  },
+  {
+    term: "Configuration Item (CI)",
+    explanation: "Any component that needs to be managed to deliver an IT service, including hardware, software, documentation, and people.",
+    category: "general"
+  },
+  {
+    term: "CMDB",
+    explanation: "Configuration Management Database - a repository that stores information about all configuration items and their relationships within an IT environment.",
+    category: "general"
+  },
+  {
+    term: "Asset Management",
+    explanation: "The process of tracking and managing IT assets throughout their lifecycle, from procurement to disposal, including hardware, software, and licenses.",
+    category: "general"
+  },
+  {
+    term: "KPI",
+    explanation: "Key Performance Indicator - a measurable value that demonstrates how effectively an IT service or team is achieving its objectives.",
+    category: "general"
+  },
+  {
+    term: "MTTR",
+    explanation: "Mean Time To Repair - the average time taken to repair a failed component or restore a service, a key metric for measuring support effectiveness.",
+    category: "general"
+  },
+  {
+    term: "MTBF",
+    explanation: "Mean Time Between Failures - the average time between system failures, used to measure reliability and predict maintenance needs.",
+    category: "general"
+  },
+  {
+    term: "Priority",
+    explanation: "A classification that determines the order in which incidents or requests are addressed, typically based on a combination of impact and urgency.",
+    category: "general"
+  },
+  {
+    term: "Urgency",
+    explanation: "A measure of how quickly an issue needs to be resolved based on the time available before it significantly impacts business operations.",
+    category: "general"
+  },
+  {
+    term: "Impact",
+    explanation: "A measure of the effect an incident has on business operations, typically categorized by the number of users or critical systems affected.",
+    category: "general"
+  },
+  {
+    term: "Workaround",
+    explanation: "A temporary solution that reduces or eliminates the impact of an incident or problem until a permanent fix can be implemented.",
+    category: "general"
+  },
+  {
+    term: "Known Error",
+    explanation: "A problem that has been analysed and has a documented root cause or workaround, recorded in a known error database for future reference.",
+    category: "general"
+  },
+  {
+    term: "Root Cause Analysis",
+    explanation: "A systematic process for identifying the underlying causes of incidents or problems to prevent recurrence and improve service quality.",
+    category: "general"
+  },
+  {
+    term: "Remote Support",
+    explanation: "The ability to access and troubleshoot a user's computer or device from a different location using remote desktop tools and screen sharing.",
+    category: "general"
+  },
+  {
+    term: "Onboarding",
+    explanation: "The process of setting up new employees with the IT equipment, accounts, access rights, and training they need to perform their role.",
+    category: "general"
+  },
+  {
+    term: "Offboarding",
+    explanation: "The IT process of removing access, recovering equipment, and securing data when an employee leaves an organisation.",
+    category: "general"
+  },
 
   // CompTIA A+ Hardware Terms
   {
