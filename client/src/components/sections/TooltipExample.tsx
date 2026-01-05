@@ -62,7 +62,7 @@ export default function TooltipExample() {
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold mb-4 text-primary dark:text-[#0066FF]">
+            <h3 className="font-semibold mb-4 text-primary dark:text-[#0066FF] text-[22px]">
               General IT Security Concepts
             </h3>
             
