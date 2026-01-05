@@ -1,7 +1,7 @@
 interface Terminology {
   term: string;
   explanation: string;
-  category: "azure" | "identity" | "m365" | "automation" | "general" | "networking" | "security" | "hardware" | "backup";
+  category: "azure" | "identity" | "m365" | "automation" | "general" | "networking" | "security" | "hardware" | "backup" | "development";
 }
 
 export const terminologyData: Terminology[] = [
@@ -791,6 +791,358 @@ export const terminologyData: Terminology[] = [
     term: "Immutable Backup",
     explanation: "Backup data that cannot be modified, encrypted, or deleted for a specified retention period, providing protection against ransomware and accidental deletion.",
     category: "backup"
+  },
+
+  // Development & Programming Terms
+  {
+    term: "Git",
+    explanation: "A distributed version control system that tracks changes to files over time, allowing multiple developers to collaborate on code while maintaining a complete history of all changes.",
+    category: "development"
+  },
+  {
+    term: "GitHub",
+    explanation: "A cloud-based platform for hosting Git repositories, providing collaboration tools like pull requests, issues, and team management for software development projects.",
+    category: "development"
+  },
+  {
+    term: "Repository",
+    explanation: "A directory or project folder that Git tracks, containing all project files, documentation, and complete revision history. Can be local or remote.",
+    category: "development"
+  },
+  {
+    term: "Clone",
+    explanation: "The process of copying a remote repository to your local machine, including all files, history, and branches, creating a complete local copy.",
+    category: "development"
+  },
+  {
+    term: "Fork",
+    explanation: "A personal copy of someone else's repository on GitHub that you have full control over, allowing you to experiment and contribute changes back via pull request.",
+    category: "development"
+  },
+  {
+    term: "Branch",
+    explanation: "A parallel version of your repository allowing separate development. You can experiment with features without affecting the main code, then merge changes back.",
+    category: "development"
+  },
+  {
+    term: "Commit",
+    explanation: "A snapshot of changes to one or more files in a repository. Each commit has a unique ID, message describing the change, and link to previous commits.",
+    category: "development"
+  },
+  {
+    term: "Pull Request",
+    explanation: "A request to merge your changes from one branch into another on GitHub, allowing others to review, comment, and approve before the code is merged.",
+    category: "development"
+  },
+  {
+    term: "Merge",
+    explanation: "The process of combining changes from one branch into another, integrating new features or fixes into the main codebase.",
+    category: "development"
+  },
+  {
+    term: "Push",
+    explanation: "The Git command to upload your local commits to a remote repository, sharing your changes with other team members.",
+    category: "development"
+  },
+  {
+    term: "Pull",
+    explanation: "The Git command to retrieve and merge remote changes into your local repository, keeping your code up to date with the team's work.",
+    category: "development"
+  },
+  {
+    term: "Staging Area",
+    explanation: "A preparation area in Git where you organise changes before committing, allowing you to review and selectively include files in the next commit.",
+    category: "development"
+  },
+  {
+    term: "Version Control",
+    explanation: "A system that tracks changes to files over time, allowing you to recall specific versions, compare changes, and collaborate with others on the same codebase.",
+    category: "development"
+  },
+  {
+    term: "CI/CD",
+    explanation: "Continuous Integration/Continuous Delivery - combined practices that automate building, testing, and deploying code changes from development to production.",
+    category: "development"
+  },
+  {
+    term: "Continuous Integration",
+    explanation: "A practice where developers merge code changes into a shared repository multiple times per day, with automated build-and-test steps verifying reliability.",
+    category: "development"
+  },
+  {
+    term: "Continuous Delivery",
+    explanation: "Automating the software delivery lifecycle to prepare code for deployment to production, typically requiring manual approval for the final release.",
+    category: "development"
+  },
+  {
+    term: "Continuous Deployment",
+    explanation: "Fully automated deployment where every code change that passes automated tests is automatically deployed to production without manual intervention.",
+    category: "development"
+  },
+  {
+    term: "DevOps",
+    explanation: "A set of practices combining software development and IT operations to shorten the development lifecycle and deliver features, fixes, and updates more frequently.",
+    category: "development"
+  },
+  {
+    term: "Pipeline",
+    explanation: "A series of automated steps that code goes through from development to production, including building, testing, and deployment stages.",
+    category: "development"
+  },
+  {
+    term: "Build",
+    explanation: "The process of compiling source code into executable software, including resolving dependencies, running preprocessors, and creating deployable packages.",
+    category: "development"
+  },
+  {
+    term: "Deploy",
+    explanation: "The process of releasing and installing software to a target environment such as a server, cloud platform, or user devices.",
+    category: "development"
+  },
+  {
+    term: "Blue/Green Deployment",
+    explanation: "A deployment strategy maintaining two identical production environments, allowing instant rollback by switching traffic between the blue and green environments.",
+    category: "development"
+  },
+  {
+    term: "Canary Deployment",
+    explanation: "A deployment strategy that releases updates to a small subset of users first to detect problems before rolling out to the entire user base.",
+    category: "development"
+  },
+  {
+    term: "Infrastructure as Code",
+    explanation: "Managing and provisioning computing infrastructure through machine-readable configuration files rather than manual processes, enabling automation and consistency.",
+    category: "development"
+  },
+  {
+    term: "Container",
+    explanation: "A lightweight, standalone package that includes everything needed to run a piece of software, including the code, runtime, system tools, and libraries.",
+    category: "development"
+  },
+  {
+    term: "Docker",
+    explanation: "A platform for developing, shipping, and running applications in containers, enabling consistent environments across development, testing, and production.",
+    category: "development"
+  },
+  {
+    term: "Kubernetes",
+    explanation: "An open-source container orchestration platform that automates deployment, scaling, and management of containerised applications across clusters of hosts.",
+    category: "development"
+  },
+  {
+    term: "Framework",
+    explanation: "A pre-built toolkit providing reusable code, libraries, and standardised structures to build applications faster and more efficiently.",
+    category: "development"
+  },
+  {
+    term: "React",
+    explanation: "A JavaScript library developed by Meta for building user interfaces, using a component-based architecture and virtual DOM for efficient rendering.",
+    category: "development"
+  },
+  {
+    term: "Angular",
+    explanation: "A TypeScript-based web application framework developed by Google, providing a complete solution for building large-scale enterprise applications.",
+    category: "development"
+  },
+  {
+    term: "Vue.js",
+    explanation: "A progressive JavaScript framework for building user interfaces, known for its gentle learning curve and flexibility in adoption.",
+    category: "development"
+  },
+  {
+    term: "Node.js",
+    explanation: "A JavaScript runtime environment that executes JavaScript code outside a web browser, commonly used for building server-side applications and APIs.",
+    category: "development"
+  },
+  {
+    term: "Component",
+    explanation: "A reusable, self-contained piece of code that represents a part of a user interface, following the principle of modular design in modern frameworks.",
+    category: "development"
+  },
+  {
+    term: "Virtual DOM",
+    explanation: "A lightweight in-memory representation of the real DOM used by frameworks like React and Vue to optimise rendering by updating only changed elements.",
+    category: "development"
+  },
+  {
+    term: "Single Page Application",
+    explanation: "A web application that loads a single HTML page and dynamically updates content as the user interacts, providing a smoother, app-like experience.",
+    category: "development"
+  },
+  {
+    term: "Server-Side Rendering",
+    explanation: "Generating HTML on the server before sending it to the client, improving initial page load time and SEO compared to client-side rendering.",
+    category: "development"
+  },
+  {
+    term: "REST API",
+    explanation: "Representational State Transfer API - an architectural style for designing networked applications using HTTP methods to perform CRUD operations on resources.",
+    category: "development"
+  },
+  {
+    term: "JSON",
+    explanation: "JavaScript Object Notation - a lightweight data interchange format that is easy for humans to read and write and easy for machines to parse and generate.",
+    category: "development"
+  },
+  {
+    term: "TypeScript",
+    explanation: "A strongly typed programming language that builds on JavaScript, adding static type definitions to catch errors early and improve code quality.",
+    category: "development"
+  },
+  {
+    term: "IDE",
+    explanation: "Integrated Development Environment - a software application providing comprehensive facilities for software development including code editor, debugger, and build tools.",
+    category: "development"
+  },
+  {
+    term: "Debugging",
+    explanation: "The process of finding and fixing errors or bugs in software code, often using specialised tools to step through code and inspect variables.",
+    category: "development"
+  },
+  {
+    term: "Unit Testing",
+    explanation: "Testing individual components or functions in isolation to verify they work correctly, typically automated and run frequently during development.",
+    category: "development"
+  },
+  {
+    term: "Integration Testing",
+    explanation: "Testing how different components or systems work together, verifying that interfaces and interactions between modules function correctly.",
+    category: "development"
+  },
+  {
+    term: "Code Review",
+    explanation: "A systematic examination of source code by developers other than the author, intended to find bugs, improve quality, and share knowledge.",
+    category: "development"
+  },
+  {
+    term: "Refactoring",
+    explanation: "Restructuring existing code without changing its external behaviour to improve readability, reduce complexity, and enhance maintainability.",
+    category: "development"
+  },
+  {
+    term: "Agile",
+    explanation: "A project management methodology emphasising iterative development, collaboration, flexibility, and rapid response to change in software development.",
+    category: "development"
+  },
+  {
+    term: "Scrum",
+    explanation: "An Agile framework for managing work in short development cycles called sprints, typically 2-4 weeks, with defined roles and ceremonies.",
+    category: "development"
+  },
+  {
+    term: "Sprint",
+    explanation: "A fixed time period (usually 2-4 weeks) in Scrum during which a specific set of work must be completed and made ready for review.",
+    category: "development"
+  },
+  {
+    term: "Technical Debt",
+    explanation: "The implied cost of additional rework caused by choosing an easy solution now instead of a better approach that would take longer.",
+    category: "development"
+  },
+  {
+    term: "Dependency",
+    explanation: "External code, libraries, or packages that your project relies on to function, managed through package managers like npm or pip.",
+    category: "development"
+  },
+  {
+    term: "Package Manager",
+    explanation: "A tool that automates installing, updating, configuring, and removing software packages and their dependencies, such as npm, pip, or NuGet.",
+    category: "development"
+  },
+  {
+    term: "npm",
+    explanation: "Node Package Manager - the default package manager for Node.js, providing access to hundreds of thousands of reusable JavaScript packages.",
+    category: "development"
+  },
+  {
+    term: "Responsive Design",
+    explanation: "A web design approach that makes pages render well on a variety of devices and screen sizes, from mobile phones to desktop monitors.",
+    category: "development"
+  },
+  {
+    term: "CSS",
+    explanation: "Cascading Style Sheets - a language used to describe the presentation and visual styling of HTML documents, controlling layout, colours, and fonts.",
+    category: "development"
+  },
+  {
+    term: "HTML",
+    explanation: "HyperText Markup Language - the standard language for creating web pages, defining the structure and content using elements and tags.",
+    category: "development"
+  },
+  {
+    term: "JavaScript",
+    explanation: "A programming language that enables interactive web pages and is an essential part of web applications, running in browsers and on servers.",
+    category: "development"
+  },
+  {
+    term: "Frontend",
+    explanation: "The client-side of a web application that users interact with directly, including the user interface, layout, and browser-based functionality.",
+    category: "development"
+  },
+  {
+    term: "Backend",
+    explanation: "The server-side of a web application that handles business logic, database operations, authentication, and API endpoints.",
+    category: "development"
+  },
+  {
+    term: "Full Stack",
+    explanation: "Development that encompasses both frontend and backend work, or a developer skilled in both client-side and server-side technologies.",
+    category: "development"
+  },
+  {
+    term: "Database",
+    explanation: "An organised collection of structured data stored electronically, accessed and managed through a database management system like SQL Server or PostgreSQL.",
+    category: "development"
+  },
+  {
+    term: "SQL",
+    explanation: "Structured Query Language - a programming language designed for managing and querying data held in relational database management systems.",
+    category: "development"
+  },
+  {
+    term: "NoSQL",
+    explanation: "Non-relational databases that store data in formats other than traditional tables, offering flexibility and scalability for certain use cases.",
+    category: "development"
+  },
+  {
+    term: "ORM",
+    explanation: "Object-Relational Mapping - a technique that lets you query and manipulate database data using an object-oriented programming language.",
+    category: "development"
+  },
+  {
+    term: "Microservices",
+    explanation: "An architectural style where an application is built as a collection of small, independent services that communicate over APIs.",
+    category: "development"
+  },
+  {
+    term: "Monolith",
+    explanation: "A traditional software architecture where all components are part of a single, unified codebase and deployed as one unit.",
+    category: "development"
+  },
+  {
+    term: "Webhook",
+    explanation: "An automated message sent from one application to another when a specific event occurs, enabling real-time data synchronisation.",
+    category: "development"
+  },
+  {
+    term: "Environment Variable",
+    explanation: "A dynamic value that can affect how running processes behave, commonly used to store configuration settings and sensitive data like API keys.",
+    category: "development"
+  },
+  {
+    term: "Production",
+    explanation: "The live environment where an application is accessible to end users, as opposed to development or staging environments.",
+    category: "development"
+  },
+  {
+    term: "Staging",
+    explanation: "A pre-production environment that mirrors production, used for final testing before releasing changes to live users.",
+    category: "development"
+  },
+  {
+    term: "Localhost",
+    explanation: "A hostname referring to the current computer, commonly used during development to test applications before deployment.",
+    category: "development"
   }
 ];
 

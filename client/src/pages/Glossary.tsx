@@ -22,6 +22,7 @@ export default function Glossary() {
     { id: "security", name: "Security" },
     { id: "hardware", name: "Hardware" },
     { id: "backup", name: "Backup & DR" },
+    { id: "development", name: "Development" },
   ];
   
   const filteredTerms = allTerms.filter(term => 
