@@ -182,7 +182,7 @@ export const terminologyData: Terminology[] = [
   {
     term: "API",
     explanation: "Application Programming Interface - a set of definitions and protocols for building and integrating application software, allowing different applications to communicate with each other.",
-    category: "general"
+    category: "development"
   },
   {
     term: "IP Address",
