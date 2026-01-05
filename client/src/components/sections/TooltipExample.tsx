@@ -41,7 +41,7 @@ export default function TooltipExample() {
           </p>
 
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
-            <h3 className="text-xl font-semibold mb-4 text-primary dark:text-[#0066FF]">
+            <h3 className="font-semibold mb-4 text-primary dark:text-[#0066FF] text-[22px]">
               Microsoft Cloud Services
             </h3>
             
