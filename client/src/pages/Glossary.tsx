@@ -83,7 +83,7 @@ export default function Glossary() {
                               {term.term}
                             </TerminologyTooltip>
                           </h3>
-                          <p className="text-sm text-white/90">{term.explanation}</p>
+                          <p className="text-[18px] text-white/90">{term.explanation}</p>
                         </div>
                       ))}
                   </div>
