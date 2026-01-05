@@ -78,18 +78,16 @@ export default function ServiceComparison() {
     support: "Tech Support"
   };
 
-  const handleChoosePackage = (packageName: string, price: string) => {
+  const handleChoosePackage = (packageName: string) => {
     const contactSection = document.getElementById("contact");
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
       
-      // Pre-fill the service field and message after scrolling
       setTimeout(() => {
-        const serviceSelect = document.querySelector('[data-testid="select-service"]') as HTMLButtonElement;
         const messageTextarea = document.querySelector('[data-testid="input-message"]') as HTMLTextAreaElement;
         
         if (messageTextarea) {
-          messageTextarea.value = `I'm interested in the ${packageName} package (${price}/month). Please contact me to discuss this managed service.`;
+          messageTextarea.value = `I'm interested in the ${packageName} package. Please contact me to discuss pricing and details.`;
           messageTextarea.dispatchEvent(new Event('input', { bubbles: true }));
         }
       }, 500);
@@ -157,8 +155,7 @@ export default function ServiceComparison() {
                     <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
                     <CardDescription className="mt-1 min-h-12">{plan.description}</CardDescription>
                     <div className="mt-4">
-                      <span className="text-3xl font-bold text-primary">{plan.price}</span>
-                      <span className="text-sm text-muted-foreground ml-1">/{plan.billingPeriod}</span>
+                      <span className="text-xl font-bold text-primary">Contact for Pricing</span>
                     </div>
                   </CardHeader>
 
@@ -176,7 +173,7 @@ export default function ServiceComparison() {
                   <CardFooter className="mt-auto">
                     <Button 
                       className="w-full bg-primary text-white hover:bg-accent"
-                      onClick={() => handleChoosePackage(plan.name, plan.price)}
+                      onClick={() => handleChoosePackage(plan.name)}
                       data-testid={`button-choose-${plan.id}`}
                     >
                       Choose {plan.name}
