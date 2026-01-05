@@ -101,7 +101,7 @@ export default function Header() {
       >
         Skip to main content
       </a>
-      <header className={`sticky top-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-[#0066FF]`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[hsl(var(--header-bg))] ${isScrolled ? 'shadow-md' : ''} transition-colors duration-200 border-t-4 border-b-4 border-primary dark:border-[#0066FF]`}>
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 py-3">
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center flex-shrink-0">
@@ -242,6 +242,8 @@ export default function Header() {
           )}
         </div>
       </header>
+      {/* Spacer to account for fixed header height */}
+      <div className="h-[72px] sm:h-[80px] md:h-[88px]" aria-hidden="true" />
     </>
   );
 }
