@@ -188,7 +188,7 @@ export default function ServiceComparison() {
         <div className="text-center mt-12 space-y-6">
           <div className="bg-muted/30 dark:bg-muted/10 rounded-lg p-6 max-w-2xl mx-auto">
             <h3 className="font-semibold mb-2 text-white text-[20px]">Prefer Flexible Hourly Rates?</h3>
-            <p className="text-white mb-4">
+            <p className="text-white mb-4 text-[18px]">
               Book ad-hoc consultations at hourly rates for one-off projects or specific technical needs.
             </p>
             <Button
