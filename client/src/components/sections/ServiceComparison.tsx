@@ -200,7 +200,7 @@ export default function ServiceComparison() {
               View Hourly Consultations
             </Button>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-[18px]">
             Need a custom solution? Contact me for a personalized package tailored to your specific requirements.
           </p>
           <Button
