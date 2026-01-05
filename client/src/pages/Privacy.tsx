@@ -13,7 +13,7 @@ export default function Privacy() {
       <main id="main-content" className="container mx-auto px-4 py-12 min-h-screen">
         <h1 className="text-4xl font-bold mb-8 text-white">Privacy Policy</h1>
         
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-lg max-w-none prose-headings:text-white prose-p:text-white/90 prose-li:text-white/90 prose-strong:text-white prose-a:text-primary">
           <p className="text-white/70 mb-6">Last updated: January 2026</p>
           
           <section className="mb-8">
