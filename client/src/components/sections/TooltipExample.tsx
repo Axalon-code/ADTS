@@ -35,7 +35,7 @@ export default function TooltipExample() {
             Interactive IT Terminology System
           </h2>
           
-          <p className="text-center mb-12 text-gray-600 dark:text-gray-400">
+          <p className="text-center mb-12 text-gray-600 dark:text-gray-400 text-[18px]">
             Hover over or tap any highlighted technical term to see a simple explanation. 
             This feature makes complex IT concepts more accessible to everyone.
           </p>
