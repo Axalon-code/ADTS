@@ -67,7 +67,7 @@ export default function TooltipExample() {
             </h3>
             
             <div className="prose dark:prose-invert max-w-none">
-              <p className="mb-4 leading-relaxed">
+              <p className="mb-4 text-[20px]">
                 {processTextWithTooltips(generalITText, { 
                   maxOccurrences: 1,
                   onlyCategories: ['general'] 
